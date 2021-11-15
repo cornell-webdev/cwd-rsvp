@@ -1,0 +1,33 @@
+{
+  "name": "cwd-rsvp",
+  "version": "0.0.0",
+  "description": "server",
+  "main": "app.js",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "generate-password": "^1.6.0",
+    "googleapis": "^74.2.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.10",
+    "mongoose-autopopulate": "^0.14.0",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --debounce --respawn --transpile-only app.ts",
+    "build": "npx tsc",
+    "lint": "eslint . --ext .js --ext .jsx --ext .ts --ext .tsx --fix"
+  },
+  "author": "",
+  "engines": {
+    "node": "14.16.1",
+    "npm": "6.14.12"
+  },
+  "devDependencies": {}
+}
