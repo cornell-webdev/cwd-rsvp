@@ -10,7 +10,7 @@ import path from 'path'
 import DBConnect from './dbConfigs'
 import User from './models/User'
 import router from './router'
-import testScript from './testScript'
+import initScript from './util/initScript'
 import { IUserDocument } from './types/user.type'
 
 // env variables
@@ -75,4 +75,5 @@ app.listen(port, () => {
   console.log(`Listening on port: ${port}`)
 })
 
-testScript()
+// run initialization script
+initScript()
