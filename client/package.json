@@ -17,6 +17,7 @@
     "ace-builds": "^1.4.12",
     "axios": "^0.21.1",
     "bson-objectid": "^2.0.1",
+    "cornell-glue-ui": "^0.1.25",
     "date-fns": "^2.11.1",
     "install": "^0.13.0",
     "moment": "^2.29.1",
