@@ -42,7 +42,7 @@ const eventSchema = new Schema(
     },
     details: {
       type: String,
-      required: true,
+      default: '',
     },
     imgs: {
       type: [String],

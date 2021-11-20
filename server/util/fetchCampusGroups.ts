@@ -1,4 +1,5 @@
 import Org from './../models/Org'
+import Tag from './../models/Tag'
 import Event from './../models/Event'
 import axios from 'axios'
 import cheerio from 'cheerio'
@@ -111,6 +112,7 @@ const parseEvent = async (eventObj: any) => {
 }
 
 const scrapeEvents = async (count: number = 100) => {
+  console.log('scraping', count, 'events')
   // fetch and parse events
   const URL_OPEN_EVENTS = `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=${count}&filter4_contains=OR&filter4_notcontains=OR&filter5=82904,82905,82910,82906,82912,82908&order=undefined&search_word=&&1636993315827`
 
@@ -121,8 +123,11 @@ const scrapeEvents = async (count: number = 100) => {
     .filter((parsed: any) => parsed)
 
   const parsedEvents: any[] = await Promise.all(eventPromises)
+  const filteredEvents: any[] = parsedEvents.filter((parsed) => parsed)
 
-  return parsedEvents.filter((parsed) => parsed)
+  console.log('scraped', filteredEvents.length, 'events')
+
+  return filteredEvents
 }
 
 const saveParsedEvents = async (parsedEvents: any[]) => {
@@ -131,7 +136,13 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
 
     if (existingEvent) {
       console.log('found existing event:', existingEvent?.title)
-      return existingEvent
+
+      const updatedEvent = await Event.findOneAndUpdate(
+        { providerId: parsed.eventId },
+        { tagId: parsed.tagId },
+        { new: true }
+      )
+      return updatedEvent
     }
 
     // check if org is already saved in DB
@@ -169,7 +180,6 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
       org = await new Org(orgData).save()
     }
 
-    // tagId not populated here
     const eventData: IEvent = {
       orgId: org._id,
       title: parsed.eventName,
@@ -180,6 +190,7 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
       startTime: parsed.startTime,
       endTime: parsed.endTime,
       details: parsed.details,
+      tagId: parsed.tagId,
       imgs: [fileUrl(parsed.eventPicture)],
       views: parsed.eventAttendees,
       likedUserIds: [],
@@ -194,20 +205,46 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
     return newEvent
   })
 
-  const scrapedEvents = await Promise.all(savePromises)
-  console.log(scrapedEvents.length, 'events scraped')
-  return scrapedEvents
+  const savedEvents = await Promise.all(savePromises)
+  console.log(savedEvents.length, 'events saved')
+  return savedEvents
 }
 
 const scrapeTaggedEvents = async () => {
-  // TODO: search by tags. update tagId for seen events, create new event for unseen events
-  return []
+  console.log('scraping tagged events')
+  const urls = {
+    professional: `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=150&filter4_contains=OR&filter4_notcontains=OR&filter5=82910,82906,82912,82908&filter6=5494462,4049455,3158958,6774419,6763630,6763631,6748514,6763629,6748183,6763632&order=undefined&search_word=&&1637426850949`,
+    entertainment: `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=150&filter4_contains=OR&filter4_notcontains=OR&filter5=82910,82906,82912,82908&filter6=3868170,3115655,3498442,2995299,5747008,5248111,6763668,3198950,6748012,7000900&order=undefined&search_word=&&1637426888392`,
+    sports: `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=150&filter4_contains=OR&filter4_notcontains=OR&filter5=82910,82906,82912,82908&filter6=2934926,3298159,3787380,5160587&order=undefined&search_word=&&1637426927868`,
+  }
+
+  const eventPromises = Object.entries(urls).map(async ([tagName, url]) => {
+    const { data } = await axios.get(url)
+
+    const eventPromises: any[] = data
+      .map((eventObj: any) => parseEvent(eventObj))
+      .filter((parsed: any) => parsed)
+
+    const parsedEvents: any[] = await Promise.all(eventPromises)
+    const tag = await Tag.findOne({ name: tagName })
+    const validEvents: any[] = parsedEvents
+      .filter((parsed) => parsed)
+      .map((event) => ({ ...event, tagId: tag?._id?.toString() }))
+    return validEvents
+  })
+
+  const eventsByTag = await Promise.all(eventPromises)
+  const allEvents: any[] = []
+  eventsByTag.forEach((events) => events.forEach((event) => allEvents.push(event)))
+  console.log('scraped', allEvents.length, 'tagged events')
+  return allEvents
 }
 
 export default async () => {
-  const parsedEvents = await scrapeEvents()
-  saveParsedEvents(parsedEvents)
-
-  const parsedTaggedEvents = await scrapeTaggedEvents()
-  saveParsedEvents(parsedTaggedEvents)
+  /* scrape 150 recent events */
+  // const parsedEvents = await scrapeEvents(150)
+  // saveParsedEvents(parsedEvents)
+  /* scrape tagged events */
+  // const parsedTaggedEvents = await scrapeTaggedEvents()
+  // saveParsedEvents(parsedTaggedEvents)
 }
