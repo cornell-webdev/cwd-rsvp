@@ -1,5 +1,7 @@
 import express from 'express'
 import Event from '../../models/Event'
+import endOfDay from 'date-fns/endOfDay'
+import startOfDay from 'date-fns/startOfDay'
 
 const eventRouter = express.Router()
 
@@ -16,6 +18,45 @@ const eventRouter = express.Router()
 //   }
 // })
 
+eventRouter.get('/trending', async (req, res) => {
+  try {
+    const sortedDocs = await Event.aggregate([
+      {
+        $project: {
+          likedUserIds: 1,
+          length: { $size: '$likedUserIds' },
+        },
+      },
+      { $sort: { length: -1 } },
+      { $limit: 10 },
+    ])
+    const ids = sortedDocs.map((doc) => doc._id)
+    const docs = await Event.find({
+      _id: { $in: ids },
+    })
+
+    res.send(docs)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+eventRouter.get('/search', async (req, res) => {
+  try {
+    const docs = await Event.find({
+      $or: [
+        { details: { $regex: req.query.query as string, $options: 'i' } },
+        { title: { $regex: req.query.query as string, $options: 'i' } },
+        { location: { $regex: req.query.query as string, $options: 'i' } },
+      ],
+    })
+
+    res.send(docs)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 eventRouter.get('/:id', async (req, res) => {
   try {
     const doc = await Event.findById(req.params.id)
@@ -27,7 +68,29 @@ eventRouter.get('/:id', async (req, res) => {
 
 eventRouter.get('/', async (req, res) => {
   try {
-    const docs = await Event.find()
+    const dateQuery = req.query.date
+      ? {
+          dates: {
+            $elemMatch: {
+              $gte: startOfDay(new Date(req.query.date as string)),
+              $lte: endOfDay(new Date(req.query.date as string)),
+            },
+          },
+        }
+      : {}
+
+    const tagQuery = req.query.tagId
+      ? {
+          tagId: req.query.tagId as string,
+        }
+      : {}
+
+    const query = {
+      ...dateQuery,
+      ...tagQuery,
+    }
+
+    const docs = await Event.find(query)
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

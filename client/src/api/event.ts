@@ -1,19 +1,49 @@
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IEvent } from 'src/types/event.type'
 
-export const eventsQueryConfig = () => ({
-  url: `/public/event`,
-  options: {
-    refetchOnWindowFocus: false,
-  },
+export interface IUseEvents {
+  date: Date
+  tagId?: string
+}
+
+export const eventsQueryConfig = ({ date, tagId }: IUseEvents) => ({
+  url: `/public/event?date=${date}&tagId=${tagId}`,
 })
 
-export const useEvents = () => {
-  const { data: events, ...rest } = useCustomQuery<IEvent[]>(eventsQueryConfig())
+export const useEvents = ({ date, tagId }: IUseEvents) => {
+  const { data: events, ...rest } = useCustomQuery<IEvent[]>(eventsQueryConfig({ date, tagId }))
 
   return {
     ...rest,
     events,
+  }
+}
+
+export const trendingEventsQueryConfig = () => ({
+  url: `/public/event/trending`,
+})
+
+export const useTrendingEvents = () => {
+  const { data: trendingEvents, ...rest } = useCustomQuery<IEvent[]>(trendingEventsQueryConfig())
+
+  return {
+    ...rest,
+    trendingEvents,
+  }
+}
+
+export const searchedEventsQueryConfig = (query: string) => ({
+  url: `/public/event/search?query=${query}`,
+})
+
+export const useSearchedEvents = (query: string) => {
+  const { data: searchedEvents, ...rest } = useCustomQuery<IEvent[]>(
+    searchedEventsQueryConfig(query)
+  )
+
+  return {
+    ...rest,
+    searchedEvents,
   }
 }
 
