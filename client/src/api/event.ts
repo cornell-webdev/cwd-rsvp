@@ -1,7 +1,7 @@
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IEvent } from 'src/types/event.type'
 
-export const eventsConfig = () => ({
+export const eventsQueryConfig = () => ({
   url: `/public/event`,
   options: {
     refetchOnWindowFocus: false,
@@ -9,7 +9,7 @@ export const eventsConfig = () => ({
 })
 
 export const useEvents = () => {
-  const { data: events, ...rest } = useCustomQuery<IEvent[]>(eventsConfig())
+  const { data: events, ...rest } = useCustomQuery<IEvent[]>(eventsQueryConfig())
 
   return {
     ...rest,
