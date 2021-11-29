@@ -9,11 +9,7 @@ const Header = () => {
   return (
     <Container>
       <DesktopContainer>
-        <Row
-          alignCenter
-          justifySpaceBetween
-          fullWidth
-        >
+        <Row alignCenter justifySpaceBetween fullWidth>
           <Logo />
           <div />
           <Auth />
@@ -28,7 +24,7 @@ const Container = styled.div`
 `
 
 const Row = styled(FlexRow)`
-  padding: .5rem .5rem .5rem .8rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
 `
 
 export default Header

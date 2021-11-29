@@ -1,15 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ReactComponent as LogoSVG } from 'src/assets/prosys-logo.svg'
-import Space from './layout/Space'
+import styled from 'styled-components'
 
 const Logo = () => {
   return (
     <Link to='/'>
-      <Space padding='.2rem 0' />
-      <LogoSVG />
+      <LogoText>RSVP</LogoText>
     </Link>
   )
 }
+
+const LogoText = styled.h2`
+  font-size: 1.5rem;
+  color: ${(props) => props.theme.brand[500]};
+  font-weight: 700;
+`
 
 export default Logo
