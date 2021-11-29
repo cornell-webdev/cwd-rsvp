@@ -1,9 +1,10 @@
+import { Button, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from 'src/api/user'
-import googleSignin from 'src/assets/services/google-signin@2x.png'
 import { IRootState } from 'src/types/redux.type'
+import styled from 'styled-components'
 import AuthedAvatar from './AuthedAvatar'
 
 const Auth = () => {
@@ -17,9 +18,18 @@ const Auth = () => {
 
   return (
     <Link to='/login'>
-      <img srcSet={`${googleSignin} 2x`} />
+      <StyledButton
+        variant='text'
+        color={theme.text.default}
+        defaultBackground={theme.grey[100]}
+        background={theme.grey[200]}>
+        Sign in
+      </StyledButton>
+      {/* <img srcSet={`${googleSignin} 2x`} /> */}
     </Link>
   )
 }
+
+const StyledButton = styled(Button)``
 
 export default Auth
