@@ -7,6 +7,12 @@ const tagSchema = new Schema(
       type: String,
       required: true,
     },
+    color: {
+      type: String,
+    },
+    backgroundColor: {
+      type: String,
+    },
   },
   {
     timestamps: true,
