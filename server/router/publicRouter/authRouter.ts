@@ -61,9 +61,8 @@ authRouter.get(
   // @ts-ignore
   passportGoogle.authenticate('google', {
     scope: [
-      'https://www.googleapis.com/auth/plus.login',
-      'https://www.googleapis.com/auth/calendar.events',
-      'https://www.googleapis.com/auth/calendar.readonly',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
     ],
     accessType: 'offline',
     prompt: 'consent',
