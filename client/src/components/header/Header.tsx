@@ -2,19 +2,19 @@ import React from 'react'
 import styled from 'styled-components'
 import Auth from '../auth/Auth'
 import { FlexContainer } from 'cornell-glue-ui'
-import DesktopContainer from '../layout/DesktopContainer'
+import PageContainer from '../layout/PageContainer'
 import Logo from '../Logo'
 
 const Header = () => {
   return (
     <Container>
-      <DesktopContainer>
+      <PageContainer>
         <Row alignCenter justifySpaceBetween fullWidth>
           <Logo />
           <div />
           <Auth />
         </Row>
-      </DesktopContainer>
+      </PageContainer>
     </Container>
   )
 }

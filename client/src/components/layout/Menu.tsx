@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import React from 'react'
 import styled from 'styled-components'
-import OutsideClickListener from './util/OutsideClickListener'
+import OutsideClickListener from '../util/OutsideClickListener'
 
 export interface IOption {
   label: string
@@ -56,13 +56,10 @@ const Menu = ({ options, children, offset }: MenuProps) => {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
             }}>
             <Paper>
-              <OutsideClickListener
-                onOutsideClick={handleOutsideClick}
-                isListening>
+              <OutsideClickListener onOutsideClick={handleOutsideClick} isListening>
                 <MenuList>
                   {options.map((option) => (
                     <MenuItem

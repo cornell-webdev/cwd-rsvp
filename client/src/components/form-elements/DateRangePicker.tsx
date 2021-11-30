@@ -2,7 +2,7 @@ import { watch } from 'fs'
 import React, { useEffect } from 'react'
 import { DateRange, OnChangeProps, RangeWithKey } from 'react-date-range'
 import { useFormContext } from 'react-hook-form'
-import theme from 'src/app/theme'
+import { theme } from 'cornell-glue-ui'
 import styled from 'styled-components'
 import ErrorMsg from '../fonts/ErrorMsg'
 
@@ -44,7 +44,12 @@ interface HookDateRangePickerProps {
 }
 
 export const HookedDateRangePicker = (props: HookDateRangePickerProps) => {
-  const { register, watch, setValue, formState: { errors } } = useFormContext()
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext()
 
   useEffect(() => {
     register(props.name)
@@ -73,8 +78,8 @@ export const HookedDateRangePicker = (props: HookDateRangePickerProps) => {
 
 const StyledDateRange = styled(DateRange)`
   & .rdrDayToday span:after {
-    background: ${props => props.theme.brand[500]} !important;
-    opacity: .5;
+    background: ${(props) => props.theme.brand[500]} !important;
+    opacity: 0.5;
   }
 `
 

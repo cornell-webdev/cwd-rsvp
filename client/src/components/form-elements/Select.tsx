@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import ReactSelect, { CommonProps } from 'react-select'
-import theme from 'src/app/theme'
+import { theme } from 'cornell-glue-ui'
 import ErrorMsg from 'src/components/fonts/ErrorMsg'
 import Label from 'src/components/fonts/Label'
 import styled from 'styled-components'
@@ -20,35 +20,31 @@ interface SelectProps {
   maxMenuHeight?: number
 }
 
-const Select = forwardRef<HTMLInputElement, SelectProps>(
-  (props: SelectProps, ref) => {
-    const valueObject = props.options.find(
-      (option) => option.value === props.value
-    )
-    return (
-      <div>
-        <Label {...props}>{props.label}</Label>
-        <StyledSelect
-          ref={ref}
-          isDisabled={props.disabled}
-          theme={(defaultStyles: any) => ({
-            ...defaultStyles,
-            colors: {
-              ...defaultStyles.colors,
-              primary25: theme.brand[50],
-              primary50: theme.bg.grey,
-              primary: theme.brand[500],
-            },
-          })}
-          {...props}
-          value={valueObject}
-          key={`select-key-${JSON.stringify(valueObject)}`}
-          isSearchable={false}
-        />
-      </div>
-    )
-  }
-)
+const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
+  const valueObject = props.options.find((option) => option.value === props.value)
+  return (
+    <div>
+      <Label {...props}>{props.label}</Label>
+      <StyledSelect
+        ref={ref}
+        isDisabled={props.disabled}
+        theme={(defaultStyles: any) => ({
+          ...defaultStyles,
+          colors: {
+            ...defaultStyles.colors,
+            primary25: theme.brand[50],
+            primary50: theme.bg.grey,
+            primary: theme.brand[500],
+          },
+        })}
+        {...props}
+        value={valueObject}
+        key={`select-key-${JSON.stringify(valueObject)}`}
+        isSearchable={false}
+      />
+    </div>
+  )
+})
 
 interface HookedSelectProps {
   name: string
