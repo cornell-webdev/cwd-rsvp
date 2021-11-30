@@ -1,12 +1,12 @@
-import { GlueProvider } from 'cornell-glue-ui'
+import { GlueProvider, Footer } from 'cornell-glue-ui'
 import React from 'react'
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-import Footer from 'src/components/footer/Footer'
 import store from 'src/redux/store'
+import styled from 'styled-components'
 // TODO: custom history definition
 // import history from 'src/util/history'
 import Header from '../components/header/Header'
@@ -26,7 +26,9 @@ const App = () => {
           <QueryClientProvider client={queryClient}>
             <GlueProvider>
               <Header />
-              <Routes />
+              <InnerContents>
+                <Routes />
+              </InnerContents>
               <Footer />
             </GlueProvider>
           </QueryClientProvider>
@@ -35,5 +37,9 @@ const App = () => {
     </Provider>
   )
 }
+
+const InnerContents = styled.div`
+  min-height: 90vh;
+`
 
 export default App
