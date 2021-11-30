@@ -1,16 +1,12 @@
-import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { ITag } from 'src/types/tag.type'
 
-export const fetchTags = () => ({
-  url: '/private/tag',
-  options: {
-    refetchOnWindowFocus: 'always',
-  },
+export const allTagsQueryConfig = () => ({
+  url: '/public/tag',
 })
 
-export const useTags = () => {
-  const { data: tags, ...rest } = useCustomQuery<ITag[]>(fetchTags())
+export const useAllTags = () => {
+  const { data: tags, ...rest } = useCustomQuery<ITag[]>(allTagsQueryConfig())
 
   return {
     ...rest,
@@ -18,37 +14,15 @@ export const useTags = () => {
   }
 }
 
-export const useCreateTag = () => {
-  const { mutateAsync: createTag, ...rest } = useCustomMutation<ITag>({
-    url: '/private/tag',
-    method: 'post',
-    localUpdates: [
-      {
-        queryConfigs: [fetchTags()],
-        presetLogic: 'appendEnd',
-      },
-    ],
-  })
+export const tagByIdQueryConfig = (id: string) => ({
+  url: `/public/tag/${id}`,
+})
+
+export const useTagById = (id: string) => {
+  const { data: tag, ...rest } = useCustomQuery<ITag[]>(tagByIdQueryConfig(id))
 
   return {
     ...rest,
-    createTag,
-  }
-}
-
-export const useDeleteTagById = () => {
-  const { mutateAsync: deleteTagById, ...rest } = useCustomMutation<ITag>({
-    url: '/private/tag',
-    method: 'delete',
-    localUpdates: [
-      {
-        queryConfigs: [fetchTags()],
-      },
-    ],
-  })
-
-  return {
-    ...rest,
-    deleteTagById,
+    tag,
   }
 }
