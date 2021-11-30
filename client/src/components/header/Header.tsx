@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Auth from '../auth/Auth'
-import { FlexRow } from '../layout/Flex'
+import { FlexContainer } from 'cornell-glue-ui'
 import DesktopContainer from '../layout/DesktopContainer'
 import Logo from '../Logo'
 
@@ -23,7 +23,7 @@ const Container = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.border.default};
 `
 
-const Row = styled(FlexRow)`
+const Row = styled(FlexContainer)`
   padding: 0.5rem 0.5rem 0.5rem 1.5rem;
 `
 

@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Spacer } from 'cornell-glue-ui'
 
 const Logo = () => {
   return (
     <Link to='/'>
+      <Spacer y='.2rem' />
       <LogoText>RSVP</LogoText>
     </Link>
   )
