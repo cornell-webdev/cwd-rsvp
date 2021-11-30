@@ -1,12 +1,12 @@
-import { useParams, useLocation, useRouteMatch } from 'react-router-dom'
+import { useParams, useLocation, useRouteMatch, useHistory } from 'react-router-dom'
 import { useMemo } from 'react'
 import { parse, stringify } from 'query-string'
-import history from 'src/util/history'
 
 export default function useRouter() {
   const params = useParams()
   const location = useLocation()
   const match: any = useRouteMatch()
+  const history = useHistory()
 
   const query: any = {
     ...parse(location.search),
