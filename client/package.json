@@ -19,6 +19,7 @@
     "bson-objectid": "^2.0.1",
     "cornell-glue-ui": "^0.1.30",
     "date-fns": "^2.11.1",
+    "history": "^5.1.0",
     "install": "^0.13.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.12",
