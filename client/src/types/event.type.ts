@@ -1,6 +1,7 @@
 import { IDocument } from './index.type'
 import { IOrg } from './org.type'
 import { ITag } from './tag.type'
+import { IUser } from './user.type'
 
 export interface IEvent extends IDocument {
   orgId: string
@@ -18,6 +19,7 @@ export interface IEvent extends IDocument {
   imgs: string[]
   views: number
   likedUserIds: string[]
+  likedUsers: IUser[]
   provider?: 'campusgroups'
   providerId?: string
   providerUrl?: string
