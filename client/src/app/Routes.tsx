@@ -8,6 +8,7 @@ const Home = React.lazy(() => import('src/pages/home/Home'))
 const AuthCallback = React.lazy(() => import('src/pages/auth-callback/AuthCallback'))
 const Login = React.lazy(() => import('src/pages/login/Login'))
 const Logout = React.lazy(() => import('src/pages/logout/Logout'))
+const New = React.lazy(() => import('src/pages/new/New'))
 
 interface IRoute {
   path: string
@@ -43,6 +44,15 @@ export const routes: IRoute[] = [
     path: '/auth/callback',
     component: AuthCallback,
     label: '',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/new',
+    component: New,
+    label: 'New',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
