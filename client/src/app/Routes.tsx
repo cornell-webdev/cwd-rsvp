@@ -8,7 +8,8 @@ const Home = React.lazy(() => import('src/pages/home/Home'))
 const AuthCallback = React.lazy(() => import('src/pages/auth-callback/AuthCallback'))
 const Login = React.lazy(() => import('src/pages/login/Login'))
 const Logout = React.lazy(() => import('src/pages/logout/Logout'))
-const New = React.lazy(() => import('src/pages/new/New'))
+const NewEvent = React.lazy(() => import('src/pages/new-event/NewEvent'))
+const NewOrg = React.lazy(() => import('src/pages/new-org/NewOrg'))
 
 interface IRoute {
   path: string
@@ -50,9 +51,18 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
-    path: '/new',
-    component: New,
-    label: 'New',
+    path: '/new-org',
+    component: NewOrg,
+    label: 'New org',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/new-event',
+    component: NewEvent,
+    label: 'New event',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,

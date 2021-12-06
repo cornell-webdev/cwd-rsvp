@@ -3,7 +3,7 @@ import { useFormContext, UseFormRegisterReturn } from 'react-hook-form'
 import { FlexRow } from 'src/components/layout/Flex'
 import styled from 'styled-components'
 import ErrorMsg from '../fonts/ErrorMsg'
-import Label from '../fonts/Label'
+import Label from './Label'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
@@ -13,16 +13,10 @@ const Checkbox = (props: CheckboxProps) => {
   return (
     <FlexRow alignCenter>
       <StyledCheckbox>
-        <input
-          {...props}
-          type='checkbox'
-        />
+        <input {...props} type='checkbox' />
         <span />
       </StyledCheckbox>
-      <Label
-        noMargin={true}
-        {...props}
-      >
+      <Label noMargin={true} {...props}>
         {props.label}
       </Label>
     </FlexRow>
@@ -35,22 +29,19 @@ interface HookedCheckboxProps {
 }
 
 export const HookedCheckbox = (props: HookedCheckboxProps) => {
-  const { register, formState: { errors } } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <div>
       <FlexRow alignCenter>
         <StyledCheckbox>
-          <input
-            {...register(props.name)}
-            type='checkbox'
-          />
+          <input {...register(props.name)} type='checkbox' />
           <span />
         </StyledCheckbox>
-        <Label
-          noMargin={true}
-          {...props}
-        >
+        <Label noMargin={true} {...props}>
           {props.label}
         </Label>
       </FlexRow>
@@ -66,8 +57,8 @@ const StyledCheckbox = styled.label`
   color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.87);
   font-family: var(
     --pure-material-font,
-    "Roboto",
-    "Segoe UI",
+    'Roboto',
+    'Segoe UI',
     BlinkMacSystemFont,
     system-ui,
     -apple-system
@@ -106,7 +97,7 @@ const StyledCheckbox = styled.label`
 
   /* Box */
   & > span::before {
-    content: "";
+    content: '';
     display: inline-block;
     box-sizing: border-box;
     margin: 3px 11px 3px 1px;
@@ -122,7 +113,7 @@ const StyledCheckbox = styled.label`
 
   /* Checkmark */
   & > span::after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     top: 3px;

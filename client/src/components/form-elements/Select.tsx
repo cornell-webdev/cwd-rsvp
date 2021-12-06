@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import ReactSelect, { CommonProps } from 'react-select'
 import { theme } from 'cornell-glue-ui'
-import ErrorMsg from 'src/components/fonts/ErrorMsg'
-import Label from 'src/components/fonts/Label'
+import ErrorMsg from './ErrorMsg'
+import Label from './Label'
 import styled from 'styled-components'
 
 export interface ISelectOption {
@@ -11,20 +11,23 @@ export interface ISelectOption {
   value: string
 }
 
-interface SelectProps {
-  options: ISelectOption[]
+interface SelectProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+  options?: ISelectOption[]
   value?: string
-  onChange?: (option: ISelectOption) => void
+  onChange?: React.FormEventHandler<HTMLSelectElement>
   label?: string
   disabled?: boolean
   maxMenuHeight?: number
+  width?: string
 }
 
-const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, ref) => {
-  const valueObject = props.options.find((option) => option.value === props.value)
+const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, ref) => {
+  const valueObject = props?.options?.find((option) => option.value === props.value)
+
   return (
     <div>
-      <Label {...props}>{props.label}</Label>
+      <Label>{props.label}</Label>
       <StyledSelect
         ref={ref}
         isDisabled={props.disabled}
@@ -41,14 +44,18 @@ const Select = forwardRef<HTMLInputElement, SelectProps>((props: SelectProps, re
         value={valueObject}
         key={`select-key-${JSON.stringify(valueObject)}`}
         isSearchable={false}
+        classNamePrefix='react-select'
       />
     </div>
   )
 })
 
-interface HookedSelectProps {
+interface HookedSelectProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
   name: string
-  options: ISelectOption[]
+  options?: ISelectOption[]
+  label?: string
+  width?: string
 }
 
 export const HookedSelect = (props: HookedSelectProps) => {
@@ -62,21 +69,26 @@ export const HookedSelect = (props: HookedSelectProps) => {
       <Controller
         name={props.name}
         control={control}
-        render={({ field }) => <Select {...field} options={props.options} />}
+        render={({ field }) => <Select {...props} {...field} options={props.options} />}
       />
       <ErrorMsg error={errors[props.name]?.message} />
     </div>
   )
 }
 
-const StyledSelect = styled(ReactSelect)<CommonProps<any, false, any>>`
+interface IStyledSelectProps extends CommonProps<any, false, any> {
+  width?: SelectProps['width']
+}
+
+const StyledSelect = styled(ReactSelect)<IStyledSelectProps>`
   & * {
     cursor: pointer !important;
     line-height: 1.5 !important;
   }
 
-  & .css-1okebmr-indicatorSeparator {
-    display: none;
+  & .react-select__control {
+    /* width */
+    width: ${(props) => props.width && props.width};
   }
 `
 
