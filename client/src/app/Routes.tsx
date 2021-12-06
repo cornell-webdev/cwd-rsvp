@@ -70,6 +70,15 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
+    path: '/new-event',
+    component: NewEvent,
+    label: 'New event',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
     path: '/profile/my-events',
     component: MyEvents,
     label: 'My events',
