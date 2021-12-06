@@ -52,7 +52,7 @@ const StyledTextarea = styled(ResizedTextarea)<TextareaProps>`
   background: ${(props) => props.theme.bg};
   font-size: 1rem;
   font-family: inherit;
-  border: 2px solid ${(props) => props.theme.border.dark};
+  border: 1px solid ${(props) => props.theme.border.dark};
   border-radius: 4px;
   line-height: 1.5;
   padding: 0.5rem;
