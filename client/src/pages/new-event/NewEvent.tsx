@@ -1,10 +1,12 @@
-import { Button, Spacer, Text } from 'cornell-glue-ui'
+import { Button, FlexContainer, Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useAllTags } from 'src/api/tag'
+import { HookedDatePicker } from 'src/components/form-elements/DatePicker'
 import { HookedInput } from 'src/components/form-elements/Input'
 import { HookedSelect } from 'src/components/form-elements/Select'
+import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import styled from 'styled-components'
 
 const NewEvent = () => {
@@ -53,6 +55,16 @@ const NewEvent = () => {
           <Link to='/new-org'>
             <Button variant='text'>Create organization</Button>
           </Link>
+          <Spacer y={0.5} />
+          <HookedTextarea
+            name='details'
+            label='Event details'
+            placeholder="What's this event about?"
+          />
+          <FlexContainer alignCenter>
+            <Text fontWeight={700}>Date and time</Text>
+          </FlexContainer>
+          <HookedDatePicker name='date' />
           <Button type='submit'>Publish</Button>
         </StyledForm>
       </FormProvider>

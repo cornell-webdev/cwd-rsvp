@@ -29,7 +29,7 @@ export const getEndOfDay = (date: Date) => {
 
 export const getFullDate = (date: Date | null): string => {
   if (!date) return ''
-  return moment(date).format('YYYY-MM-DD')
+  return moment(date).format('YYYY/MM/DD')
 }
 
 export const areSameDates = (date1: Date, date2: Date): boolean => {
