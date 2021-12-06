@@ -17,7 +17,7 @@ const Header = () => {
         <Row alignCenter justifySpaceBetween fullWidth>
           <Logo />
           <RightSection isSignedIn={currentUser !== null}>
-            <Link to='/new'>
+            <Link to='/new-event'>
               <Button startIcon={<AddIcon />}>Event</Button>
             </Link>
             <Auth />
