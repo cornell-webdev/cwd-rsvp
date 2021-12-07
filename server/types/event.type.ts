@@ -2,6 +2,12 @@ import { Document } from 'mongoose'
 
 export interface IEventDocument extends Document, IEvent {}
 
+export interface IEventDate {
+  date: Date
+  startTime: string
+  endTime: string
+}
+
 export interface IEvent {
   orgId: string
   title: string
@@ -9,9 +15,7 @@ export interface IEvent {
   location: string
   meetingUrl?: string
   tagId?: string
-  dates: Date[]
-  startTime: string
-  endTime: string
+  dates: IEventDate[]
   details: string
   imgs: string[]
   views: number

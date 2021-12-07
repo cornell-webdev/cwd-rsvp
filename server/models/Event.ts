@@ -29,15 +29,26 @@ const eventSchema = new Schema(
       type: String,
     },
     dates: {
-      type: [Date],
-      required: true,
-    },
-    startTime: {
-      type: String,
-      required: true,
-    },
-    endTime: {
-      type: String,
+      type: [
+        {
+          date: {
+            type: Date,
+            required: true,
+          },
+          startTime: {
+            type: String,
+            required: true,
+            minlength: 4,
+            maxlength: 4,
+          },
+          endTime: {
+            type: String,
+            required: true,
+            minlength: 4,
+            maxlength: 4,
+          },
+        },
+      ],
       required: true,
     },
     details: {
