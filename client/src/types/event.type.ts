@@ -3,6 +3,12 @@ import { IOrg } from './org.type'
 import { ITag } from './tag.type'
 import { IUser } from './user.type'
 
+export interface IEventDate {
+  date: Date
+  startTime: string
+  endTime: string
+}
+
 export interface IEvent extends IDocument {
   orgId: string
   org: IOrg
@@ -12,9 +18,7 @@ export interface IEvent extends IDocument {
   meetingUrl?: string
   tagId?: string
   tag: ITag
-  dates: Date[]
-  startTime: string
-  endTime: string
+  dates: IEventDate[]
   details: string
   imgs: string[]
   views: number
