@@ -90,6 +90,18 @@ const StyledSelect = styled(ReactSelect)<IStyledSelectProps>`
     /* width */
     width: ${(props) => props.width && props.width};
   }
+
+  & .react-select__indicator-separator {
+    display: none;
+  }
+
+  & .react-select__indicator {
+    padding-left: 0;
+  }
+
+  & .react-select__value-container {
+    padding-right: 0;
+  }
 `
 
 Select.displayName = 'Select'

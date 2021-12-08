@@ -8,6 +8,7 @@ import { HookedInput } from 'src/components/form-elements/Input'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import styled from 'styled-components'
+import DateAndTime from './DateAndTime'
 
 const NewEvent = () => {
   const form = useForm()
@@ -61,10 +62,9 @@ const NewEvent = () => {
             label='Event details'
             placeholder="What's this event about?"
           />
-          <FlexContainer alignCenter>
-            <Text fontWeight={700}>Date and time</Text>
-          </FlexContainer>
-          <HookedDatePicker name='date' />
+          <Text fontWeight={700}>Date and time</Text>
+          <DateAndTime />
+          <Text fontWeight={700}>Thumbnail image</Text>
           <Button type='submit'>Publish</Button>
         </StyledForm>
       </FormProvider>
