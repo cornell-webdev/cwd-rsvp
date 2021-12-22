@@ -1,9 +1,9 @@
-import { Button, FlexContainer, Spacer, Text } from 'cornell-glue-ui'
-import React from 'react'
+import { Button, Spacer, Text } from 'cornell-glue-ui'
+import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useAllTags } from 'src/api/tag'
-import { HookedDatePicker } from 'src/components/form-elements/DatePicker'
+import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedInput } from 'src/components/form-elements/Input'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
@@ -14,6 +14,8 @@ const NewEvent = () => {
   const form = useForm()
   const onSubmit = (data: any) => console.log(data)
   const { tags } = useAllTags()
+
+  const [urls, setUrls] = useState<string[]>([])
 
   return (
     <Container>
@@ -65,6 +67,7 @@ const NewEvent = () => {
           <Text fontWeight={700}>Date and time</Text>
           <DateAndTime />
           <Text fontWeight={700}>Thumbnail image</Text>
+          <ImageUpload urls={urls} setUrls={setUrls} />
           <Button type='submit'>Publish</Button>
         </StyledForm>
       </FormProvider>
