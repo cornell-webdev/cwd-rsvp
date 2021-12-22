@@ -51,14 +51,14 @@ const DateAndTime = ({}: IDateAndTimeProps) => {
   return (
     <Container>
       {dates.map(({ date, startTime, endTime }, idx) => (
-        <>
+        <div key={`${date.toString()}${startTime}${endTime}`}>
           <FlexContainer alignCenter justifySpaceBetween key={date.toString()}>
             <DatePicker date={date} onChange={(date) => changeDate(idx, date)} />
             <Select value={startTime} options={timeOptions} />
             <Select value={endTime} options={timeOptions} />
           </FlexContainer>
           <Spacer y={2} />
-        </>
+        </div>
       ))}
       <Button variant='text' onClick={handleAddDate}>
         Add another date
