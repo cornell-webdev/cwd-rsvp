@@ -1,0 +1,41 @@
+.img{
+  float: left;
+  border-radius: 6px;
+  width:100px;
+  height:100px;
+  margin-right:10px;
+}
+
+.heart{
+  float: right;
+  width:15px;
+  height:13.76px;
+  color:#D05F5F;
+  margin-left:0px
+  
+}
+
+.button-container{
+  font-size:12px;
+  font-weight: medium;
+  text-align: right;
+  display:inline-block;
+  padding: 3px
+}
+
+.event{
+  width:400px;
+  height:100px;
+  padding: 8px 25px;
+}
+
+.text{
+  width:255px;
+  height:81px;
+  padding: 3px 3px 3px
+}
+
+.date{
+  display:inline-block;
+}
+
