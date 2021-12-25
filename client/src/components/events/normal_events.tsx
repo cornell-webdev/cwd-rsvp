@@ -23,12 +23,12 @@ const Event: React.FC<EventProps> = ({event, date}) => {
         <Spacer y={3}>
         <Text fontWeight='700' variant='meta1'>{event.title}</Text>
         </Spacer>
-        <Spacer y={3.6}>
+        <Spacer y={3.75}>
         <Tag variant="contained" color={event.tag.color} background={event.tag.backgroundColor}>{event.tag.name}</Tag>
         </Spacer>
         <FlexContainer justifySpaceBetween={true}>
           {/* {event.dates.filter(e => e.date.getTime() === date.getTime()).map(e => <Text>{e.startTime} - {e.endTime}</Text>)} */}
-          <Text variant='meta1' color='#d05f5f' fontWeight='700'>{event.dates[0].startTime} - {event.dates[0].endTime}</Text>
+          <Text variant='meta2' color='#d05f5f' fontWeight='700'>{event.dates[0].startTime} - {event.dates[0].endTime}</Text>
           <LikeContainer event={event}/>
         </FlexContainer>
       </div>
