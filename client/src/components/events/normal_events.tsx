@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Button, Text, Tag } from 'cornell-glue-ui'
+import React from 'react'
+import { Text, Tag, Spacer} from 'cornell-glue-ui'
 import LikeContainer from './like'
 import { FlexContainer } from 'cornell-glue-ui'
-import { IOrg } from 'src/types/org.type'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import { IUser } from 'src/types/user.type'
-import { ITag } from 'src/types/tag.type'
 import './event.css'
 
 
@@ -22,12 +19,16 @@ const Event: React.FC<EventProps> = ({event, date}) => {
     <FlexContainer className='event'>
       <img className='img' src={event.imgs[0]}/>
       <div className='text'>
-        <Text variant='meta1'>{event.org.name}</Text>
-        <Text fontWeight='700' variant='p'>{event.title}</Text>
+        <Text variant='meta2'>{event.org.name}</Text>
+        <Spacer y={3}>
+        <Text fontWeight='700' variant='meta1'>{event.title}</Text>
+        </Spacer>
+        <Spacer y={3.6}>
         <Tag variant="contained" color={event.tag.color} background={event.tag.backgroundColor}>{event.tag.name}</Tag>
+        </Spacer>
         <FlexContainer justifySpaceBetween={true}>
           {/* {event.dates.filter(e => e.date.getTime() === date.getTime()).map(e => <Text>{e.startTime} - {e.endTime}</Text>)} */}
-          <Text className='date' variant='meta1' color='#d05f5f' fontWeight='700'>{event.dates[0].startTime} - {event.dates[0].endTime}</Text>
+          <Text variant='meta1' color='#d05f5f' fontWeight='700'>{event.dates[0].startTime} - {event.dates[0].endTime}</Text>
           <LikeContainer event={event}/>
         </FlexContainer>
       </div>
