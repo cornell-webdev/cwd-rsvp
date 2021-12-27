@@ -4,7 +4,7 @@ import { Calendar, OnChangeProps } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { Controller, useFormContext } from 'react-hook-form'
-import { getFullDate } from 'src/util/date'
+import { formatDate } from 'src/util/date'
 import styled from 'styled-components'
 import OutsideClickListener from '../util/OutsideClickListener'
 import ErrorMsg from './ErrorMsg'
@@ -12,9 +12,10 @@ import ErrorMsg from './ErrorMsg'
 interface DatePickerProps {
   date: Date
   onChange: (date: Date) => void
+  isHideYear?: boolean
 }
 
-const DatePicker = ({ date, onChange }: DatePickerProps) => {
+const DatePicker = ({ date, onChange, isHideYear }: DatePickerProps) => {
   const [isShowing, setIsShowing] = useState<boolean>(false)
 
   const handleChange = (range: OnChangeProps) => {
@@ -24,8 +25,8 @@ const DatePicker = ({ date, onChange }: DatePickerProps) => {
 
   return (
     <Container>
-      <InputContainer onClick={() => setIsShowing(!isShowing)}>
-        <DatepickerInput disabled value={getFullDate(date)} />
+      <InputContainer onClick={() => setIsShowing(!isShowing)} isHideYear={isHideYear}>
+        <DatepickerInput disabled value={formatDate(date, { isHideYear })} />
         <StyledCalendarIcon />
       </InputContainer>
       {isShowing && (
@@ -65,10 +66,17 @@ const Container = styled.div`
   position: relative;
 `
 
-const InputContainer = styled.div`
+interface IInputContainerProps {
+  isHideYear?: DatePickerProps['isHideYear']
+}
+
+const InputContainer = styled.div<IInputContainerProps>`
   position: relative;
   width: 130px;
   cursor: pointer;
+
+  /* isHideYear */
+  width: ${(props) => props.isHideYear && '90px'};
 `
 
 const StyledCalendarIcon = styled(CalendarIcon)`
@@ -100,6 +108,7 @@ const DatepickerInput = styled.input`
 const StyledCalendar = styled(Calendar)`
   position: absolute;
   top: 35px;
+  z-index: 99;
 
   & .rdrDay {
     color: ${(props) => props.theme.brand[500]} !important;

@@ -1,9 +1,11 @@
-import { Button, FlexContainer, Spacer } from 'cornell-glue-ui'
+import { Button, FlexContainer, IconButton, Spacer } from 'cornell-glue-ui'
 import React from 'react'
 import DatePicker from 'src/components/form-elements/DatePicker'
 import Select, { ISelectOption } from 'src/components/form-elements/Select'
 import { IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
+import DeleteIcon from '@material-ui/icons/Delete'
+import useIsDesktop from 'src/hooks/useIsDesktop'
 
 interface IDateAndTimeProps {
   dates: IEventDate[]
@@ -71,12 +73,22 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
     setDates(newDates)
   }
 
+  const isDesktop = useIsDesktop()
+
+  const handleDelete = (targetIdx: number) => {
+    setDates(dates.filter((_, idx) => idx !== targetIdx))
+  }
+
   return (
     <Container>
       {dates.map(({ date, startTime, endTime }, idx) => (
         <div key={`${date.toString()}${startTime}${endTime}`}>
           <FlexContainer alignCenter justifySpaceBetween key={date.toString()}>
-            <DatePicker date={date} onChange={(date) => changeDate(idx, date)} />
+            <DatePicker
+              isHideYear={!isDesktop}
+              date={date}
+              onChange={(date) => changeDate(idx, date)}
+            />
             <Select
               value={startTime}
               options={timeOptions}
@@ -87,11 +99,12 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('end', selectedOption, idx)}
             />
+            <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />
           </FlexContainer>
           <Spacer y={2} />
         </div>
       ))}
-      <Button variant='text' onClick={handleAddDate}>
+      <Button variant='text' onClick={handleAddDate} type='button'>
         Add another date
       </Button>
     </Container>
