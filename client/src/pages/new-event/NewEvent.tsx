@@ -27,6 +27,8 @@ const NewEvent = () => {
 
   const form = useForm({
     resolver: yupResolver(schema),
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
   })
   const { tags } = useAllTags()
 
