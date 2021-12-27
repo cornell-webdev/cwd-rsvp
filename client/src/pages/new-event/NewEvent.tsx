@@ -10,9 +10,24 @@ import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import { IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import DateAndTime from './DateAndTime'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 const NewEvent = () => {
-  const form = useForm()
+  const schema = yup
+    .object({
+      title: yup.string().required(),
+      location: yup.string().required(),
+      // TODO:
+      tag: yup.object().required(),
+      org: yup.object().required(),
+      details: yup.string().required(),
+    })
+    .required()
+
+  const form = useForm({
+    resolver: yupResolver(schema),
+  })
   const { tags } = useAllTags()
 
   const [urls, setUrls] = useState<string[]>([])
@@ -24,13 +39,19 @@ const NewEvent = () => {
     },
   ])
 
-  const onSubmit = (data: any) => {
-    const mergedData = {
-      ...data,
+  const onSubmit = (formData: any) => {
+    const data = {
+      ...formData,
       imgs: urls,
       dates,
+      tagId: formData.tag.value,
+      orgId: formData.org.value,
     }
-    console.log('mergedData', mergedData)
+
+    delete data.tag
+    delete data.org
+
+    console.log('data', data)
   }
 
   return (
@@ -49,7 +70,7 @@ const NewEvent = () => {
             name='location'
           />
           <HookedSelect
-            name='tagId'
+            name='tag'
             label='Event type'
             placeholder='Choose type'
             width='200px'
@@ -59,7 +80,7 @@ const NewEvent = () => {
             }))}
           />
           <HookedSelect
-            name='orgId'
+            name='org'
             label='Organization'
             placeholder='Choose organization'
             width='300px'
@@ -80,6 +101,7 @@ const NewEvent = () => {
             name='details'
             label='Event details'
             placeholder="What's this event about?"
+            minRows={5}
           />
           <Text fontWeight={700}>Date and time</Text>
           <DateAndTime dates={dates} setDates={setDates} />

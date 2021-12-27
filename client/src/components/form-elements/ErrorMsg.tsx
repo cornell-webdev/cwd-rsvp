@@ -1,3 +1,4 @@
+import { Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -10,9 +11,17 @@ interface IErrorMsgProps
 }
 
 const ErrorMsg = ({ error }: IErrorMsgProps) => {
-  return <Container>{error}</Container>
+  return (
+    <Container>
+      <Text variant='meta1' color={theme.danger[500]}>
+        {error}
+      </Text>
+    </Container>
+  )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  margin-top: 0.2rem;
+`
 
 export default ErrorMsg
