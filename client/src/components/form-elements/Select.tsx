@@ -12,10 +12,13 @@ export interface ISelectOption {
 }
 
 interface SelectProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLSelectElement>, HTMLSelectElement> {
+  extends Omit<
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLSelectElement>, HTMLSelectElement>,
+    'onChange'
+  > {
   options?: ISelectOption[]
   value?: string
-  onChange?: React.FormEventHandler<HTMLSelectElement>
+  onChange?: (selectedOption: ISelectOption) => void
   label?: string
   disabled?: boolean
   maxMenuHeight?: number

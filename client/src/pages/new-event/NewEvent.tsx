@@ -7,15 +7,31 @@ import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedInput } from 'src/components/form-elements/Input'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
+import { IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import DateAndTime from './DateAndTime'
 
 const NewEvent = () => {
   const form = useForm()
-  const onSubmit = (data: any) => console.log(data)
   const { tags } = useAllTags()
 
   const [urls, setUrls] = useState<string[]>([])
+  const [dates, setDates] = useState<IEventDate[]>([
+    {
+      date: new Date(),
+      startTime: '0000',
+      endTime: '0000',
+    },
+  ])
+
+  const onSubmit = (data: any) => {
+    const mergedData = {
+      ...data,
+      imgs: urls,
+      dates,
+    }
+    console.log('mergedData', mergedData)
+  }
 
   return (
     <Container>
@@ -47,7 +63,8 @@ const NewEvent = () => {
             label='Organization'
             placeholder='Choose organization'
             width='300px'
-            // TODO: show current user's linked orgs
+            // TODO: show all orgs
+            // TODO: searchable
             options={[
               {
                 label: 'Language Expansion Program',
@@ -65,9 +82,9 @@ const NewEvent = () => {
             placeholder="What's this event about?"
           />
           <Text fontWeight={700}>Date and time</Text>
-          <DateAndTime />
+          <DateAndTime dates={dates} setDates={setDates} />
           <Text fontWeight={700}>Thumbnail image</Text>
-          <ImageUpload urls={urls} setUrls={setUrls} />
+          <ImageUpload urls={urls} setUrls={setUrls} maxImgs={1} />
           <Button type='submit'>Publish</Button>
         </StyledForm>
       </FormProvider>

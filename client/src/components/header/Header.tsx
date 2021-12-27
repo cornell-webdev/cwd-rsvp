@@ -42,6 +42,7 @@ interface IRightSectionProps {
 
 const RightSection = styled(FlexContainer)<IRightSectionProps>`
   flex-direction: row-reverse;
+  align-items: center;
 
   & > * {
     margin-left: 1rem;
