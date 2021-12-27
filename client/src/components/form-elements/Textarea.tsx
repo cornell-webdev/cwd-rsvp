@@ -40,7 +40,7 @@ export const HookedTextarea = (props: HookedInputProps) => {
     <div>
       <Label>{props.label}</Label>
       <div>
-        <StyledTextarea {...register(props.name)} {...props} />
+        <StyledTextarea {...register(props.name)} error={errors[props.name]} {...props} />
       </div>
       <ErrorMsg error={errors[props.name]?.message} />
     </div>
@@ -49,7 +49,6 @@ export const HookedTextarea = (props: HookedInputProps) => {
 
 const StyledTextarea = styled(ResizedTextarea)<TextareaProps>`
   width: 100%;
-  background: ${(props) => props.theme.bg};
   font-size: 1rem;
   font-family: inherit;
   border: 1px solid ${(props) => props.theme.border.dark};
