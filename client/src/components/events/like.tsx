@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
+import { FlexContainer } from 'cornell-glue-ui'
 
 import { IEvent } from 'src/types/event.type'
 
@@ -19,21 +20,21 @@ const LikeContainer:React.FC<LikeProps> = ({event}) => {
 
   if (!liked) {
     return (
-      <div className="button-container">
+      <FlexContainer alignCenter={true} className="button-container">
         {likeCount}
         <button className='heart' style={{ backgroundColor: 'transparent', cursor: 'pointer' }} onClick={()=> {setLikeCount(likeCount + 1); setLiked(true)}}>
           <HeartOutlined style={{ color: '#D05F5F', 'cursor': 'pointer' }} />
         </button>
-      </div>
+      </FlexContainer>
     )
   } else {
     return (
-    <div className="button-container">
+    <FlexContainer alignCenter={true} className="button-container">
       {likeCount}
       <button className="heart" style={{ backgroundColor: 'transparent', cursor: 'pointer' }} onClick={()=> {setLikeCount(likeCount - 1); setLiked(false)}}>
         <HeartFilled style={{ color: '#D05F5F', 'cursor': 'pointer' }} />
       </button>
-    </div>
+    </FlexContainer>
     )
   }
 }

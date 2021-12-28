@@ -36,18 +36,13 @@ const Event: React.FC<EventProps> = ({event, startTime, endTime}) => {
     }
 
   return (
-    <FlexContainer className='event'>
+    <FlexContainer className='event' alignCenter={true}>
       <img className='img' src={event.imgs[0]}/>
       <div className='text'>
         <Text variant='meta2'>{event.org.name}</Text>
-        <Spacer y={3}>
         <Text fontWeight='700' variant='meta1'>{desc}</Text>
-        </Spacer>
-        <Spacer y={3.75}>
         <Tag variant="contained" color={event.tag.color} background={event.tag.backgroundColor}>{event.tag.name}</Tag>
-        </Spacer>
         <FlexContainer justifySpaceBetween={true} alignCenter={true}>
-          {/* {event.dates.filter(e => e.date.getTime() === date.getTime()).map(e => <Text>{e.startTime} - {e.endTime}</Text>)} */}
           <Text variant='meta2' color='#d05f5f' fontWeight='700'>{getTime(startTime)} - {getTime(endTime)}</Text>
           <LikeContainer event={event}/>
         </FlexContainer>

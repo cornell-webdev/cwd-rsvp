@@ -1,8 +1,8 @@
 .img{
   float: left;
   border-radius: 6px;
-  width:100px;
-  height:100px;
+  width:87px;
+  height:87px;
   margin-right:10px;
 }
 
@@ -20,20 +20,20 @@
   font-size:12px;
   font-weight: medium;
   text-align: right;
-  display:inline-block;
-  padding: 3px
+  /* padding: 3px */
+  float:right;
 }
 
 .event{
-  width:375px;
+  /* width:375px; */
   height:100px;
-  padding: 6px 12px;
+  padding: 6px 12px 6px 12px;
+  margin: 0px
 }
 
 .text{
-  width:255px;
-  height:81px;
-  margin: 10px, 11px, 8px, 0px ;
+  width:270px;
+  height:87px;
 }
 
 .trendingEvent{
@@ -41,7 +41,7 @@
   height:150px;
   border-radius: 6px;
   margin-inline: 12px;
-  margin: 12px;
+  margin: 0px 12px ;
 }
 
 .img2{
