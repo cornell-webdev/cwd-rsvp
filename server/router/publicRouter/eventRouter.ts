@@ -72,18 +72,21 @@ eventRouter.get('/', async (req, res) => {
       ? {
           dates: {
             $elemMatch: {
-              $gte: startOfDay(new Date(req.query.date as string)),
-              $lte: endOfDay(new Date(req.query.date as string)),
+              date: {
+                $gte: startOfDay(new Date(req.query.date as string)),
+                $lt: endOfDay(new Date(req.query.date as string)),
+              },
             },
           },
         }
       : {}
 
-    const tagQuery = req.query.tagId
-      ? {
-          tagId: req.query.tagId as string,
-        }
-      : {}
+    const tagQuery =
+      req.query.tagId !== 'undefined'
+        ? {
+            tagId: req.query.tagId as string,
+          }
+        : {}
 
     const query = {
       ...dateQuery,
