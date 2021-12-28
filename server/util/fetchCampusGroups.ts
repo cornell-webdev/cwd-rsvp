@@ -6,7 +6,7 @@ import cheerio from 'cheerio'
 import { IOrg } from '../types/org.type'
 import { IEvent } from '../types/event.type'
 
-const convertTime12to24 = (time12h: string) => {
+const convertTime12to24 = (time12h: string): string => {
   const [time, modifier] = time12h.split(' ')
 
   let [hours, minutes] = time.split(':')
@@ -19,7 +19,7 @@ const convertTime12to24 = (time12h: string) => {
     hours = (parseInt(hours, 10) + 12).toString()
   }
 
-  return Number(`${hours}${minutes || '00'}`)
+  return `${('0' + hours).slice(-2)}${minutes || '00'}`
 }
 
 const fileUrl = (path: string): string => (path ? `https://static1.campusgroups.com${path}` : '')
@@ -111,7 +111,7 @@ const parseEvent = async (eventObj: any) => {
   return parsed
 }
 
-const scrapeEvents = async (count: number = 100) => {
+const scrapeAndParseEvents = async (count: number = 100) => {
   console.log('scraping', count, 'events')
   // fetch and parse events
   const URL_OPEN_EVENTS = `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=${count}&filter4_contains=OR&filter4_notcontains=OR&filter5=82904,82905,82910,82906,82912,82908&order=undefined&search_word=&&1636993315827`
@@ -122,30 +122,70 @@ const scrapeEvents = async (count: number = 100) => {
     .map((eventObj: any) => parseEvent(eventObj))
     .filter((parsed: any) => parsed)
 
-  const parsedEvents: any[] = await Promise.all(eventPromises)
-  const filteredEvents: any[] = parsedEvents.filter((parsed) => parsed)
+  const parsedEvents: any[] = (await Promise.all(eventPromises)).filter((parsed) => parsed)
+  const mergedEvents: any[] = []
 
-  console.log('scraped', filteredEvents.length, 'events')
+  // merge recurring events by adding to date
+  const eventNameToIndex: { [eventName: string]: number } = {}
 
-  return filteredEvents
+  parsedEvents.forEach((parsed) => {
+    if (Object.hasOwnProperty.call(eventNameToIndex, parsed.eventName)) {
+      const existingEvent = mergedEvents[eventNameToIndex[parsed.eventName]]
+      existingEvent.dates = [
+        ...existingEvent.dates,
+        {
+          date: parsed.date,
+          startTime: parsed.startTime,
+          endTime: parsed.endTime,
+        },
+      ]
+    } else {
+      eventNameToIndex[parsed.eventName] = mergedEvents.length
+      const formattedParsed = {
+        ...parsed,
+        dates: [
+          {
+            date: parsed.date,
+            startTime: parsed.startTime,
+            endTime: parsed.endTime,
+          },
+        ],
+      }
+      delete formattedParsed.startTime
+      delete formattedParsed.endTime
+      delete formattedParsed.date
+      mergedEvents.push(formattedParsed)
+    }
+  })
+
+  console.log('scraped', mergedEvents.length, 'events')
+
+  return mergedEvents
 }
 
 const saveParsedEvents = async (parsedEvents: any[]) => {
   const savePromises = parsedEvents.map(async (parsed) => {
-    const existingEvent = await Event.findOne({ providerId: parsed.eventId })
+    // parsed.eventId is different for all recurring events
+    // query existing event by eventName
+    const existingEvent = await Event.findOne({ title: parsed.eventName })
 
     if (existingEvent) {
       console.log('found existing event:', existingEvent?.title)
 
-      const updatedEvent = await Event.findOneAndUpdate(
-        { providerId: parsed.eventId },
-        { tagId: parsed.tagId },
-        { new: true }
-      )
+      existingEvent.dates = [...existingEvent.dates, ...parsed.dates]
+
+      if (parsed.tagId) {
+        existingEvent.tagId = parsed.tagId
+      }
+
+      const updatedEvent = await existingEvent.save()
+
+      console.log('added date:', updatedEvent.dates)
+
       return updatedEvent
     }
 
-    // check if org is already saved in DB
+    // save org to DB if not saved yet
     let org = await Org.findOne({ providerId: parsed.clubId })
 
     if (!org) {
@@ -183,12 +223,8 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
     const eventData: IEvent = {
       orgId: org._id,
       title: parsed.eventName,
-      isVirtual: false, // TODO:
       location: formatLocation(parsed.eventLocation),
-      meetingUrl: undefined,
-      dates: [parsed.date],
-      startTime: parsed.startTime,
-      endTime: parsed.endTime,
+      dates: parsed.dates,
       details: parsed.details,
       tagId: parsed.tagId,
       imgs: [fileUrl(parsed.eventPicture)],
@@ -242,7 +278,7 @@ const scrapeTaggedEvents = async () => {
 
 export default async () => {
   /* scrape 150 recent events */
-  // const parsedEvents = await scrapeEvents(150)
+  // const parsedEvents = await scrapeAndParseEvents(150)
   // saveParsedEvents(parsedEvents)
   /* scrape tagged events */
   // const parsedTaggedEvents = await scrapeTaggedEvents()

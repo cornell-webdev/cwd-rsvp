@@ -13,9 +13,7 @@ export interface IEvent extends IDocument {
   orgId: string
   org: IOrg
   title: string
-  isVirtual: boolean
   location: string
-  meetingUrl?: string
   tagId?: string
   tag: ITag
   dates: IEventDate[]
