@@ -13,19 +13,12 @@ const eventSchema = new Schema(
       type: String,
       required: true,
     },
-    isVirtual: {
-      type: Boolean,
-      default: false,
-    },
     location: {
       type: String,
       required: true,
     },
-    meetingUrl: {
-      // zoom link for virtual events
-      type: String,
-    },
     tagId: {
+      // tag may not exist for scraped events
       type: String,
     },
     dates: {

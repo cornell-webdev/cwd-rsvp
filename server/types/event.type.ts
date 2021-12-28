@@ -11,9 +11,7 @@ export interface IEventDate {
 export interface IEvent {
   orgId: string
   title: string
-  isVirtual: boolean
   location: string
-  meetingUrl?: string
   tagId?: string
   dates: IEventDate[]
   details: string
