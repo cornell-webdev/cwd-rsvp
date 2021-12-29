@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import useIsMobile from 'src/hooks/useIsMobile'
+import MyEvents from 'src/pages/my-events/MyEvents'
 import { IRootState } from 'src/types/redux.type'
 
 const Home = React.lazy(() => import('src/pages/home/Home'))
@@ -66,6 +67,15 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/profile/my-events',
+    component: MyEvents,
+    label: 'My events',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
     isDesktopOnly: false,
   },
   {

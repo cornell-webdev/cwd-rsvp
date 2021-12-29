@@ -1,3 +1,4 @@
+import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IEvent } from 'src/types/event.type'
 
@@ -16,6 +17,19 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
   return {
     ...rest,
     events,
+  }
+}
+
+export const myEventsQueryConfig = () => ({
+  url: `/private/event`,
+})
+
+export const useMyEvents = () => {
+  const { data: myEvents, ...rest } = useCustomQuery<IEvent[]>(myEventsQueryConfig())
+
+  return {
+    ...rest,
+    myEvents,
   }
 }
 
@@ -44,6 +58,18 @@ export const useSearchedEvents = (query: string) => {
   return {
     ...rest,
     searchedEvents,
+  }
+}
+
+export const useCreateEvent = () => {
+  const { mutate: createEvent, ...rest } = useCustomMutation<IEvent>({
+    url: '/private/event',
+    method: 'post',
+  })
+
+  return {
+    ...rest,
+    createEvent,
   }
 }
 
@@ -84,24 +110,6 @@ export const useSearchedEvents = (query: string) => {
 //   return {
 //     ...rest,
 //     tasks,
-//   }
-// }
-
-// export const useCreateTask = (params: IUseProsysTasksParams) => {
-//   const { mutate: createTask, ...rest } = useCustomMutation<ITask>({
-//     url: '/private/task',
-//     method: 'post',
-//     localUpdates: [
-//       {
-//         queryConfigs: [prosysTasksConfig(params)],
-//         presetLogic: 'appendStart',
-//       },
-//     ],
-//   })
-
-//   return {
-//     ...rest,
-//     createTask,
 //   }
 // }
 

@@ -5,19 +5,6 @@ import startOfDay from 'date-fns/startOfDay'
 
 const eventRouter = express.Router()
 
-// TODO: create event endpoint
-// eventRouter.post('/', async (req, res) => {
-//   try {
-//     const doc = await new Event({
-//       ...req.body,
-//       userId: req.user?._id,
-//     }).save()
-//     res.send(doc)
-//   } catch (e) {
-//     res.status(500).send(e)
-//   }
-// })
-
 eventRouter.get('/trending', async (req, res) => {
   try {
     const sortedDocs = await Event.aggregate([
@@ -106,15 +93,6 @@ eventRouter.put('/:id', async (req, res) => {
       new: true,
     })
     res.send(doc)
-  } catch (e) {
-    res.status(500).send(e)
-  }
-})
-
-eventRouter.delete('/', async (req, res) => {
-  try {
-    const result = await Event.findByIdAndDelete(req.body)
-    res.send(result)
   } catch (e) {
     res.status(500).send(e)
   }
