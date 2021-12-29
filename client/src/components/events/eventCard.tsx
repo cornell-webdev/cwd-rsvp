@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, Tag, Spacer} from 'cornell-glue-ui'
-import LikeContainer from './like'
+import styled from 'styled-components'
+import { Text, Tag} from 'cornell-glue-ui'
+import LikeButton from './likeButton'
 import { FlexContainer } from 'cornell-glue-ui'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import { IUser } from 'src/types/user.type'
@@ -8,13 +9,13 @@ import './event.css'
 
 
 
-interface EventProps {
+interface IEventProps {
   event: IEvent, 
   startTime: string
   endTime: string
 }
 
-const Event: React.FC<EventProps> = ({event, startTime, endTime}) => {
+const EventCard: React.FC<IEventProps> = ({event, startTime, endTime}:IEventProps) => {
 
   function getTime (time: string) {
     const hour = parseInt(time.substring(0,2))
@@ -36,21 +37,38 @@ const Event: React.FC<EventProps> = ({event, startTime, endTime}) => {
     }
 
   return (
-    <FlexContainer className='event' alignCenter={true}>
-      <img className='img' src={event.imgs[0]}/>
-      <div className='text'>
+    <EventContainer className='event' alignCenter={true}>
+      <ImgContainer className='img' src={event.imgs[0]}/>
+      <TextContainer className='text'>
         <Text variant='meta2'>{event.org.name}</Text>
         <Text fontWeight='700' variant='meta1'>{desc}</Text>
         <Tag variant="contained" color={event.tag.color} background={event.tag.backgroundColor}>{event.tag.name}</Tag>
         <FlexContainer justifySpaceBetween={true} alignCenter={true}>
           <Text variant='meta2' color='#d05f5f' fontWeight='700'>{getTime(startTime)} - {getTime(endTime)}</Text>
-          <LikeContainer event={event}/>
+          <LikeButton event={event}/>
         </FlexContainer>
-      </div>
-
-    </FlexContainer>
+      </TextContainer>
+    </EventContainer>
 
   )
 }
 
-export default Event
+const EventContainer = styled(FlexContainer)`
+height:100px;
+padding: 6px 12px 6px 12px;
+`
+
+const ImgContainer = styled.img`
+float: left;
+border-radius: 6px;
+width:87px;
+height:87px;
+margin-right:10px;
+`;
+
+const TextContainer = styled.div`
+  width:270px;
+  height:87px;
+`
+
+export default EventCard
