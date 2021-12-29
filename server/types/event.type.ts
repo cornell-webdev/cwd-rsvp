@@ -9,6 +9,7 @@ export interface IEventDate {
 }
 
 export interface IEvent {
+  userId?: string
   orgId: string
   title: string
   location: string
