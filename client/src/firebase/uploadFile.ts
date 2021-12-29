@@ -49,7 +49,6 @@ const uploadFile = (file: any, path: string) =>
               () => {
                 // successfully uploaded
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                  console.log('new upload downloadURL', downloadURL)
                   resolve(downloadURL)
                 })
               }
