@@ -20,6 +20,19 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
   }
 }
 
+export const myEventsQueryConfig = () => ({
+  url: `/private/event`,
+})
+
+export const useMyEvents = () => {
+  const { data: myEvents, ...rest } = useCustomQuery<IEvent[]>(myEventsQueryConfig())
+
+  return {
+    ...rest,
+    myEvents,
+  }
+}
+
 export const trendingEventsQueryConfig = () => ({
   url: `/public/event/trending`,
 })
@@ -82,6 +95,18 @@ export const useToggleEventLike = () => {
   }
 }
 
+
+export const useCreateEvent = () => {
+  const { mutate: createEvent, ...rest } = useCustomMutation<IEvent>({
+    url: '/private/event',
+    method: 'post',
+  })
+
+  return {
+    ...rest,
+    createEvent,
+  }
+
 // export const prosysTasksConfig = (params: IUseProsysTasksParams) => {
 //   return {
 //     url: `/private/task/inbox/prosys?${stringify(
@@ -119,24 +144,6 @@ export const useToggleEventLike = () => {
 //   return {
 //     ...rest,
 //     tasks,
-//   }
-// }
-
-// export const useCreateTask = (params: IUseProsysTasksParams) => {
-//   const { mutate: createTask, ...rest } = useCustomMutation<ITask>({
-//     url: '/private/task',
-//     method: 'post',
-//     localUpdates: [
-//       {
-//         queryConfigs: [prosysTasksConfig(params)],
-//         presetLogic: 'appendStart',
-//       },
-//     ],
-//   })
-
-//   return {
-//     ...rest,
-//     createTask,
 //   }
 // }
 
