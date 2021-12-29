@@ -10,6 +10,8 @@ export interface IEventDate {
 }
 
 export interface IEvent extends IDocument {
+  userId?: string
+  user: IUser
   orgId: string
   org: IOrg
   title: string
