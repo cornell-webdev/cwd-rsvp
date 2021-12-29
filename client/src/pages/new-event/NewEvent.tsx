@@ -12,13 +12,14 @@ import styled from 'styled-components'
 import DateAndTime from './DateAndTime'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useCreateEvent } from 'src/api/event'
+import useRouter from 'src/hooks/useRouter'
 
 const NewEvent = () => {
   const schema = yup
     .object({
       title: yup.string().required(),
       location: yup.string().required(),
-      // TODO:
       tag: yup.object().required(),
       org: yup.object().required(),
       details: yup.string().required(),
@@ -29,6 +30,14 @@ const NewEvent = () => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
+    defaultValues:
+      import.meta.env.VITE_NODE_ENV === 'development'
+        ? {
+            title: `test event ${Date.now().toString().slice(-4)}`,
+            location: `test location ${Date.now().toString().slice(-4)}`,
+            details: `test details ${Date.now().toString().slice(-4)}`,
+          }
+        : {},
   })
   const { tags } = useAllTags()
 
@@ -41,6 +50,8 @@ const NewEvent = () => {
     },
   ])
 
+  const { createEvent } = useCreateEvent()
+  const router = useRouter()
   const onSubmit = (formData: any) => {
     const data = {
       ...formData,
@@ -53,7 +64,8 @@ const NewEvent = () => {
     delete data.tag
     delete data.org
 
-    console.log('data', data)
+    createEvent(data)
+    router.push('/profile/my-events')
   }
 
   return (
