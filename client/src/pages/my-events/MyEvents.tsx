@@ -11,7 +11,7 @@ const MyEvents = ({}: IMyEventsProps) => {
   return (
     <Container>
       <Text variant='h4' fontWeight={700}>
-        Create event
+        My events
       </Text>
       {myEvents?.map((event) => (
         <Text key={event?._id}>{event?.title}</Text>
