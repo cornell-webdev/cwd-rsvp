@@ -5,6 +5,9 @@ import Tag from './Tag'
 
 const eventSchema = new Schema(
   {
+    userId: {
+      type: String,
+    },
     orgId: {
       type: String,
       required: true,
@@ -91,6 +94,14 @@ eventSchema.virtual('likedUsers', {
 eventSchema.virtual('tag', {
   ref: Tag,
   localField: 'tagId',
+  foreignField: '_id',
+  justOne: true,
+  autopopulate: true,
+})
+
+eventSchema.virtual('user', {
+  ref: User,
+  localField: 'userId',
   foreignField: '_id',
   justOne: true,
   autopopulate: true,
