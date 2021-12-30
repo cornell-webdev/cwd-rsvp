@@ -1,11 +1,10 @@
-import { Text } from 'cornell-glue-ui'
+import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
 import { useMyEvents } from 'src/api/event'
 import styled from 'styled-components'
+import MyEventCard from './MyEventCard'
 
-interface IMyEventsProps {}
-
-const MyEvents = ({}: IMyEventsProps) => {
+const MyEvents = () => {
   const { myEvents } = useMyEvents()
 
   return (
@@ -13,8 +12,9 @@ const MyEvents = ({}: IMyEventsProps) => {
       <Text variant='h4' fontWeight={700}>
         My events
       </Text>
+      <Spacer y={1.5} />
       {myEvents?.map((event) => (
-        <Text key={event?._id}>{event?.title}</Text>
+        <MyEventCard key={event?._id} event={event} />
       ))}
     </Container>
   )

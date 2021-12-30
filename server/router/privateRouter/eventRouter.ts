@@ -17,7 +17,7 @@ eventRouter.post('/', async (req, res) => {
 
 eventRouter.get('/', async (req, res) => {
   try {
-    const events = await Event.find({ userId: req.user?._id })
+    const events = await Event.find({ userId: req.user?._id }).sort({ createdAt: -1 })
     res.send(events)
   } catch (e) {
     res.status(500).send(e)

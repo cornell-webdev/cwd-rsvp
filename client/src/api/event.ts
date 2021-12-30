@@ -62,14 +62,19 @@ export const useSearchedEvents = (query: string) => {
 }
 
 export const useCreateEvent = () => {
-  const { mutate: createEvent, ...rest } = useCustomMutation<IEvent>({
+  const { mutateAsync: createEventAsync, ...rest } = useCustomMutation<IEvent>({
     url: '/private/event',
     method: 'post',
+    localUpdates: [
+      {
+        queryConfigs: [myEventsQueryConfig()],
+      },
+    ],
   })
 
   return {
     ...rest,
-    createEvent,
+    createEventAsync,
   }
 }
 
