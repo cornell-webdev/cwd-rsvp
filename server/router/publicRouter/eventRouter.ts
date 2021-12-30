@@ -120,4 +120,24 @@ eventRouter.delete('/', async (req, res) => {
   }
 })
 
+eventRouter.post('/increment-views', async (req, res) => {
+  try {
+    const event = await Event.findById(req.body._id)
+    if (event) {
+      const doc = await Event.findByIdAndUpdate(
+        req.body._id,
+        { views: event.views + 1 },
+        {
+          new: true,
+        }
+      )
+      res.send(doc)
+    } else {
+      res.status(400).send('Invalid event id')
+    }
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 export default eventRouter
