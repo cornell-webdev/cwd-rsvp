@@ -112,6 +112,23 @@ export const useCreateEvent = () => {
     createEventAsync,
   }
 
+export const useDeleteEvent = () => {
+  const { mutateAsync: deleteEventAsync, ...rest } = useCustomMutation<IEvent>({
+    url: '/private/event',
+    method: 'delete',
+    localUpdates: [
+      {
+        queryConfigs: [myEventsQueryConfig()],
+      },
+    ],
+  })
+
+  return {
+    ...rest,
+    deleteEventAsync,
+  }
+}
+
 // export const prosysTasksConfig = (params: IUseProsysTasksParams) => {
 //   return {
 //     url: `/private/task/inbox/prosys?${stringify(
