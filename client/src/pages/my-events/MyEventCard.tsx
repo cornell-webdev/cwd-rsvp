@@ -25,14 +25,16 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
         {event?.imgs?.length >= 1 ? <Thumbnail src={event?.imgs[0]} /> : <ImgPlaceholder />}
         <RightSection>
           <TextSection>
-            <Text variant='meta2'>30 likes • 88 views</Text>
+            <Text variant='meta2'>
+              {event?.likedUserIds?.length} likes • {event?.views} views
+            </Text>
             <Text variant='meta1' fontWeight={700}>
               {event?.title}
             </Text>
           </TextSection>
           <FlexContainer alignCenter justifySpaceBetween fullWidth>
             <FlexContainer>
-              {/* TODO: link buttons */}
+              {/* TODO: link buttons after respective pages are developed */}
               <Button>Edit</Button>
               <Spacer x={2} />
               <Button variant='text'>View event</Button>
