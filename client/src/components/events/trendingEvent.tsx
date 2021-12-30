@@ -5,9 +5,6 @@ import LikeButton from './likeButton'
 import { FlexContainer } from 'cornell-glue-ui'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import { IUser } from 'src/types/user.type'
-import './event.css'
-
-
 
 interface ITrendingEventProps {
   event: IEvent, 
