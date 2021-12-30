@@ -65,6 +65,23 @@ export const useIncrementEventViews = () => {
   }
 }
 
+export const useToggleEventLike = () => {
+  const {
+    mutate: toggleEventLike,
+    mutateAsync: toggleEventLikeAsync,
+    ...rest
+  } = useCustomMutation<IEvent>({
+    url: '/private/event/toggle-like',
+    method: 'post',
+  })
+
+  return {
+    ...rest,
+    toggleEventLike,
+    toggleEventLikeAsync,
+  }
+}
+
 // export const prosysTasksConfig = (params: IUseProsysTasksParams) => {
 //   return {
 //     url: `/private/task/inbox/prosys?${stringify(
