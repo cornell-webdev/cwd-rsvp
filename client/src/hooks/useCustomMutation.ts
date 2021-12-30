@@ -135,7 +135,7 @@ const useCustomMutation = <T>({
         onSettled: () => {
           if (localUpdates) {
             localUpdates.forEach((localUpdate) => {
-              if (!localUpdate.refetchOnSettle) {
+              if (localUpdate.refetchOnSettle) {
                 localUpdate.queryConfigs.forEach(({ url, variables }) => {
                   const queryKey = [url, variables]
                   queryClient.invalidateQueries(queryKey)
