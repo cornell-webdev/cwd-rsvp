@@ -50,9 +50,9 @@ const NewEvent = () => {
     },
   ])
 
-  const { createEvent } = useCreateEvent()
+  const { createEventAsync } = useCreateEvent()
   const router = useRouter()
-  const onSubmit = (formData: any) => {
+  const onSubmit = async (formData: any) => {
     const data = {
       ...formData,
       imgs: urls,
@@ -64,7 +64,7 @@ const NewEvent = () => {
     delete data.tag
     delete data.org
 
-    createEvent(data)
+    await createEventAsync(data)
     router.push('/profile/my-events')
   }
 

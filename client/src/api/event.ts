@@ -97,14 +97,19 @@ export const useToggleEventLike = () => {
 
 
 export const useCreateEvent = () => {
-  const { mutate: createEvent, ...rest } = useCustomMutation<IEvent>({
+  const { mutateAsync: createEventAsync, ...rest } = useCustomMutation<IEvent>({
     url: '/private/event',
     method: 'post',
+    localUpdates: [
+      {
+        queryConfigs: [myEventsQueryConfig()],
+      },
+    ],
   })
 
   return {
     ...rest,
-    createEvent,
+    createEventAsync,
   }
 
 // export const prosysTasksConfig = (params: IUseProsysTasksParams) => {
