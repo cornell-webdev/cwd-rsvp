@@ -14,24 +14,40 @@ const AuthedAvatar = ({ userPhotoSrc }: AuthedProps) => {
   const router = useRouter()
   const menuOptions = [
     {
+      label: 'My events',
+      onClick: () => router.push('/profile/my-events'),
+    },
+    {
       label: 'Logout',
       onClick: () => router.push('/logout'),
     },
   ]
   return (
-    <Menu options={menuOptions} offset={10}>
-      <Container>
-        <Avatar src={userPhotoSrc} />
-        <Spacer x='.1rem' />
-        <ExpandMoreIcon />
-      </Container>
-    </Menu>
+    <MenuStyleContainer>
+      <Menu options={menuOptions} offset={10}>
+        <Container>
+          <Avatar src={userPhotoSrc} />
+          <Spacer x='.1rem' />
+          <ExpandMoreIcon />
+        </Container>
+      </Menu>
+    </MenuStyleContainer>
   )
 }
 
 const Container = styled(FlexContainer)`
   align-items: center;
   cursor: pointer;
+`
+
+const MenuStyleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & .MuiMenuItem-root {
+    min-height: 30px;
+  }
 `
 
 export default AuthedAvatar
