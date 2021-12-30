@@ -26,7 +26,7 @@ eventRouter.get('/', async (req, res) => {
 
 eventRouter.delete('/', async (req, res) => {
   try {
-    const result = await Event.findByIdAndDelete(req.body)
+    const result = await Event.findByIdAndDelete(req?.body?._id)
     res.send(result)
   } catch (e) {
     res.status(500).send(e)
