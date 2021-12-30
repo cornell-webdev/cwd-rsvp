@@ -1,3 +1,4 @@
+import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IEvent } from 'src/types/event.type'
 
@@ -44,6 +45,23 @@ export const useSearchedEvents = (query: string) => {
   return {
     ...rest,
     searchedEvents,
+  }
+}
+
+export const useIncrementEventViews = () => {
+  const {
+    mutate: incrementEventViews,
+    mutateAsync: incrementEventViewsAsync,
+    ...rest
+  } = useCustomMutation<IEvent>({
+    url: '/public/event/increment-views',
+    method: 'post',
+  })
+
+  return {
+    ...rest,
+    incrementEventViews,
+    incrementEventViewsAsync,
   }
 }
 
