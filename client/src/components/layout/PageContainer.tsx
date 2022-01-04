@@ -1,32 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface PageContainerProps extends ContainerProps {
+interface PageContainerProps {
   children: React.ReactNode
-}
-
-interface ContainerProps {
   height?: string
 }
-
-export const Container = styled.div<ContainerProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  & > div {
-    width: 100%;
-  }
-
-  @media (min-width: ${(props) => props.theme.tablet}) {
-    & > div {
-      width: 90%;
-    }
-  }
-
-  // height
-  height: ${(props) => props.height && props.height};
-`
 
 const PageContainer = ({ children, height }: PageContainerProps) => {
   return (
@@ -35,5 +13,29 @@ const PageContainer = ({ children, height }: PageContainerProps) => {
     </Container>
   )
 }
+
+interface ContainerProps {
+  height?: PageContainerProps['height']
+}
+
+const Container = styled.div<ContainerProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > div {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  @media (min-width: ${(props) => props.theme.tablet}) {
+    & > div {
+      width: ${(props) => props.theme.tablet};
+    }
+  }
+
+  // height
+  height: ${(props) => props.height && props.height};
+`
 
 export default PageContainer
