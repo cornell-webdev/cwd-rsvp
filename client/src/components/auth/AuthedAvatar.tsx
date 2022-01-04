@@ -18,10 +18,15 @@ const AuthedAvatar = ({ userPhotoSrc }: AuthedProps) => {
       onClick: () => router.push('/profile/my-events'),
     },
     {
+      label: 'My orgs',
+      onClick: () => router.push('/profile/my-orgs'),
+    },
+    {
       label: 'Logout',
       onClick: () => router.push('/logout'),
     },
   ]
+
   return (
     <MenuStyleContainer>
       <Menu options={menuOptions} offset={10}>
