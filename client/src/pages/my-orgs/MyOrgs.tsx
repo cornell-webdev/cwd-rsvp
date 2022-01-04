@@ -5,9 +5,11 @@ import styled from 'styled-components'
 import AddIcon from '@material-ui/icons/Add'
 import { ReactComponent as EmptyStateIllust } from 'src/assets/svgs/my-orgs-empty-state.svg'
 import { Link } from 'react-router-dom'
+import { useMyOrgs } from 'src/api/org'
+import MyOrgCard from './MyOrgCard'
 
 const MyOrgs = () => {
-  const myOrgs = []
+  const { myOrgs } = useMyOrgs()
 
   return (
     <PageContainer>
@@ -19,10 +21,12 @@ const MyOrgs = () => {
         <Link to='/new-org'>
           <Button startIcon={<AddIcon />}>Org</Button>
         </Link>
-        {/* TODO: iterate list of MyOrgCards */}
-        {myOrgs?.length > 0 ? (
+        {myOrgs && myOrgs?.length > 0 ? (
           <>
             <Spacer y={2} />
+            {myOrgs.map((org) => (
+              <MyOrgCard key={org?._id} org={org} />
+            ))}
           </>
         ) : (
           <EmptyStateContainer>
