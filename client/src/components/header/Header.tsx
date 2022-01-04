@@ -33,7 +33,7 @@ const Container = styled.div`
 `
 
 const Row = styled(FlexContainer)`
-  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  padding-left: 0.5rem;
 `
 
 interface IRightSectionProps {
