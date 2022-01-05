@@ -12,6 +12,7 @@ const Logout = React.lazy(() => import('src/pages/logout/Logout'))
 const NewEvent = React.lazy(() => import('src/pages/new-event/NewEvent'))
 const NewOrg = React.lazy(() => import('src/pages/new-org/NewOrg'))
 const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
+const OrgAdmins = React.lazy(() => import('src/pages/org-admins/OrgAdmins'))
 
 interface IRoute {
   path: string
@@ -83,6 +84,15 @@ export const routes: IRoute[] = [
     path: '/profile/my-events',
     component: MyEvents,
     label: 'My events',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/profile/org-admins/:orgId',
+    component: OrgAdmins,
+    label: 'Manage administrators',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,

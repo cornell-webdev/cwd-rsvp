@@ -3,6 +3,7 @@ import React from 'react'
 import { IOrg } from 'src/types/org.type'
 import styled from 'styled-components'
 import GroupIcon from '@material-ui/icons/Group'
+import { Link } from 'react-router-dom'
 
 interface IMyOrgCardProps {
   org: IOrg
@@ -21,7 +22,9 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
           </Text>
           <Spacer y={2} />
           <FlexContainer>
-            <Button startIcon={<GroupIcon />}>Manage</Button>
+            <Link to={`/profile/org-admins/${org?._id}`}>
+              <Button startIcon={<GroupIcon />}>Manage</Button>
+            </Link>
             <Spacer x={1} />
             <Button color={theme.text.default} background={theme.grey[100]}>
               Edit profile

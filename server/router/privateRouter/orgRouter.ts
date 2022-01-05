@@ -3,6 +3,18 @@ import Org from '../../models/Org'
 
 const orgRouter = express.Router()
 
+orgRouter.get('/:id/linked-users', async (req, res) => {
+  try {
+    const org = await Org.findById(req.params.id)
+    res.send({
+      linkedUserIds: org?.linkedUserIds,
+      linkedUsers: org?.linkedUsers,
+    })
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 orgRouter.get('/:id', async (req, res) => {
   try {
     const org = await Org.findById(req.params.id)
