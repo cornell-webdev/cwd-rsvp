@@ -95,7 +95,6 @@ export const useToggleEventLike = () => {
   }
 }
 
-
 export const useCreateEvent = () => {
   const { mutateAsync: createEventAsync, ...rest } = useCustomMutation<IEvent>({
     url: '/private/event',
@@ -111,6 +110,7 @@ export const useCreateEvent = () => {
     ...rest,
     createEventAsync,
   }
+}
 
 export const useDeleteEvent = () => {
   const { mutateAsync: deleteEventAsync, ...rest } = useCustomMutation<IEvent>({
