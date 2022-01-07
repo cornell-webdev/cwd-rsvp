@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useCreateOrg } from 'src/api/org'
+import { useCreateOrg, useUpdateOrgById } from 'src/api/org'
 import { useCurrentUser } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import { HookedTextarea } from '../form-elements/Textarea'
 import VerticalButtonsContainer from '../layout/VerticalButtonsContainer'
 
 interface IOrgFormInitValues {
+  _id?: string
   name?: string
   desc?: string
   avatar?: string
@@ -23,7 +24,7 @@ interface IOrgFormProps {
 }
 
 const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
-  const [urls, setUrls] = useState<string[]>([])
+  const [urls, setUrls] = useState<string[]>(initValues?.avatar ? [initValues.avatar] : [])
 
   const schema = yup
     .object({
@@ -42,14 +43,21 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
   const { createOrgAsync } = useCreateOrg()
   const router = useRouter()
   const { currentUser } = useCurrentUser()
+  const { updateOrgAsync } = useUpdateOrgById(initValues?._id || '')
+
   const onSubmit = async (formData: any) => {
     const data = {
       ...formData,
       // TODO: add default org avatar
-      linkedUserIds: [currentUser?._id],
+      avatar: urls?.length > 0 ? urls[0] : '',
     }
 
-    await createOrgAsync(data)
+    if (initValues?._id) {
+      await updateOrgAsync(data)
+    } else {
+      await createOrgAsync({ ...data, linkedUserIds: [currentUser?._id] })
+    }
+
     router.push('/profile/my-orgs')
   }
 
