@@ -68,4 +68,15 @@ orgRouter.put('/:id/remove-linked-user', async (req, res) => {
   }
 })
 
+orgRouter.post('/', async (req, res) => {
+  try {
+    const org = await new Org({
+      ...req.body,
+    }).save()
+    res.send(org)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 export default orgRouter
