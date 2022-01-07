@@ -14,6 +14,10 @@ const AuthedAvatar = ({ userPhotoSrc }: AuthedProps) => {
   const router = useRouter()
   const menuOptions = [
     {
+      label: 'My likes',
+      onClick: () => router.push('/my-likes'),
+    },
+    {
       label: 'My events',
       onClick: () => router.push('/profile/my-events'),
     },

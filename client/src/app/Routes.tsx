@@ -15,6 +15,7 @@ const EditEvent = React.lazy(() => import('src/pages/edit-event/EditEvent'))
 const NewOrg = React.lazy(() => import('src/pages/new-org/NewOrg'))
 const EditOrg = React.lazy(() => import('src/pages/edit-org/EditOrg'))
 const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
+const MyLikes = React.lazy(() => import('src/pages/my-likes/MyLikes'))
 const OrgAdmins = React.lazy(() => import('src/pages/org-admins/OrgAdmins'))
 
 interface IRoute {
@@ -87,6 +88,15 @@ export const routes: IRoute[] = [
     path: '/edit-event/:eventId',
     component: EditEvent,
     label: 'Edit event',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/my-likes',
+    component: MyLikes,
+    label: 'My likes',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,
