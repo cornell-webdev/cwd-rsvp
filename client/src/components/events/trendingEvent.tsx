@@ -52,7 +52,7 @@ function getTime (time: string) {
   }
 }
 
-function getDate(date: Date){
+export function getDate(date: Date){
   const day = date.toLocaleString('default', {month: 'short', day: 'numeric' })
   return day
 }
@@ -71,8 +71,7 @@ const TrendingEventContainer = styled.div`
   width:200px;
   height:150px;
   border-radius: 6px;
-  margin-inline: 12px;
-  margin: 0px 12px ;
+  margin-inline: 6px;
 `
 
 export default TrendingEvent
