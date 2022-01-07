@@ -49,7 +49,10 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
     const data = {
       ...formData,
       // TODO: add default org avatar
-      avatar: urls?.length > 0 ? urls[0] : '',
+    }
+
+    if (urls?.length > 0) {
+      data.avatar = urls[0]
     }
 
     if (initValues?._id) {
