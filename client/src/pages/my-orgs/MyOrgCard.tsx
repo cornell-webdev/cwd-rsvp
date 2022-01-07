@@ -26,9 +26,11 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
               <Button startIcon={<GroupIcon />}>Manage</Button>
             </Link>
             <Spacer x={1} />
-            <Button color={theme.text.default} background={theme.grey[100]}>
-              Edit profile
-            </Button>
+            <Link to={`/edit-org/${org?._id}`}>
+              <Button color={theme.text.default} background={theme.grey[100]}>
+                Edit profile
+              </Button>
+            </Link>
           </FlexContainer>
           <Spacer y={1.75} />
           <Text variant='meta1' maxLines={2}>
@@ -40,7 +42,11 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  padding-top: 0.33rem;
+  padding-bottom: 0.33rem;
+  margin-top: 0.5rem;
+`
 
 const Avatar = styled.img`
   height: 87px;

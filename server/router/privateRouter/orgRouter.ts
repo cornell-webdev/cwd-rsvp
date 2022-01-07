@@ -16,19 +16,19 @@ orgRouter.get('/:id/linked-users', async (req, res) => {
   }
 })
 
-orgRouter.get('/:id', async (req, res) => {
+orgRouter.get('/', async (req, res) => {
   try {
-    const org = await Org.findById(req.params.id)
-    res.send(org)
+    const orgs = await Org.find({ linkedUserIds: req?.user?._id })
+    res.send(orgs)
   } catch (e) {
     res.status(500).send(e)
   }
 })
 
-orgRouter.get('/', async (req, res) => {
+orgRouter.put('/:id/update', async (req, res) => {
   try {
-    const orgs = await Org.find({ linkedUserIds: req?.user?._id })
-    res.send(orgs)
+    const org = await Org.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.send(org)
   } catch (e) {
     res.status(500).send(e)
   }

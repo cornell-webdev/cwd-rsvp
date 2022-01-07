@@ -15,6 +15,19 @@ export const useMyOrgs = () => {
   }
 }
 
+export const orgByIdQueryConfig = (orgId: string) => ({
+  url: `/public/org/${orgId}`,
+})
+
+export const useOrgById = (orgId: string) => {
+  const { data: org, ...rest } = useCustomQuery<IOrg>(orgByIdQueryConfig(orgId))
+
+  return {
+    ...rest,
+    org,
+  }
+}
+
 export const orgLinkedUsersQueryConfig = (orgId: string) => ({
   url: `/private/org/${orgId}/linked-users`,
 })
@@ -44,6 +57,23 @@ export const useCreateOrg = () => {
   return {
     ...rest,
     createOrgAsync,
+  }
+}
+
+export const useUpdateOrgById = (orgId: string) => {
+  const { mutateAsync: updateOrgAsync, ...rest } = useCustomMutation<IOrg>({
+    url: `/private/org/${orgId}/update`,
+    method: 'put',
+    localUpdates: [
+      {
+        queryConfigs: [myOrgsQueryConfig()],
+      },
+    ],
+  })
+
+  return {
+    ...rest,
+    updateOrgAsync,
   }
 }
 
