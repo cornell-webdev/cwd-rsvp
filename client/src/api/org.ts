@@ -30,6 +30,23 @@ export const useOrgLinkedUsers = (orgId: string) => {
   }
 }
 
+export const useCreateOrg = () => {
+  const { mutateAsync: createOrgAsync, ...rest } = useCustomMutation<IOrg>({
+    url: `/private/org`,
+    method: 'post',
+    localUpdates: [
+      {
+        queryConfigs: [myOrgsQueryConfig()],
+      },
+    ],
+  })
+
+  return {
+    ...rest,
+    createOrgAsync,
+  }
+}
+
 export const useOrgAddLinkedUser = (orgId: string) => {
   const { mutateAsync: addLinkedUserAsync, ...rest } = useCustomMutation<IOrg>({
     url: `/private/org/${orgId}/add-linked-user`,
