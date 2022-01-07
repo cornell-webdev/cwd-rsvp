@@ -10,11 +10,11 @@ import { IEvent } from 'src/types/event.type'
 //   avatarColor?: string
 // }
 
-interface LikeProps {
+interface ILikeProps {
   event: IEvent, 
 }
 
-const LikeButton:React.FC<LikeProps> = ({event}) => {
+const LikeButton:React.FC<ILikeProps> = ({event}) => {
   const [likeCount, setLikeCount] = useState(event.views)
   const [liked, setLiked] = useState(false)
 

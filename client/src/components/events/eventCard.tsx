@@ -5,14 +5,16 @@ import LikeButton from './likeButton'
 import { FlexContainer } from 'cornell-glue-ui'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import { IUser } from 'src/types/user.type'
+import {getDate} from './trendingEvent'
 
 interface IEventProps {
   event: IEvent, 
-  startTime: string
-  endTime: string
+  startTime: string,
+  endTime: string,
+  date?: Date
 }
 
-const EventCard: React.FC<IEventProps> = ({event, startTime, endTime}:IEventProps) => {
+const EventCard: React.FC<IEventProps> = ({event, startTime, endTime, date}:IEventProps) => {
 
   function getTime (time: string) {
     const hour = parseInt(time.substring(0,2))
@@ -41,7 +43,9 @@ const EventCard: React.FC<IEventProps> = ({event, startTime, endTime}:IEventProp
         <Text fontWeight='700' variant='meta1'>{desc}</Text>
         <Tag variant="contained" color={event.tag.color} background={event.tag.backgroundColor}>{event.tag.name}</Tag>
         <FlexContainer justifySpaceBetween={true} alignCenter={true}>
-          <Text variant='meta2' color='#d05f5f' fontWeight='700'>{getTime(startTime)} - {getTime(endTime)}</Text>
+          {date !== undefined ? (<Text variant='meta2' color='#d05f5f' fontWeight='700'>{getTime(startTime)} - {getTime(endTime)}, {getDate(date)}</Text>) :
+          (<Text variant='meta2' color='#d05f5f' fontWeight='700'>{getTime(startTime)} - {getTime(endTime)}</Text>
+          )}
           <LikeButton event={event}/>
         </FlexContainer>
       </TextContainer>
