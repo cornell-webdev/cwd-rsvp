@@ -1,3 +1,4 @@
+import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { IOrg, IOrgLinkedUsers } from 'src/types/org.type'
 
@@ -26,5 +27,39 @@ export const useOrgLinkedUsers = (orgId: string) => {
   return {
     ...rest,
     orgLinkedUsers,
+  }
+}
+
+export const useOrgAddLinkedUser = (orgId: string) => {
+  const { mutateAsync: addLinkedUserAsync, ...rest } = useCustomMutation<IOrg>({
+    url: `/private/org/${orgId}/add-linked-user`,
+    method: 'put',
+    localUpdates: [
+      {
+        queryConfigs: [orgLinkedUsersQueryConfig(orgId)],
+      },
+    ],
+  })
+
+  return {
+    ...rest,
+    addLinkedUserAsync,
+  }
+}
+
+export const useOrgRemoveLinkedUser = (orgId: string) => {
+  const { mutateAsync: removeLinkedUserAsync, ...rest } = useCustomMutation<IOrg>({
+    url: `/private/org/${orgId}/remove-linked-user`,
+    method: 'put',
+    localUpdates: [
+      {
+        queryConfigs: [orgLinkedUsersQueryConfig(orgId)],
+      },
+    ],
+  })
+
+  return {
+    ...rest,
+    removeLinkedUserAsync,
   }
 }

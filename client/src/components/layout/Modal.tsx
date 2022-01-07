@@ -6,7 +6,7 @@ import ReactModal from 'react-modal'
 import { hexToRGBA } from 'src/util/colors'
 import styled from 'styled-components'
 
-export interface ModalProps {
+export interface IModalProps {
   isOpen: boolean
   onRequestClose: () => void
   children: React.ReactNode
@@ -15,35 +15,44 @@ export interface ModalProps {
   isShowHeader?: boolean
 }
 
-const Modal = (props: ModalProps) => {
+const Modal = ({
+  isOpen,
+  onRequestClose,
+  children,
+  heading,
+  onAfterOpen,
+  isShowHeader = true,
+}: IModalProps) => {
   useEffect(() => {
     ReactModal.setAppElement('#root')
   }, [])
 
   useEffect(() => {
-    if (props.isOpen) {
+    if (isOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = 'unset'
     }
-  }, [props.isOpen])
+  }, [isOpen])
 
-  if (!props.isOpen) return null
+  if (!isOpen) return null
 
   return (
     <ReactModal
-      isOpen={props.isOpen}
-      onRequestClose={props.onRequestClose}
-      onAfterOpen={props.onAfterOpen}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      onAfterOpen={onAfterOpen}
       style={customStyles}
       ariaHideApp={false}>
-      <TopRow justifySpaceBetween alignCenter heading={props.heading}>
-        <Text variant='h4'>{props.heading}</Text>
-        <StyledCloseButton size='small' onClick={props.onRequestClose}>
-          <CloseIcon fontSize='inherit' />
-        </StyledCloseButton>
-      </TopRow>
-      <ContentContainer>{props.children}</ContentContainer>
+      {isShowHeader && (
+        <TopRow justifySpaceBetween alignCenter heading={heading}>
+          <Text variant='h4'>{heading}</Text>
+          <StyledCloseButton size='small' onClick={onRequestClose}>
+            <CloseIcon fontSize='inherit' />
+          </StyledCloseButton>
+        </TopRow>
+      )}
+      <ContentContainer>{children}</ContentContainer>
     </ReactModal>
   )
 }
@@ -59,6 +68,7 @@ const customStyles = {
     padding: '0',
     border: `1px solid ${theme.border.default}`,
     maxWidth: '95vw',
+    borderRadius: '8px',
   },
   overlay: {
     background: hexToRGBA('#000000', 0.3),
