@@ -53,6 +53,9 @@ const Avatar = styled.img`
   width: 87px;
   border-radius: 50%;
   border: 2px solid ${(props) => props.theme.border.default};
+  flex-shrink: 0;
+  flex-grow: 0;
+  object-fit: cover;
 `
 
 export default MyOrgCard
