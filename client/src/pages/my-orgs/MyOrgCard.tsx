@@ -15,7 +15,7 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
       <FlexContainer>
         <Avatar src={org?.avatar} />
         <Spacer x={1} />
-        <div>
+        <RightSection>
           <Text variant='meta2'>{org?.linkedUserIds?.length} administrators</Text>
           <Text variant='meta1' fontWeight={700}>
             {org?.name}
@@ -33,10 +33,12 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
             </Link>
           </FlexContainer>
           <Spacer y={1.75} />
-          <Text variant='meta1' maxLines={2}>
-            {org?.desc}
-          </Text>
-        </div>
+          <TextContainer>
+            <Text variant='meta1' maxLines={2}>
+              {org?.desc}
+            </Text>
+          </TextContainer>
+        </RightSection>
       </FlexContainer>
     </Container>
   )
@@ -56,6 +58,14 @@ const Avatar = styled.img`
   flex-shrink: 0;
   flex-grow: 0;
   object-fit: cover;
+`
+
+const RightSection = styled.div`
+  flex-shrink: 99;
+`
+
+const TextContainer = styled.div`
+  max-width: 80%;
 `
 
 export default MyOrgCard
