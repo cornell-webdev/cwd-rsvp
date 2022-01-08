@@ -13,7 +13,7 @@ interface IErrorMsgProps
 const ErrorMsg = ({ error }: IErrorMsgProps) => {
   return (
     <Container>
-      <Text variant='meta1' color={theme.danger[500]}>
+      <Text variant='meta1' color={theme.text.error}>
         {error}
       </Text>
     </Container>
