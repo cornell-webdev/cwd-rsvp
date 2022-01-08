@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose'
 import { IEventDocument } from '../types/event.type'
 import User from './User'
 import Tag from './Tag'
+import Org from './Org'
 
 const eventSchema = new Schema(
   {
@@ -94,6 +95,14 @@ eventSchema.virtual('likedUsers', {
 eventSchema.virtual('tag', {
   ref: Tag,
   localField: 'tagId',
+  foreignField: '_id',
+  justOne: true,
+  autopopulate: true,
+})
+
+eventSchema.virtual('org', {
+  ref: Org,
+  localField: 'orgId',
   foreignField: '_id',
   justOne: true,
   autopopulate: true,

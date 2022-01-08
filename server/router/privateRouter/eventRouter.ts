@@ -53,4 +53,13 @@ eventRouter.delete('/', async (req, res) => {
   }
 })
 
+eventRouter.put('/:id/update', async (req, res) => {
+  try {
+    const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.send(event)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 export default eventRouter

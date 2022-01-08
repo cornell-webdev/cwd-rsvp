@@ -86,17 +86,17 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
           <FlexContainer alignCenter justifySpaceBetween key={date.toString()}>
             <DatePicker
               isHideYear={!isDesktop}
-              date={date}
+              date={new Date(date)}
               onChange={(date) => changeDate(idx, date)}
             />
             <Select
-              value={startTime}
+              value={timeOptions?.find((option) => option.value === startTime)}
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('start', selectedOption, idx)}
               width='105px'
             />
             <Select
-              value={endTime}
+              value={timeOptions?.find((option) => option.value === endTime)}
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('end', selectedOption, idx)}
               width='105px'

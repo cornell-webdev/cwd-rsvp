@@ -17,7 +17,7 @@ interface SelectProps
     'onChange'
   > {
   options?: ISelectOption[]
-  value?: string
+  value?: ISelectOption
   onChange?: (selectedOption: ISelectOption) => void
   label?: string
   disabled?: boolean
@@ -28,7 +28,7 @@ interface SelectProps
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, ref) => {
-  const valueObject = props?.options?.find((option) => option.value === props.value)
+  const valueObject = props?.options?.find((option) => option.value === props?.value?.value)
 
   return (
     <div>

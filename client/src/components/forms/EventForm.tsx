@@ -3,23 +3,21 @@ import { Button, Spacer, Text } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { useCreateEvent } from 'src/api/event'
+import { useCreateEvent, useUpdateEventById } from 'src/api/event'
 import { useAllOrgs } from 'src/api/org'
 import { useAllTags } from 'src/api/tag'
 import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import useRouter from 'src/hooks/useRouter'
-import { IEventDate } from 'src/types/event.type'
+import { IEvent, IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { HookedInput } from '../form-elements/Input'
 import DateAndTime from 'src/components/form-elements/DateAndTime'
 
-export interface IEventFormInitValues {}
-
 interface IEventFormProps {
-  initValues?: IEventFormInitValues
+  initValues?: IEvent
 }
 
 const EventForm = ({ initValues }: IEventFormProps) => {
@@ -37,26 +35,41 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onBlur',
-    defaultValues: initValues
-      ? {
-          title: `test event ${Date.now().toString().slice(-4)}`,
-          location: `test location ${Date.now().toString().slice(-4)}`,
-          details: `test details ${Date.now().toString().slice(-4)}`,
-        }
-      : {},
+    defaultValues:
+      {
+        title: initValues?.title,
+        location: initValues?.location,
+        tag: initValues?.tag && {
+          label: initValues?.tag?.name,
+          value: initValues?.tag?._id,
+        },
+        org: initValues?.org && {
+          label: initValues?.org?.name,
+          value: initValues?.org?._id,
+        },
+        details: initValues?.details,
+      } || {},
   })
+
   const { tags } = useAllTags()
 
-  const [urls, setUrls] = useState<string[]>([])
-  const [dates, setDates] = useState<IEventDate[]>([
-    {
-      date: new Date(),
-      startTime: '0000',
-      endTime: '0000',
-    },
-  ])
+  const [urls, setUrls] = useState<string[]>(
+    initValues && initValues?.imgs?.length > 0 ? [initValues?.imgs[0]] : []
+  )
+  const [dates, setDates] = useState<IEventDate[]>(
+    initValues && initValues?.dates
+      ? initValues.dates
+      : [
+          {
+            date: new Date(),
+            startTime: '0000',
+            endTime: '0000',
+          },
+        ]
+  )
 
   const { createEventAsync } = useCreateEvent()
+  const { updateEventAsync } = useUpdateEventById(initValues?._id || '')
   const router = useRouter()
   const onSubmit = async (formData: any) => {
     const data = {
@@ -70,7 +83,12 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     delete data.tag
     delete data.org
 
-    await createEventAsync(data)
+    if (initValues) {
+      await updateEventAsync(data)
+    } else {
+      await createEventAsync(data)
+    }
+
     router.push('/profile/my-events')
   }
 
