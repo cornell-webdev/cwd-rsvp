@@ -10,6 +10,7 @@ const AuthCallback = React.lazy(() => import('src/pages/auth-callback/AuthCallba
 const Login = React.lazy(() => import('src/pages/login/Login'))
 const Logout = React.lazy(() => import('src/pages/logout/Logout'))
 const NewEvent = React.lazy(() => import('src/pages/new-event/NewEvent'))
+const EditEvent = React.lazy(() => import('src/pages/edit-event/EditEvent'))
 const NewOrg = React.lazy(() => import('src/pages/new-org/NewOrg'))
 const EditOrg = React.lazy(() => import('src/pages/edit-org/EditOrg'))
 const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
@@ -79,6 +80,15 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/edit-event/:eventId',
+    component: EditEvent,
+    label: 'Edit event',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
     isDesktopOnly: false,
   },
   {

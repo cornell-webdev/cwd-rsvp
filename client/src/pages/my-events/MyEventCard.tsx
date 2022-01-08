@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ConfirmationModal from 'src/components/layout/ConfirmationModal'
 import { useDeleteEvent } from 'src/api/event'
+import { Link } from 'react-router-dom'
 
 interface IMyEventCardProps {
   event: IEvent
@@ -34,9 +35,11 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
           </TextSection>
           <FlexContainer alignCenter justifySpaceBetween fullWidth>
             <FlexContainer>
-              {/* TODO: link buttons after respective pages are developed */}
-              <Button>Edit</Button>
+              <Link to={`/edit-event/${event?._id}`}>
+                <Button>Edit</Button>
+              </Link>
               <Spacer x={2} />
+              {/* TODO: link buttons after event details page is developed */}
               <Button variant='text'>View event</Button>
             </FlexContainer>
             <IconButton icon={<DeleteIcon />} onClick={() => setIsDeleteModoalOpen(true)} />
