@@ -18,11 +18,11 @@ import useRouter from 'src/hooks/useRouter'
 const NewEvent = () => {
   const schema = yup
     .object({
-      title: yup.string().required(),
-      location: yup.string().required(),
-      tag: yup.object().required(),
-      org: yup.object().required(),
-      details: yup.string().required(),
+      title: yup.string().required('Event title is required'),
+      location: yup.string().required('Location is required'),
+      tag: yup.object().required('Event type is required'),
+      org: yup.object().required('Organization is required'),
+      details: yup.string().required('Event details is required'),
     })
     .required()
 

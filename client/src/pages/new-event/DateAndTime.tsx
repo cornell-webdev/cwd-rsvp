@@ -99,7 +99,11 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('end', selectedOption, idx)}
             />
-            <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />
+            {idx !== 0 ? (
+              <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />
+            ) : (
+              <SpacePlaceholder />
+            )}
           </FlexContainer>
           <Spacer y={2} />
         </div>
@@ -112,5 +116,9 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
 }
 
 const Container = styled.div``
+
+const SpacePlaceholder = styled.div`
+  width: 40px;
+`
 
 export default DateAndTime
