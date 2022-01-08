@@ -14,6 +14,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useCreateEvent } from 'src/api/event'
 import useRouter from 'src/hooks/useRouter'
+import { useAllOrgs } from 'src/api/org'
 
 const NewEvent = () => {
   const schema = yup
@@ -68,6 +69,12 @@ const NewEvent = () => {
     router.push('/profile/my-events')
   }
 
+  const { allOrgs } = useAllOrgs()
+  const orgOptions = allOrgs?.map((org) => ({
+    label: org?.name,
+    value: org?._id,
+  }))
+
   return (
     <Container>
       <Text variant='h4' fontWeight={700}>
@@ -98,14 +105,8 @@ const NewEvent = () => {
             label='Organization'
             placeholder='Choose organization'
             width='300px'
-            // TODO: show all orgs
             // TODO: searchable
-            options={[
-              {
-                label: 'Language Expansion Program',
-                value: '619833239e3bd68229eb63cb',
-              },
-            ]}
+            options={orgOptions}
           />
           <Link to='/new-org'>
             <Button variant='text'>Create organization</Button>

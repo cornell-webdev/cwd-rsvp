@@ -15,6 +15,19 @@ export const useMyOrgs = () => {
   }
 }
 
+export const allOrgsQueryConfig = () => ({
+  url: `/public/org`,
+})
+
+export const useAllOrgs = () => {
+  const { data: allOrgs, ...rest } = useCustomQuery<IOrg[]>(allOrgsQueryConfig())
+
+  return {
+    ...rest,
+    allOrgs,
+  }
+}
+
 export const orgByIdQueryConfig = (orgId: string) => ({
   url: `/public/org/${orgId}`,
 })

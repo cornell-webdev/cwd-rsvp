@@ -93,11 +93,13 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               value={startTime}
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('start', selectedOption, idx)}
+              width='105px'
             />
             <Select
               value={endTime}
               options={timeOptions}
               onChange={(selectedOption) => handleTimeChange('end', selectedOption, idx)}
+              width='105px'
             />
             {idx !== 0 ? (
               <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />
