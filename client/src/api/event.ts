@@ -20,6 +20,19 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
   }
 }
 
+export const eventByIdQueryConfig = (eventId: string) => ({
+  url: `/public/event/${eventId}`,
+})
+
+export const useEventById = (eventId: string) => {
+  const { data: event, ...rest } = useCustomQuery<IEvent>(eventByIdQueryConfig(eventId))
+
+  return {
+    ...rest,
+    event,
+  }
+}
+
 export const myEventsQueryConfig = () => ({
   url: `/private/event`,
 })
