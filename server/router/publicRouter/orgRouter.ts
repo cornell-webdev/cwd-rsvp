@@ -12,4 +12,13 @@ orgRouter.get('/:id', async (req, res) => {
   }
 })
 
+orgRouter.get('/', async (req, res) => {
+  try {
+    const orgs = await Org.find()
+    res.send(orgs)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 export default orgRouter

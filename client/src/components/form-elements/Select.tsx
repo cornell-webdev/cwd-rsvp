@@ -23,6 +23,7 @@ interface SelectProps
   disabled?: boolean
   maxMenuHeight?: number
   width?: string
+  isSearchable?: boolean
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, ref) => {
@@ -46,7 +47,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, r
         {...props}
         value={valueObject}
         key={`select-key-${JSON.stringify(valueObject)}`}
-        isSearchable={false}
+        isSearchable={props.isSearchable}
         classNamePrefix='react-select'
       />
     </div>
@@ -59,6 +60,7 @@ interface HookedSelectProps
   options?: ISelectOption[]
   label?: string
   width?: string
+  isSearchable?: boolean
 }
 
 export const HookedSelect = (props: HookedSelectProps) => {
