@@ -99,7 +99,7 @@ const StyledInput = styled.input<StyledInputProps>`
   width: ${(props) => props.width && `${props.width}px`};
 
   // error
-  border-color: ${(props) => props.error && props.theme.danger[500]};
+  border-color: ${(props) => props.error && props.theme.text.error};
 
   &:focus {
     border-color: ${(props) => props.theme.brand[500]};

@@ -24,6 +24,7 @@ interface SelectProps
   maxMenuHeight?: number
   width?: string
   isSearchable?: boolean
+  error?: string
 }
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, ref) => {
@@ -49,6 +50,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, r
         key={`select-key-${JSON.stringify(valueObject)}`}
         isSearchable={props.isSearchable}
         classNamePrefix='react-select'
+        isError={props.error != null}
       />
     </div>
   )
@@ -74,7 +76,14 @@ export const HookedSelect = (props: HookedSelectProps) => {
       <Controller
         name={props.name}
         control={control}
-        render={({ field }) => <Select {...props} {...field} options={props.options} />}
+        render={({ field }) => (
+          <Select
+            {...props}
+            {...field}
+            options={props.options}
+            error={errors[props.name]?.message}
+          />
+        )}
       />
       <ErrorMsg error={errors[props.name]?.message} />
     </div>
@@ -83,6 +92,7 @@ export const HookedSelect = (props: HookedSelectProps) => {
 
 interface IStyledSelectProps extends CommonProps<any, false, any> {
   width?: SelectProps['width']
+  isError?: boolean
 }
 
 const StyledSelect = styled(ReactSelect)<IStyledSelectProps>`
@@ -106,6 +116,11 @@ const StyledSelect = styled(ReactSelect)<IStyledSelectProps>`
 
   & .react-select__value-container {
     padding-right: 0;
+  }
+
+  & .react-select__control {
+    /* isError */
+    border-color: ${(props) => props.isError && theme.text.error} !important;
   }
 `
 
