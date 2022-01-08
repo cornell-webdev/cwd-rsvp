@@ -1,5 +1,6 @@
 import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { useEventById } from 'src/api/event'
 import EventForm from 'src/components/forms/EventForm'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
@@ -7,7 +8,7 @@ import styled from 'styled-components'
 const EditEvent = () => {
   const router = useRouter()
   const eventId = router.match.params.eventId
-  // TODO: fetch existing event data by id
+  const { event } = useEventById(eventId)
 
   return (
     <Container>
@@ -15,7 +16,7 @@ const EditEvent = () => {
         Edit event
       </Text>
       <Spacer y='1.125rem' />
-      <EventForm />
+      {event && <EventForm initValues={event} />}
     </Container>
   )
 }
