@@ -1,40 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {CloseCircleFilled, SearchOutlined} from '@ant-design/icons';
 import styled from 'styled-components'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import { FlexContainer } from "cornell-glue-ui";
+// import {useSearchedEvents} from "../../api/event"
 
 interface ISearchboxProps{
   placeholder: string;
-  data: IEvent[];
-  setFilteredData:  Function
-  setSearch: Function
+  handleFilter: (event: React.ChangeEvent<HTMLInputElement>)=>void;
+  clearInput: () => void;
+  wordEntered: string;
 }
 
-function SearchBox({ placeholder, data, setFilteredData, setSearch}: ISearchboxProps) {
-  const [wordEntered, setWordEntered] = useState("");
+function SearchBox({ placeholder, handleFilter, clearInput, wordEntered}: ISearchboxProps) {
+  // const [wordEntered, setWordEntered] = useState("");
 
-  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchWord = event.target.value;
-    setWordEntered(searchWord);
-    const newFilter = data.filter((value) => {
-      return value.title.toLowerCase().includes(searchWord.toLowerCase());
-    });
+  // const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const searchWord = event.target.value;
+  //   setWordEntered(searchWord);
+  //   // const newFilter = data.filter((value) => {
+  //   //   return value.title.toLowerCase().includes(searchWord.toLowerCase());
+  //   // });
+  //   // const {searchedEvents} = useSearchedEvents(searchWord)
+    
+  //   useEffect(() => {
+  //     const {searchedEvents} = useSearchedEvents(searchWord)
+  //     if (searchWord !== "") {
+  //       setFilteredData(searchedEvents);
+  //     }
+  //   }, [wordEntered])
 
-    if (searchWord === "") {
-      setFilteredData(data);
-      setSearch(false);
-    } else {
-      setFilteredData(newFilter);
-      setSearch(true);
-    }
-  };
+  //   if (searchWord === "") {
+  //     setFilteredData(data);
+  //     setSearch(false);
+  //   }
+  //   // } else {
+  //   //   setFilteredData(searchedEvents);
+  //   //   setSearch(true);
+  //   // }
+  // };
 
-  const clearInput = () => {
-    setFilteredData(data);
-    setWordEntered("");
-    setSearch(false)
-  };
+  // const clearInput = () => {
+  //   setFilteredData(data);
+  //   setWordEntered("");
+  //   setSearch(false)
+  // };
 
   return (
       <SearchContainer alignCenter={true}>

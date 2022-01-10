@@ -12,7 +12,7 @@ interface IFilterProps{
   }
 
 const FilterButtonContainer = styled.button`
-  margin-inline: 6px;
+  margin-inline: 4.5px;
   background: transparent;
   `
 const FilterTag = styled(Tag)`

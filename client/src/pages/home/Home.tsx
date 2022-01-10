@@ -10,35 +10,76 @@ import FilterButton from 'src/components/events/FilterButton'
 import eve from './eve'
 import {FlexContainer, Text, Tag, Button} from 'cornell-glue-ui'
 import { IEvent, IEventDate } from 'src/types/event.type'
+import { useTrendingEvents } from "src/api/event"
+import {useSearchedEvents} from "../../api/event"
 
-const Home = () => {
-  const [filteredData, setFilteredData] = useState(eve);
-  const [Data, setData] = useState(eve);
-  const [TrendingData, setTrendingData] = useState(eve);
+function Home () {
+  const [filteredData, setFilteredData] = useState<IEvent[]>([]);
+  const [Data, setData] = useState<IEvent[]>(eve);
+  const [searchData, setSearchData] = useState<IEvent[]>([]);
+  const [TrendingData, setTrendingData] = useState<IEvent[]>(eve);
   const [Search, setSearch] = useState(false);
   const [numPressed, setnumPressed] = useState(0);
   const [expandToday, setExpandToday] = useState(false);
   const [expandTomorrow, setExpandTomorrow] = useState(false);
+  const [wordEntered, setWordEntered] = useState("");
+
+  const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchWord = event.target.value;
+    setWordEntered(searchWord);
+    // const newFilter = data.filter((value) => {
+    //   return value.title.toLowerCase().includes(searchWord.toLowerCase());
+    // });
+    // const {searchedEvents} = useSearchedEvents(searchWord)
+    
+    if (searchWord === "") {
+      // setFilteredData(data);
+      setSearch(false);
+    }
+    // } else {
+    //   setFilteredData(searchedEvents);
+    //   setSearch(true);
+    // }
+  };
+
+  const clearInput = () => {
+    // setFilteredData(data);
+    setWordEntered("");
+    setSearch(false)
+  };
+
+  useEffect(() => {
+    const {searchedEvents} = useSearchedEvents(wordEntered)
+    if (wordEntered !== "" && searchedEvents !== undefined) {
+      setSearchData(searchedEvents);
+    }
+  }, [wordEntered])
 
 
-  // useEffect(() => {
-  //   if (Data !== undefined) {
-  //     getSiteSchedule({ site, startDate: startEndDate[0], endDate: startEndDate[1] }).then((siteScheduleDTO) => {
-  //       setSiteSchedule(new SiteSchedule(siteScheduleDTO))
-  //       setInitialIcmVsoRatio([siteScheduleDTO.icmRatio, siteScheduleDTO.vsoRatio])
-  //     })
-  //   }
-  // }, [site])
+  useEffect(() => {
+    const { trendingEvents } = useTrendingEvents()
+    if (trendingEvents !== undefined) {
+      setTrendingData(trendingEvents)   
+    }
+  }, [TrendingData])
+
 
   function filter1(tag:string){
-    setFilteredData([...new Set([...Data.filter(e => (e.tag.name === tag)), ...filteredData])]); 
-    setnumPressed(numPressed+1)
+    if(!Search){
+      setFilteredData([...new Set([...Data.filter(e => (e.tag.name === tag)), ...filteredData])]); 
+      setnumPressed(numPressed+1)
+    }else if(numPressed !== 2){
+      setFilteredData([...new Set([...searchData.filter(e => (e.tag.name === tag)), ...filteredData])]); 
+      setnumPressed(numPressed+1)
+    }else{
+      setFilteredData(searchData); 
+      setnumPressed(numPressed+1)
+    }
   }
 
   function filter2(tag:string){
-    setFilteredData(filteredData.filter(e => (e.tag.name !== tag)))
-    setnumPressed(numPressed-1)
-
+      setFilteredData(filteredData.filter(e => (e.tag.name !== tag)))
+      setnumPressed(numPressed-1)
   }
 
   function getEventByDate(date:Date, data:IEvent[], expand:boolean){
@@ -50,12 +91,14 @@ const Home = () => {
     
   }
   
-  function getFilteredData(){
+  function getSearchData(){
+    const d = (numPressed === 0 || numPressed === 3) ? searchData : filteredData 
     return(
-      filteredData.map(e => (e.dates.map(ed => (
+      d.map(e => (e.dates.map(ed => (
         <EventCard event = {e} startTime = {ed.startTime} endTime={ed.endTime} date={ed.date}/>
       ))))
     )}
+    
 
   const today = new Date()
   const tomorrow = new Date()
@@ -65,32 +108,43 @@ const Home = () => {
   return ( 
     <div>
       <EventText>Trending</EventText>
-      <TrendingContainer>
-      {TrendingData.map(e=>(
-          <TrendingEvent event={e} date={e.dates[0].date} time= {e.dates[0].startTime}/>
-        ))}
-      </TrendingContainer>   
+      <ScrollContainer>
+        <TrendingContainer>
+        {TrendingData.map(e=>(
+            <TrendingEvent event={e} date={e.dates[0].date} time= {e.dates[0].startTime}/>
+          ))}
+        </TrendingContainer> 
+      </ScrollContainer>
+  
       <SearchContainer justifyCenter = {true}>
-        <SearchBox placeholder="input" data={Data} setFilteredData={setFilteredData} setSearch={setSearch} />
+        <SearchBox placeholder="input" handleFilter={handleFilter} clearInput={clearInput} wordEntered={wordEntered} />
       </SearchContainer>
+      <TrendingContainer>
+        <FilterButton tag='Entertainment' color='#E8AC15' backgroundColor='#FEF3D6' functionPress={filter1} functionUnpress={filter2} />
+        <FilterButton tag='Professional' color='#71B6BA' backgroundColor='#E9F5F5' functionPress={filter1} functionUnpress={filter2}/>
+      </TrendingContainer>
       {
-        Search === false ? (
+        Search === false && filteredData !== undefined ? (
           <div>
-            <TrendingContainer>
-              <FilterButton tag='Entertainment' color='#E8AC15' backgroundColor='#FEF3D6' functionPress={filter1} functionUnpress={filter2} />
-              <FilterButton tag='Professional' color='#71B6BA' backgroundColor='#E9F5F5' functionPress={filter1} functionUnpress={filter2}/>
-            </TrendingContainer>
             <DateText>Today</DateText>
             {numPressed === 0 ? 
-            (<div>{getEventByDate(today, Data, expandToday)}
-            <FlexContainer alignEnd={true}><ExpandButton background="#F8F8F8" color='#212121' onClick={()=>{setExpandToday(!expandToday)}}>Show more</ExpandButton></FlexContainer>
-            </div>): 
-            getEventByDate(today, filteredData, true)}
+            getEventByDate(today, Data, expandToday):
+            getEventByDate(today, filteredData, expandToday)}
+            <ButtonContainer justifyEnd={true}>
+              <ExpandButton background="#F8F8F8" color='#212121' onClick={()=>{setExpandToday(!expandToday)}}>
+                {expandToday ? 'Show less' : 'Show more'}
+              </ExpandButton>
+            </ButtonContainer>
             <DateText>{days[tomorrow.getDay()]}</DateText>
-            {numPressed === 0 ? getEventByDate(tomorrow, Data, expandTomorrow) : getEventByDate(tomorrow, filteredData, true)}
+            {numPressed === 0 ? getEventByDate(tomorrow, Data, expandTomorrow): getEventByDate(tomorrow, filteredData, expandTomorrow)}
+            <ButtonContainer justifyEnd={true}>
+                <ExpandButton background="#F8F8F8" color='#212121' onClick={()=>{setExpandTomorrow(!expandTomorrow)}}>
+                  {expandTomorrow ? 'Show less' : 'Show more'}
+                </ExpandButton>
+              </ButtonContainer> 
           </div>
         ):(
-          <div>{getFilteredData()}</div>
+          <div>{getSearchData()}</div>
         )
       }
     </div>              
@@ -106,18 +160,29 @@ const DateText = styled(EventText)`
 font-size: 16px;
 `
 const SearchContainer = styled(FlexContainer)`
-padding: 12px;
+padding: 6px 12px 6px;
 `
 const TrendingContainer = styled(FlexContainer)`
-padding: 6px 12px 14px;
+padding: 6px 7.5px 14px;
+overflow-x: scroll;
+white-space: nowrap;
+`
+const ScrollContainer = styled.div`
+overflow: hidden;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
 `
 const ExpandButton = styled(Button)`
 width:91px;
 height:22px;
 font-size: 14px;
 padding: 3px 10px;
-margin-right: 12px;
 float:right;
+`
+
+const ButtonContainer = styled(FlexContainer)`
+padding: 8px 12px;
+
 `
 
 
