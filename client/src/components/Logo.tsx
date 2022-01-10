@@ -6,7 +6,7 @@ import { Spacer } from 'cornell-glue-ui'
 const Logo = () => {
   return (
     <Link to='/'>
-      <Spacer y='.2rem' />
+      <Spacer y={0.1} />
       <LogoText>RSVP</LogoText>
     </Link>
   )

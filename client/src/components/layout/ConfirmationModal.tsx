@@ -23,11 +23,11 @@ const ConfirmationModal = ({
       <Container>
         <FlexContainer flexDirection='column' alignCenter>
           <Text fontWeight={700}>{heading}</Text>
-          <Spacer y={1} />
+          <Spacer y={0.5} />
           {body && <BodyText>{body}</BodyText>}
           <ButtonsRow>
             <Button onClick={onConfirm}>{confirmationText}</Button>
-            <Spacer x={3} />
+            <Spacer x={1.5} />
             <Button
               color={theme.text.default}
               background={theme.grey[100]}

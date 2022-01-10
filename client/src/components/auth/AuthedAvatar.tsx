@@ -32,7 +32,7 @@ const AuthedAvatar = ({ userPhotoSrc }: AuthedProps) => {
       <Menu options={menuOptions} offset={10}>
         <Container>
           <Avatar src={userPhotoSrc} />
-          <Spacer x='.1rem' />
+          <Spacer x={0.05} />
           <ExpandMoreIcon />
         </Container>
       </Menu>

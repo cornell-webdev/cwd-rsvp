@@ -12,7 +12,7 @@ const MyEvents = () => {
       <Text variant='h4' fontWeight={700}>
         My events
       </Text>
-      <Spacer y={1.5} />
+      <Spacer y={0.75} />
       {myEvents?.map((event) => (
         <MyEventCard key={event?._id} event={event} />
       ))}

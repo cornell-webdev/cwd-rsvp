@@ -38,7 +38,7 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
               <Link to={`/edit-event/${event?._id}`}>
                 <Button>Edit</Button>
               </Link>
-              <Spacer x={2} />
+              <Spacer x={1} />
               {/* TODO: link buttons after event details page is developed */}
               <Button variant='text'>View event</Button>
             </FlexContainer>

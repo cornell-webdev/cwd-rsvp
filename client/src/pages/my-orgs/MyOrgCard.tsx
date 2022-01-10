@@ -21,25 +21,25 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
             <FallbackAvatar />
           </FallbackContainer>
         )}
-        <Spacer x={1} />
+        <Spacer x={0.5} />
         <RightSection>
           <Text variant='meta2'>{org?.linkedUserIds?.length} administrators</Text>
           <Text variant='meta1' fontWeight={700}>
             {org?.name}
           </Text>
-          <Spacer y={2} />
+          <Spacer y={1} />
           <FlexContainer>
             <Link to={`/profile/org-admins/${org?._id}`}>
               <Button startIcon={<GroupIcon />}>Manage</Button>
             </Link>
-            <Spacer x={1} />
+            <Spacer x={0.5} />
             <Link to={`/edit-org/${org?._id}`}>
               <Button color={theme.text.default} background={theme.grey[100]}>
                 Edit profile
               </Button>
             </Link>
           </FlexContainer>
-          <Spacer y={1.75} />
+          <Spacer y={0.875} />
           <TextContainer>
             <Text variant='meta1' maxLines={2}>
               {org?.desc}

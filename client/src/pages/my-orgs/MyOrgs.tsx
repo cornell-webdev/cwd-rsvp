@@ -17,13 +17,13 @@ const MyOrgs = () => {
         <Text variant='h4' fontWeight={700}>
           My organizations
         </Text>
-        <Spacer y={1.5} />
+        <Spacer y={0.75} />
         <Link to='/new-org'>
           <Button startIcon={<AddIcon />}>Org</Button>
         </Link>
         {myOrgs && myOrgs?.length > 0 ? (
           <>
-            <Spacer y={2} />
+            <Spacer y={1} />
             {myOrgs.map((org) => (
               <MyOrgCard key={org?._id} org={org} />
             ))}
