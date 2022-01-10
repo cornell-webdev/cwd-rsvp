@@ -9,7 +9,7 @@ import LinkedUserList from './LinkedUserList'
 
 const OrgAdmins = () => {
   return (
-    <PageContainer>
+    <PageContainer isMobileOnly>
       <Container>
         <Link to='/profile/my-orgs'>
           <Button

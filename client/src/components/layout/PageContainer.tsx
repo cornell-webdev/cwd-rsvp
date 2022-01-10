@@ -8,15 +8,21 @@ interface PageContainerProps {
   children: React.ReactNode
   height?: string
   isMobileOnly?: boolean
+  isShowWarning?: boolean
 }
 
-const PageContainer = ({ children, height, isMobileOnly = false }: PageContainerProps) => {
+const PageContainer = ({
+  children,
+  height,
+  isMobileOnly = false,
+  isShowWarning = true,
+}: PageContainerProps) => {
   const isMobile = useIsMobile()
 
   return (
     <Container height={height}>
       <InnerContainer isMobileOnly={isMobileOnly}>
-        {isMobileOnly && !isMobile && (
+        {isMobileOnly && !isMobile && isShowWarning && (
           <WarningContainer>
             <StyledInfoIcon />
             <Text variant='meta1' color={theme.warning[600]}>
