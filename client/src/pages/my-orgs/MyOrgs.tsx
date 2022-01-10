@@ -12,7 +12,7 @@ const MyOrgs = () => {
   const { myOrgs } = useMyOrgs()
 
   return (
-    <PageContainer>
+    <PageContainer isMobileOnly>
       <Container>
         <Text variant='h4' fontWeight={700}>
           My organizations

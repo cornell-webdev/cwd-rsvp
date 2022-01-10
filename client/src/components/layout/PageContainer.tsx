@@ -1,15 +1,31 @@
+import { Text, theme } from 'cornell-glue-ui'
 import React from 'react'
+import useIsMobile from 'src/hooks/useIsMobile'
 import styled from 'styled-components'
+import InfoIcon from '@material-ui/icons/Info'
 
 interface PageContainerProps {
   children: React.ReactNode
   height?: string
+  isMobileOnly?: boolean
 }
 
-const PageContainer = ({ children, height }: PageContainerProps) => {
+const PageContainer = ({ children, height, isMobileOnly = false }: PageContainerProps) => {
+  const isMobile = useIsMobile()
+
   return (
     <Container height={height}>
-      <div>{children}</div>
+      <InnerContainer isMobileOnly={isMobileOnly}>
+        {isMobileOnly && !isMobile && (
+          <WarningContainer>
+            <StyledInfoIcon />
+            <Text variant='meta1' color={theme.warning[600]}>
+              The desktop version of this page is currently under development
+            </Text>
+          </WarningContainer>
+        )}
+        {children}
+      </InnerContainer>
     </Container>
   )
 }
@@ -23,19 +39,41 @@ const Container = styled.div<ContainerProps>`
   flex-direction: column;
   align-items: center;
 
-  & > div {
-    width: 100%;
-    padding: 0.75rem;
-  }
-
-  @media (min-width: ${(props) => props.theme.tablet}) {
-    & > div {
-      width: ${(props) => props.theme.tablet};
-    }
-  }
-
   // height
   height: ${(props) => props.height && props.height};
+`
+
+interface InnerContainerProps {
+  isMobileOnly?: PageContainerProps['isMobileOnly']
+}
+
+const InnerContainer = styled.div<InnerContainerProps>`
+  width: 100%;
+  padding: 0.75rem;
+
+  @media (min-width: ${(props) => props.theme.tablet}) {
+    /* isMobileOnly */
+    width: ${(props) => !props.isMobileOnly && props.theme.tablet};
+  }
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    /* isMobileOnly */
+    width: ${(props) => props.isMobileOnly && props.theme.small};
+  }
+`
+
+const WarningContainer = styled.div`
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin: 1rem 0 2rem 0;
+  background: ${(props) => props.theme.warning[50]};
+  display: flex;
+  align-items: center;
+`
+
+const StyledInfoIcon = styled(InfoIcon)`
+  fill: ${(props) => props.theme.warning[600]} !important;
+  margin-right: 0.5rem;
 `
 
 export default PageContainer
