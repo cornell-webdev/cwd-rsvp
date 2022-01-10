@@ -1,5 +1,6 @@
 import express from 'express'
 import Event from '../../models/Event'
+import Org from '../../models/Org'
 
 const eventRouter = express.Router()
 
@@ -37,8 +38,13 @@ eventRouter.post('/', async (req, res) => {
 
 eventRouter.get('/', async (req, res) => {
   try {
-    const events = await Event.find({ userId: req.user?._id }).sort({ createdAt: -1 })
-    res.send(events)
+    const linkedOrgs = await Org.find({ linkedUserIds: req.user?._id })
+    const linkedEventQueries = linkedOrgs?.map((org) => ({
+      orgId: org?._id,
+    }))
+    const query = { $or: [{ userId: req.user?._id }, ...linkedEventQueries] }
+    const myEvents = await Event.find(query).sort({ createdAt: -1 })
+    res.send(myEvents)
   } catch (e) {
     res.status(500).send(e)
   }
