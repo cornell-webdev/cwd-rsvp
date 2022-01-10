@@ -40,7 +40,7 @@ const LinkedUserItem = ({ user, orgId }: ILinkedUserItemProps) => {
               </Text>
             )}
           </EmailContainer>
-          <Spacer x={2.5} />
+          <Spacer x={1.25} />
           <IconButton icon={<DeleteIcon />} onClick={() => setIsModalOpen(true)} />
         </FlexContainer>
       </Container>

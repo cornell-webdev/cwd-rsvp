@@ -128,7 +128,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
         <Link to='/new-org'>
           <Button variant='text'>Create organization</Button>
         </Link>
-        <Spacer y={0.5} />
+        <Spacer y={0.25} />
         <HookedTextarea
           name='details'
           label='Event details'

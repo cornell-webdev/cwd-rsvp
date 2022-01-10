@@ -20,11 +20,11 @@ const OrgAdmins = () => {
             Back
           </Button>
         </Link>
-        <Spacer y={1.5} />
+        <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Manage administrators
         </Text>
-        <Spacer y={1.125} />
+        <Spacer y={0.5625} />
         <Text variant='meta1'>
           Administrators are accounts that are linked to your organization. These accounts are
           allowed to post and edit events for your organization as well as manage personnel.
@@ -34,7 +34,7 @@ const OrgAdmins = () => {
           <Link to='/profile/my-orgs'>
             <Button>Save changes</Button>
           </Link>
-          <Spacer y={1.125} />
+          <Spacer y={0.5625} />
           <Link to='/profile/my-orgs'>
             <Button color={theme.text.default} background={theme.grey[100]}>
               Cancel

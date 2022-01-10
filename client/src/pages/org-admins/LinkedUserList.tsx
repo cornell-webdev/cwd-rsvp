@@ -36,7 +36,7 @@ const LinkedUserList = () => {
       {orgLinkedUsers?.linkedUsers?.map((user) => (
         <LinkedUserItem key={user?._id} user={user} orgId={orgId} />
       ))}
-      <Spacer y={1.5} />
+      <Spacer y={0.75} />
       {isAdding ? (
         <div>
           <FlexContainer alignCenter>
@@ -45,7 +45,7 @@ const LinkedUserList = () => {
               value={newEmail}
               onChange={(e) => setNewEmail(e.currentTarget.value)}
             />
-            <Spacer x={2} />
+            <Spacer x={1} />
             <AddButton onClick={handleLinkNewEmail}>Add</AddButton>
           </FlexContainer>
           {error && <ErrorMsg error={error} />}

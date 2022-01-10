@@ -15,7 +15,7 @@ const EditEvent = () => {
       <Text variant='h4' fontWeight={700}>
         Edit event
       </Text>
-      <Spacer y='1.125rem' />
+      <Spacer y={0.5625} />
       {event && <EventForm initValues={event} />}
     </PageContainer>
   )

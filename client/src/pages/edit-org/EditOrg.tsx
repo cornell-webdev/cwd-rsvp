@@ -23,7 +23,7 @@ const EditOrg = () => {
           onClick={() => router.history.goBack()}>
           Back
         </Button>
-        <Spacer y={1.5} />
+        <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Edit profile
         </Text>

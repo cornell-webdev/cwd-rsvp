@@ -68,7 +68,7 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
     <Container>
       <FormProvider {...form}>
         <StyledForm onSubmit={form.handleSubmit(onSubmit)}>
-          <Spacer y={0.75} />
+          <Spacer y={0.375} />
           <Text fontWeight={700}>Basic information</Text>
           <StyledInput name='name' label='Organization name' />
           <HookedTextarea name='desc' label='Organization description' minRows={5} />
@@ -77,7 +77,7 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
           <ImageUpload urls={urls} setUrls={setUrls} maxImgs={1} />
           <VerticalButtonsContainer>
             <Button type='submit'>Save changes</Button>
-            <Spacer y={1.125} />
+            <Spacer y={0.5625} />
             <Button
               color={theme.text.default}
               background={theme.grey[100]}

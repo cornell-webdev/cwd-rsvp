@@ -107,7 +107,7 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               <SpacePlaceholder />
             )}
           </FlexContainer>
-          <Spacer y={2} />
+          <Spacer y={1} />
         </div>
       ))}
       <Button variant='text' onClick={handleAddDate} type='button'>

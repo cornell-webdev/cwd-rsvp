@@ -9,7 +9,7 @@ const NewEvent = () => {
       <Text variant='h4' fontWeight={700}>
         Create event
       </Text>
-      <Spacer y='1.125rem' />
+      <Spacer y={0.5625} />
       <EventForm />
     </PageContainer>
   )
