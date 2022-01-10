@@ -13,7 +13,7 @@ const EditOrg = () => {
   const { org } = useOrgById(orgId)
 
   return (
-    <PageContainer>
+    <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
         <Button
           variant='text'

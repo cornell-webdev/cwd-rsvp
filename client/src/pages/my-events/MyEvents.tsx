@@ -1,14 +1,14 @@
 import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
 import { useMyEvents } from 'src/api/event'
-import styled from 'styled-components'
+import PageContainer from 'src/components/layout/PageContainer'
 import MyEventCard from './MyEventCard'
 
 const MyEvents = () => {
   const { myEvents } = useMyEvents()
 
   return (
-    <Container>
+    <PageContainer isMobileOnly>
       <Text variant='h4' fontWeight={700}>
         My events
       </Text>
@@ -16,12 +16,8 @@ const MyEvents = () => {
       {myEvents?.map((event) => (
         <MyEventCard key={event?._id} event={event} />
       ))}
-    </Container>
+    </PageContainer>
   )
 }
-
-const Container = styled.div`
-  padding: 0.75rem;
-`
 
 export default MyEvents
