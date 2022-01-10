@@ -4,6 +4,7 @@ import { IOrg } from 'src/types/org.type'
 import styled from 'styled-components'
 import GroupIcon from '@material-ui/icons/Group'
 import { Link } from 'react-router-dom'
+import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
 
 interface IMyOrgCardProps {
   org: IOrg
@@ -13,7 +14,13 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
   return (
     <Container>
       <FlexContainer>
-        <Avatar src={org?.avatar} />
+        {org?.avatar ? (
+          <Avatar src={org?.avatar} />
+        ) : (
+          <FallbackContainer>
+            <FallbackAvatar />
+          </FallbackContainer>
+        )}
         <Spacer x={1} />
         <RightSection>
           <Text variant='meta2'>{org?.linkedUserIds?.length} administrators</Text>
@@ -48,6 +55,22 @@ const Container = styled.div`
   padding-top: 0.33rem;
   padding-bottom: 0.33rem;
   margin-top: 0.5rem;
+`
+
+const FallbackContainer = styled.div`
+  height: 87px;
+  width: 87px;
+  border-radius: 50%;
+  border: 2px solid ${(props) => props.theme.border.default};
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow: hidden;
+  background: ${(props) => props.theme.brand[100]};
+`
+
+const FallbackAvatar = styled(FallbackAvatarIllust)`
+  height: 100%;
+  width: 100%;
 `
 
 const Avatar = styled.img`
