@@ -15,19 +15,22 @@ const DayEvent = ({ d, tagIDs }: IDayEventProps) => {
   const [expand, setExpand] = useState(false)
   const [Data, setData] = useState<IEvent[]>([])
 
-  // console.log('date', d.toString().split('T')[0])
-
-  // d = new Date(d.toString().split('T')[0])
   d.setHours(0, 0, 0, 0)
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const a: IUseEvents = { date: d }
-  const { events } = useEvents(a)
+  const { events } = useEvents({ date: d })
   useEffect(() => {
-    setData(events || [])
-  }, [events])
-  console.log('data', d, Data)
+    if (tagIDs.length === 0) {
+      setData(events || [])
+    } else {
+      const eventsWithTag =
+        events !== undefined
+          ? [...new Set(tagIDs.map((t) => events.filter((e) => e.tag.name === t)).flat())]
+          : []
+      setData(eventsWithTag)
+    }
+  }, [events, tagIDs.length])
 
   function getEventByDate(date: Date, data: IEvent[], expand: boolean) {
     const eventByDate = data
@@ -37,7 +40,6 @@ const DayEvent = ({ d, tagIDs }: IDayEventProps) => {
           .map((ed) => <EventCard event={e} startTime={ed.startTime} endTime={ed.endTime} />)
       )
       .flat()
-    console.log('ebd', eventByDate)
     return eventByDate
   }
 
@@ -50,7 +52,7 @@ const DayEvent = ({ d, tagIDs }: IDayEventProps) => {
       {displayEvents.length > 2 ? (
         <ButtonContainer justifyEnd={true}>
           <ExpandButton
-            background='#F8F8F8'
+            background='#F9ECEC'
             color='#212121'
             onClick={() => {
               setExpand(!expand)
