@@ -36,12 +36,12 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
     <EventContainer className='event' alignCenter={true}>
       <ImgContainer className='img' src={event.imgs[0]} />
       <TextContainer className='text'>
-        {/* <Text variant='meta2'>{event.org.name}</Text> */}
+        <Text variant='meta2'>{event.org.name}</Text>
         <Text fontWeight='700' variant='meta1'>
           {desc}
         </Text>
         <Tag variant='contained' color={event.tag.color} background={event.tag.backgroundColor}>
-          {event.tag.name}
+          {event.tag.name.charAt(0).toUpperCase() + event.tag.name.slice(1)}
         </Tag>
         <FlexContainer justifySpaceBetween={true} alignCenter={true}>
           {date !== undefined ? (

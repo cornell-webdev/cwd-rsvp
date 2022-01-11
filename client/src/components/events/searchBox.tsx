@@ -20,33 +20,6 @@ function SearchBox({
   handleSearch,
   wordEntered,
 }: ISearchboxProps) {
-  // const [wordEntered, setWordEntered] = useState("");
-
-  // const handleFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const searchWord = event.target.value;
-  //   setWordEntered(searchWord);
-  //   // const newFilter = data.filter((value) => {
-  //   //   return value.title.toLowerCase().includes(searchWord.toLowerCase());
-  //   // });
-  //   // const {searchedEvents} = useSearchedEvents(searchWord)
-
-  //   useEffect(() => {
-  //     const {searchedEvents} = useSearchedEvents(searchWord)
-  //     if (searchWord !== "") {
-  //       setFilteredData(searchedEvents);
-  //     }
-  //   }, [wordEntered])
-
-  //   if (searchWord === "") {
-  //     setFilteredData(data);
-  //     setSearch(false);
-  //   }
-  //   // } else {
-  //   //   setFilteredData(searchedEvents);
-  //   //   setSearch(true);
-  //   // }
-  // };
-
   return (
     <SearchContainer alignCenter={true}>
       <SearchIcon />
@@ -56,7 +29,6 @@ function SearchBox({
         value={wordEntered}
         onChange={handleSearch}
         onKeyPress={handleFilter}
-        // onPressEnter={handleSearch}
       />
       {wordEntered !== undefined && wordEntered.length === 0 ? null : (
         <Clear onClick={clearInput} role='button' onMouseDown={(e) => e.preventDefault()} />
@@ -73,13 +45,16 @@ const SearchContainer = styled(FlexContainer)`
   border-radius: 6px;
 `
 const SearchInput = styled.input`
-  width: 300px;
+  width: 285px;
 `
 
 const Clear = styled(CloseCircleFilled)`
-color: #E0E0E0;
-width = 8px
-height = 8px
+  color: #e0e0e0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const SearchIcon = styled(SearchOutlined)`

@@ -7,6 +7,7 @@ import TrendingEvent from 'src/components/events/trendingEvent'
 import SearchBox from 'src/components/events/searchBox'
 import FilterButton from 'src/components/events/FilterButton'
 import DayEvent from 'src/components/events/DayEvent'
+import SearchEvents from 'src/components/events/SearchEvents'
 
 import eve from './eve'
 import { FlexContainer, Text, Tag, Button } from 'cornell-glue-ui'
@@ -15,13 +16,11 @@ import { useTrendingEvents } from 'src/api/event'
 import { useSearchedEvents } from '../../api/event'
 
 function Home() {
-  const [filteredData, setFilteredData] = useState<IEvent[]>([])
-  const [Data, setData] = useState<IEvent[]>(eve)
   const [searchData, setSearchData] = useState<IEvent[]>([])
   const [TrendingData, setTrendingData] = useState<IEvent[]>([])
   const [search, setSearch] = useState(false)
-  const [numPressed, setnumPressed] = useState(0)
   const [wordEntered, setWordEntered] = useState('')
+  const [tagIds, setTagIds] = useState<string[]>([])
 
   const handleFilter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -48,39 +47,25 @@ function Home() {
       setSearchData([])
     }
   }, [search])
-  // console.log('searchevent', searchedEvents)
-  // console.log('search', searchData)
-  // console.log('isSearch', search)
-  // console.log('w', wordEntered)
 
   const { trendingEvents } = useTrendingEvents()
-  // console.log('trending', trendingEvents)
   useEffect(() => {
     setTrendingData(trendingEvents || [])
   }, [TrendingData])
 
-  function filter1(tag: string) {
-    if (!search) {
-      setFilteredData([...new Set([...Data.filter((e) => e.tag.name === tag), ...filteredData])])
-      setnumPressed(numPressed + 1)
-    } else if (numPressed !== 2) {
-      setFilteredData([
-        ...new Set([...searchData.filter((e) => e.tag.name === tag), ...filteredData]),
-      ])
-      setnumPressed(numPressed + 1)
-    } else {
-      setFilteredData(searchData)
-      setnumPressed(numPressed + 1)
-    }
+  function filter1(tagId: string) {
+    setTagIds([...tagIds, tagId])
   }
 
-  function filter2(tag: string) {
-    setFilteredData(filteredData.filter((e) => e.tag.name !== tag))
-    setnumPressed(numPressed - 1)
+  function filter2(tagId: string) {
+    setTagIds(tagIds.filter((t) => t !== tagId))
   }
 
   function getSearchData() {
-    const d = numPressed === 0 || numPressed === 3 ? searchData : filteredData
+    // const filteredData = [
+    //   ...new Set(tagIDs.map((t) => searchData.filter((e) => e.tag.name === t)).flat()),
+    // ]
+    // const d = tagIDs.length === 0 || tagIDs.length === 3 ? searchData : filteredData
     return searchData.map((e) =>
       e.dates.map((ed) => (
         <EventCard event={e} startTime={ed.startTime} endTime={ed.endTime} date={ed.date} />
@@ -90,7 +75,7 @@ function Home() {
 
   const today = new Date()
   const days = [0, 1, 2, 3, 4]
-  const tags = ['Entertainment', 'Professional', 'Sport']
+  const tags = ['entertainment', 'professional', 'sports']
   const tagColors = ['#E8AC15', '#71B6BA', '#8F9ACF']
   const tagBackground = ['#FEF3D6', '#E9F5F5', '#E3E8F4']
 
@@ -104,7 +89,6 @@ function Home() {
           ))}
         </TrendingContainer>
       </ScrollContainer>
-
       <SearchContainer justifyCenter={true}>
         <SearchBox
           placeholder='input'
@@ -136,18 +120,19 @@ function Home() {
             {days.map((d) => {
               const day: Date = new Date()
               day.setDate(today.getDate() + d)
-              return <DayEvent d={day} tagIDs={[]} />
+              return <DayEvent d={day} tagIDs={tagIds} />
             })}
           </div>
         ) : (
           days.map((d) => {
             const day: Date = new Date()
             day.setDate(today.getDate() + d)
-            return <DayEvent d={day} tagIDs={[]} />
+            return <DayEvent d={day} tagIDs={tagIds} />
           })
         )
       ) : (
-        <div>{getSearchData()}</div>
+        // <div>{getSearchData()}</div>
+        <SearchEvents tagIDs={tagIds} searchData={searchData} />
       )}
     </Container>
   )
