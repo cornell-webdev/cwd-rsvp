@@ -135,14 +135,14 @@ function Home() {
             <MoreText>More Events</MoreText>
             {days.map((d) => {
               const day: Date = new Date()
-              day.setDate(today.getDate() + d + 17)
+              day.setDate(today.getDate() + d)
               return <DayEvent d={day} tagIDs={[]} />
             })}
           </div>
         ) : (
           days.map((d) => {
             const day: Date = new Date()
-            day.setDate(today.getDate() + d + 17)
+            day.setDate(today.getDate() + d)
             return <DayEvent d={day} tagIDs={[]} />
           })
         )
