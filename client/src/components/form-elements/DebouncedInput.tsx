@@ -19,7 +19,7 @@ const DebouncedInput = ({ initValue, onDebouncedChange, ...rest }: DebouncedInpu
     }
   }, [debouncedValue])
 
-  return <Input {...rest} value={value} onChange={(event) => setValue(event.target.value)} />
+  return <Input {...rest} value={value} onChange={(event) => setValue(event.currentTarget.value)} />
 }
 
 export default memo(DebouncedInput)

@@ -1,24 +1,20 @@
+import { theme } from 'cornell-glue-ui'
 import React, { forwardRef } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import ReactSelect, { CommonProps } from 'react-select'
-import { theme } from 'cornell-glue-ui'
+import ReactSelect, { ActionMeta } from 'react-select'
+import styled from 'styled-components'
 import ErrorMsg from './ErrorMsg'
 import Label from './Label'
-import styled from 'styled-components'
 
 export interface ISelectOption {
   label: string
   value: string
 }
 
-interface SelectProps
-  extends Omit<
-    React.DetailedHTMLProps<React.HTMLAttributes<HTMLSelectElement>, HTMLSelectElement>,
-    'onChange'
-  > {
+interface ISelectProps {
   options?: ISelectOption[]
   value?: ISelectOption
-  onChange?: (selectedOption: ISelectOption) => void
+  onChange?: (newOption: unknown, actionMeta: ActionMeta<unknown>) => void
   label?: string
   disabled?: boolean
   maxMenuHeight?: number
@@ -27,14 +23,14 @@ interface SelectProps
   error?: string
 }
 
-const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, ref) => {
+const Select = forwardRef<HTMLSelectElement, ISelectProps>((props: ISelectProps, ref) => {
   const valueObject = props?.options?.find((option) => option.value === props?.value?.value)
 
   return (
     <div>
       <Label>{props.label}</Label>
       <StyledSelect
-        ref={ref}
+        {...props}
         isDisabled={props.disabled}
         theme={(defaultStyles: any) => ({
           ...defaultStyles,
@@ -45,12 +41,12 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>((props: SelectProps, r
             primary: theme.brand[500],
           },
         })}
-        {...props}
         value={valueObject}
         key={`select-key-${JSON.stringify(valueObject)}`}
         isSearchable={props.isSearchable}
         classNamePrefix='react-select'
-        isError={props.error != null}
+        isError={!!props?.error}
+        width={props?.width}
       />
     </div>
   )
@@ -90,8 +86,8 @@ export const HookedSelect = (props: HookedSelectProps) => {
   )
 }
 
-interface IStyledSelectProps extends CommonProps<any, false, any> {
-  width?: SelectProps['width']
+interface IStyledSelectProps {
+  width?: ISelectProps['width']
   isError?: boolean
 }
 

@@ -1,10 +1,9 @@
-import { watch } from 'fs'
+import { theme } from 'cornell-glue-ui'
 import React, { useEffect } from 'react'
 import { DateRange, OnChangeProps, RangeWithKey } from 'react-date-range'
 import { useFormContext } from 'react-hook-form'
-import { theme } from 'cornell-glue-ui'
 import styled from 'styled-components'
-import ErrorMsg from '../fonts/ErrorMsg'
+import ErrorMsg from './ErrorMsg'
 
 interface IRangeProp {
   selection: RangeWithKey
