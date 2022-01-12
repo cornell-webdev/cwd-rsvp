@@ -1,8 +1,8 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react'
-import { useFormContext, UseFormRegisterReturn } from 'react-hook-form'
-import { FlexRow } from 'src/components/layout/Flex'
+import { FlexContainer } from 'cornell-glue-ui'
+import React, { InputHTMLAttributes } from 'react'
+import { useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
-import ErrorMsg from '../fonts/ErrorMsg'
+import ErrorMsg from './ErrorMsg'
 import Label from './Label'
 
 interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -11,15 +11,13 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Checkbox = (props: CheckboxProps) => {
   return (
-    <FlexRow alignCenter>
+    <FlexContainer alignCenter>
       <StyledCheckbox>
         <input {...props} type='checkbox' />
         <span />
       </StyledCheckbox>
-      <Label noMargin={true} {...props}>
-        {props.label}
-      </Label>
-    </FlexRow>
+      <Label>{props.label}</Label>
+    </FlexContainer>
   )
 }
 
@@ -36,15 +34,13 @@ export const HookedCheckbox = (props: HookedCheckboxProps) => {
 
   return (
     <div>
-      <FlexRow alignCenter>
+      <FlexContainer alignCenter>
         <StyledCheckbox>
           <input {...register(props.name)} type='checkbox' />
           <span />
         </StyledCheckbox>
-        <Label noMargin={true} {...props}>
-          {props.label}
-        </Label>
-      </FlexRow>
+        <Label>{props.label}</Label>
+      </FlexContainer>
       <ErrorMsg error={errors[props.name]?.message} />
     </div>
   )

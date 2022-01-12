@@ -7,7 +7,7 @@ import Label from './Label'
 interface InputProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   onEnterPress?: () => void
-  width?: number
+  width?: string | number
   label?: string
   value?: any
   placeholder?: string

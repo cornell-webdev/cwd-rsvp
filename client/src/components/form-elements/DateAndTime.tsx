@@ -92,13 +92,17 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
             <Select
               value={timeOptions?.find((option) => option.value === startTime)}
               options={timeOptions}
-              onChange={(selectedOption) => handleTimeChange('start', selectedOption, idx)}
+              onChange={(selectedOption) =>
+                handleTimeChange('start', selectedOption as ISelectOption, idx)
+              }
               width='105px'
             />
             <Select
               value={timeOptions?.find((option) => option.value === endTime)}
               options={timeOptions}
-              onChange={(selectedOption) => handleTimeChange('end', selectedOption, idx)}
+              onChange={(selectedOption) =>
+                handleTimeChange('end', selectedOption as ISelectOption, idx)
+              }
               width='105px'
             />
             {idx !== 0 ? (

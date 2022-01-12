@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
-import ErrorMsg from 'src/components/fonts/ErrorMsg'
+import ErrorMsg from './ErrorMsg'
 import styled from 'styled-components'
 
 interface IOption {
@@ -52,18 +52,16 @@ interface HookedRadioGroupProps {
 }
 
 export const HookedRadioGroup = (props: HookedRadioGroupProps) => {
-  const { register, formState: { errors } } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <RadioGroupContainer>
       {props.options.map(({ value, label }) => (
         <RadioLabel key={value}>
-          <input
-            {...register(props.name)}
-            value={value}
-            type='radio'
-            readOnly
-          />
+          <input {...register(props.name)} value={value} type='radio' readOnly />
           <span>{label}</span>
         </RadioLabel>
       ))}
@@ -84,8 +82,8 @@ const RadioLabel = styled.label`
   color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.87);
   font-family: var(
     --pure-material-font,
-    "Roboto",
-    "Segoe UI",
+    'Roboto',
+    'Segoe UI',
     BlinkMacSystemFont,
     system-ui,
     -apple-system
@@ -127,7 +125,7 @@ const RadioLabel = styled.label`
 
   /* Circle */
   & > span::before {
-    content: "";
+    content: '';
     display: inline-block;
     box-sizing: border-box;
     margin: 2px 10px 2px 0;
@@ -142,7 +140,7 @@ const RadioLabel = styled.label`
 
   /* Check */
   & > span::after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     top: 2px;
