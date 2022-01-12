@@ -2,13 +2,12 @@ import { GlueProvider, Footer } from 'cornell-glue-ui'
 import React from 'react'
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import store from 'src/redux/store'
 import styled from 'styled-components'
-// TODO: custom history definition
-// import history from 'src/util/history'
+import history from 'src/util/history'
 import Header from '../components/header/Header'
 import Routes from './Routes'
 
@@ -22,7 +21,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
+        <Router history={history}>
           <QueryClientProvider client={queryClient}>
             <GlueProvider>
               <Header />
@@ -32,7 +31,7 @@ const App = () => {
               <Footer />
             </GlueProvider>
           </QueryClientProvider>
-        </BrowserRouter>
+        </Router>
       </PersistGate>
     </Provider>
   )
