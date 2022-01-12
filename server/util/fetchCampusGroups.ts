@@ -194,6 +194,7 @@ const saveParsedEvents = async (parsedEvents: any[]) => {
         name: parsed.clubName,
         desc: '',
         linkedUserIds: [],
+        linkedUsers: [],
         provider: 'campusgroups',
         providerId: parsed.clubId,
         providerData: {
