@@ -28,8 +28,8 @@
   },
   "author": "",
   "engines": {
-    "node": "14.16.1",
-    "npm": "6.14.12"
+    "node": "17.0.1",
+    "npm": "8.1.0"
   },
   "devDependencies": {}
 }
