@@ -328,10 +328,11 @@ export const scrapeCampusGroups = async () => {
 }
 
 const scrapeJob = new CronJob('0 0 0 * * *', async () => {
+  console.log('running cron job: scrapeJob')
   scrapeCampusGroups()
 })
 
 export const scrapeAtMidnight = () => {
-  console.log('starting cron job: scrapeAtMidnight')
+  console.log('found cron job: scrapeAtMidnight')
   scrapeJob.start()
 }
