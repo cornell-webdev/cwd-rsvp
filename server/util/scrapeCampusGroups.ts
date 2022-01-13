@@ -1,4 +1,5 @@
 import Org from '../models/Org'
+import Log from '../models/Log'
 import Tag from '../models/Tag'
 import Event from '../models/Event'
 import axios from 'axios'
@@ -329,6 +330,7 @@ export const scrapeCampusGroups = async () => {
 
 const scrapeJob = new CronJob('0 0 0 * * *', async () => {
   console.log('running cron job: scrapeJob')
+  new Log({ action: 'scrape campus groups' }).save()
   scrapeCampusGroups()
 })
 
