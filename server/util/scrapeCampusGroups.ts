@@ -313,7 +313,7 @@ const scrapeAndTagEvents = async () => {
 export const scrapeCampusGroups = async () => {
   /* scrape recent events */
   console.log('*** STAGE 1.1: scraping events ***')
-  const parsedEvents = await scrapeAndParseEvents(50)
+  const parsedEvents = await scrapeAndParseEvents(150)
   console.log('*** STAGE 1.2: saving scraped events ***')
   await saveParsedEvents(parsedEvents)
 
