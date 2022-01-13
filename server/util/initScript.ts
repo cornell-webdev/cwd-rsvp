@@ -1,8 +1,9 @@
 import Event from './../models/Event'
-import fetchCampusGroups from './fetchCampusGroups'
+import { scrapeAtMidnight, scrapeCampusGroups } from './scrapeCampusGroups'
+import verifyDatabase from './verifyDatabase'
 
 export default async () => {
-  // const events = await Event.find()
-  // console.log('events.length', events.length)
-  // fetchCampusGroups()
+  scrapeAtMidnight()
+
+  // scrapeCampusGroups()
 }
