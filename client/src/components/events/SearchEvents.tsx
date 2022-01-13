@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import EventCard from 'src/components/events/eventCard'
+import EventCard from 'src/components/events/EventCard'
 import { IEvent, IEventDate } from 'src/types/event.type'
 
 interface ISearchEventsProps {

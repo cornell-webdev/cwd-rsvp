@@ -1,10 +1,8 @@
+import { FlexContainer, Tag, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
-import { Text, Tag } from 'cornell-glue-ui'
 import LikeButton from './likeButton'
-import { FlexContainer } from 'cornell-glue-ui'
-import { IEvent, IEventDate } from 'src/types/event.type'
-import { IUser } from 'src/types/user.type'
 import { getDate } from './trendingEvent'
 
 interface IEventProps {
@@ -26,24 +24,27 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
     }
   }
 
-  var desc = event.title
-
-  if (event.title.length > 32) {
-    desc = event.title.substring(0, 32) + '...'
-  }
-
   return (
-    <EventContainer className='event' alignCenter={true}>
-      <ImgContainer className='img' src={event.imgs[0]} />
-      <TextContainer className='text'>
-        <Text variant='meta2'>{event.org.name}</Text>
-        <Text fontWeight='700' variant='meta1'>
-          {desc}
+    <EventContainer alignStart>
+      <ImgContainer src={event.imgs[0]} />
+      <TextContainer>
+        <Text variant='meta2' maxLines={1}>
+          {event.org.name}
         </Text>
-        <Tag variant='contained' color={event.tag.color} background={event.tag.backgroundColor}>
-          {event.tag.name.charAt(0).toUpperCase() + event.tag.name.slice(1)}
-        </Tag>
-        <FlexContainer justifySpaceBetween={true} alignCenter={true}>
+        <Text fontWeight='700' variant='meta1' maxLines={2}>
+          {event.title}
+        </Text>
+        {event?.tag && (
+          <TagContainer>
+            <Tag
+              variant='contained'
+              color={event.tag?.color}
+              background={event.tag?.backgroundColor}>
+              {event.tag?.name.charAt(0).toUpperCase() + event.tag?.name.slice(1)}
+            </Tag>
+          </TagContainer>
+        )}
+        <FlexContainer justifySpaceBetween alignCenter>
           {date !== undefined ? (
             <Text variant='meta2' color='#d05f5f' fontWeight='700'>
               {getTime(startTime)} - {getTime(endTime)}, {getDate(date)}
@@ -61,21 +62,27 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
 }
 
 const EventContainer = styled(FlexContainer)`
-  height: 100px;
-  padding: 4px 6px;
+  padding: 0.25rem 0.375rem;
+  margin: 0.5rem 0;
 `
 
 const ImgContainer = styled.img`
   float: left;
   border-radius: 6px;
-  width: 87px;
+  min-width: 87px;
+  width: 25%;
   height: 87px;
   margin-right: 10px;
+  object-fit: cover;
+  border: 1px solid ${(props) => props.theme.border.default};
+`
+
+const TagContainer = styled.div`
+  margin: 0.3rem 0;
 `
 
 const TextContainer = styled.div`
   width: 270px;
-  height: 87px;
 `
 
 export default EventCard
