@@ -1,55 +1,59 @@
-import React, { useState, useEffect } from 'react'
+import { Button, FlexContainer, Text } from 'cornell-glue-ui'
+import React, { useState } from 'react'
+import { useEvents } from 'src/api/event'
+import EventCard from 'src/components/events/EventCard'
 import styled from 'styled-components'
-import { FlexContainer, Text, Tag, Button } from 'cornell-glue-ui'
-import EventCard from 'src/components/events/eventCard'
-import { IEvent, IEventDate } from 'src/types/event.type'
-import { useEvents, IUseEvents } from 'src/api/event'
 
 interface IDayEventProps {
-  d: Date
-  tagIDs: string[]
+  date: Date
+  tagId: string
 }
 
-const DayEvent = ({ d, tagIDs }: IDayEventProps) => {
-  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DayEvent = ({ date, tagId }: IDayEventProps) => {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const [expand, setExpand] = useState(false)
-  const [Data, setData] = useState<IEvent[]>([])
 
-  d.setHours(0, 0, 0, 0)
+  date?.setHours(0, 0, 0, 0)
   const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  today?.setHours(0, 0, 0, 0)
 
-  const { events } = useEvents({ date: d })
-  useEffect(() => {
-    if (tagIDs.length === 0) {
-      setData(events || [])
-    } else {
-      const eventsWithTag =
-        events !== undefined
-          ? [...new Set(tagIDs.map((t) => events.filter((e) => e.tag.name === t)).flat())]
-          : []
-      setData(eventsWithTag)
-    }
-  }, [events, tagIDs.length])
+  const { events } = useEvents({ date, tagId })
 
-  function getEventByDate(date: Date, data: IEvent[], expand: boolean) {
-    const eventByDate = data
-      .map((e) =>
+  /* filter by multiple tags */
+  // useEffect(() => {
+  //   if (tagIDs.length === 0) {
+  //     setData(events || [])
+  //   } else {
+  //     const eventsWithTag =
+  //       events !== undefined
+  //         ? [...new Set(tagIDs.map((t) => events.filter((e) => e.tag.name === t)).flat())]
+  //         : []
+  //     setData(eventsWithTag)
+  //   }
+  // }, [events, tagIDs.length])
+
+  // const displayEvents = getEventByDate(d, Data, expand)
+  const displayEvents = expand ? events : events?.slice(0, 2)
+
+  function getEventByDate() {
+    const eventByDate = displayEvents
+      ?.map((e) =>
         e.dates
           .filter((ed) => new Date(ed.date).toDateString() === date.toDateString())
-          .map((ed) => <EventCard event={e} startTime={ed.startTime} endTime={ed.endTime} />)
+          .map((ed) => (
+            <EventCard key={e?._id} event={e} startTime={ed.startTime} endTime={ed.endTime} />
+          ))
       )
       .flat()
     return eventByDate
   }
-
-  const displayEvents = getEventByDate(d, Data, expand)
+  if (!events || events?.length === 0) return null
 
   return (
     <div>
-      <DateText>{d.getTime() === today.getTime() ? 'Today' : days[d.getDay()]}</DateText>
-      {expand ? displayEvents : displayEvents.slice(0, 2)}
-      {displayEvents.length > 2 ? (
+      <DateText>{date.getTime() === today.getTime() ? 'Today' : days[date.getDay()]}</DateText>
+      {getEventByDate()}
+      {events?.length > 2 ? (
         <ButtonContainer justifyEnd={true}>
           <ExpandButton
             background='#F9ECEC'

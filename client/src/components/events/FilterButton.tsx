@@ -1,36 +1,34 @@
-import React, { useState } from "react"
+import { Tag } from 'cornell-glue-ui'
+import React from 'react'
+import { ITag } from 'src/types/tag.type'
 import styled from 'styled-components'
-import {FlexContainer, Text, Tag} from 'cornell-glue-ui'
-import { IEvent, IEventDate } from 'src/types/event.type'
 
-interface IFilterProps{
-    tag: string
-    color: string
-    backgroundColor: string
-    functionPress: Function
-    functionUnpress: Function
-  }
+interface IFilterProps {
+  tag: ITag
+  selectedTagId?: string
+  onClick: (targetTagId: string) => void
+}
+
+const FilterButton = ({ tag, selectedTagId, onClick }: IFilterProps) => {
+  return (
+    <FilterButtonContainer onClick={() => onClick(tag?._id)}>
+      <FilterTag
+        variant={selectedTagId === tag?._id ? 'contained' : 'outlined'}
+        color={tag.color}
+        background={tag.backgroundColor}>
+        {tag.name}
+      </FilterTag>
+    </FilterButtonContainer>
+  )
+}
 
 const FilterButtonContainer = styled.button`
   margin-inline: 4.5px;
   background: transparent;
-  `
-const FilterTag = styled(Tag)`
-cursor: pointer;
-
 `
-const FilterButton:React.FC<IFilterProps> = ({tag, color, backgroundColor, functionPress, functionUnpress}) => {
-const [pressed, setPressed] = useState(false)
-if(!pressed){
-    
-    return(
-    <FilterButtonContainer onClick={() => { functionPress(tag); setPressed(true)}}><FilterTag variant="outlined" color={color}>{tag}</FilterTag></FilterButtonContainer>
-    )
-}else{
-    return(
-    <FilterButtonContainer onClick={() => { functionUnpress(tag); setPressed(false)}}><FilterTag variant="contained" color={color} background={backgroundColor}>{tag}</FilterTag></FilterButtonContainer>
-    )
-}
-}
-  
+
+const FilterTag = styled(Tag)`
+  cursor: pointer;
+`
+
 export default FilterButton
