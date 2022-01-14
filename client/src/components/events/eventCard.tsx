@@ -63,8 +63,14 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
 }
 
 const EventContainer = styled(FlexContainer)`
-  padding: 0.25rem 0.375rem;
-  margin: 0.5rem 0;
+  padding: 0.5rem 0.375rem;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  border-radius: 8px;
+
+  &:hover {
+    background: ${(props) => props.theme.grey[50]};
+  }
 `
 
 const ImgContainer = styled.img`

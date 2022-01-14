@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { HeartOutlined, HeartFilled } from '@ant-design/icons'
+import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import { FlexContainer } from 'cornell-glue-ui'
-import { useToggleEventLike } from '../../api/event'
+import React, { useState } from 'react'
 import { IEvent } from 'src/types/event.type'
-
-// interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
-//   name: string
-//   avatarColor?: string
-// }
+import styled from 'styled-components'
+import { useToggleEventLike } from '../../api/event'
 
 interface ILikeProps {
   event: IEvent
