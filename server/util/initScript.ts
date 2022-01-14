@@ -4,6 +4,6 @@ import verifyDatabase from './verifyDatabase'
 
 export default async () => {
   scrapeAtMidnight()
-
+  verifyDatabase()
   // scrapeCampusGroups()
 }

@@ -9,6 +9,10 @@ export interface IUseEvents {
 
 export const eventsQueryConfig = ({ date, tagId }: IUseEvents) => ({
   url: `/public/event?date=${date}&tagId=${tagId}`,
+  options: {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  },
 })
 
 export const useEvents = ({ date, tagId }: IUseEvents) => {

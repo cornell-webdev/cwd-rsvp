@@ -1,9 +1,10 @@
 import { FlexContainer, Tag, Text } from 'cornell-glue-ui'
-import React from 'react'
+import React, { memo } from 'react'
 import { IEvent } from 'src/types/event.type'
+import { getEventDate } from 'src/util/date'
+import { capitalizeFirstChar } from 'src/util/string'
 import styled from 'styled-components'
-import LikeButton from './likeButton'
-import { getDate } from './trendingEvent'
+import LikeButton from './LikeButton'
 
 interface IEventProps {
   event: IEvent
@@ -40,14 +41,14 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
               variant='contained'
               color={event.tag?.color}
               background={event.tag?.backgroundColor}>
-              {event.tag?.name.charAt(0).toUpperCase() + event.tag?.name.slice(1)}
+              {capitalizeFirstChar(event?.tag?.name)}
             </Tag>
           </TagContainer>
         )}
         <FlexContainer justifySpaceBetween alignCenter>
           {date !== undefined ? (
             <Text variant='meta2' color='#d05f5f' fontWeight='700'>
-              {getTime(startTime)} - {getTime(endTime)}, {getDate(date)}
+              {getTime(startTime)} - {getTime(endTime)}, {getEventDate(date)}
             </Text>
           ) : (
             <Text variant='meta2' color='#d05f5f' fontWeight='700'>
@@ -70,8 +71,9 @@ const ImgContainer = styled.img`
   float: left;
   border-radius: 6px;
   min-width: 87px;
-  width: 25%;
-  height: 87px;
+  width: 28%;
+  min-height: 87px;
+  height: 8vw;
   margin-right: 10px;
   object-fit: cover;
   border: 1px solid ${(props) => props.theme.border.default};
@@ -82,7 +84,7 @@ const TagContainer = styled.div`
 `
 
 const TextContainer = styled.div`
-  width: 270px;
+  width: 70%;
 `
 
-export default EventCard
+export default memo(EventCard)

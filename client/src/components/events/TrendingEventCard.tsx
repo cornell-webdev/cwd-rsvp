@@ -1,44 +1,34 @@
+import { FlexContainer, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { IEvent } from 'src/types/event.type'
+import { getEventDate } from 'src/util/date'
 import styled from 'styled-components'
-import { Text } from 'cornell-glue-ui'
-import LikeButton from './likeButton'
-import { FlexContainer } from 'cornell-glue-ui'
-import { IEvent, IEventDate } from 'src/types/event.type'
-import { IUser } from 'src/types/user.type'
+import LikeButton from './LikeButton'
 
 interface ITrendingEventProps {
   event: IEvent
+  itemId: string
   date: Date
   time: string
 }
 
-const TrendingEvent: React.FC<ITrendingEventProps> = ({
+const TrendingEventCard: React.FC<ITrendingEventProps> = ({
   event,
   date,
   time,
 }: ITrendingEventProps) => {
-  const shadow = {
-    boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-  }
-
-  var desc = event.title
-
-  if (event.title.length > 15) {
-    desc = event.title.substring(0, 16) + '...'
-  }
-
   return (
-    <TrendingEventContainer style={shadow} className='trendingEvent'>
+    <TrendingEventContainer className='trendingEvent'>
       <ImgContainer src={event.imgs[0]} />
       <div>
         <Container>
           <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
-            {getTime(time) + ', ' + getDate(date)}
+            {getTime(time) + ', ' + getEventDate(date)}
           </Text>
         </Container>
         <Container justifySpaceBetween={true} alignCenter={true}>
-          <Text fontWeight='700' variant='meta1' color='#212121'>
-            {desc}
+          <Text fontWeight='700' variant='meta1' color='#212121' maxLines={1}>
+            {event?.title}
           </Text>
           <LikeButton event={event} />
         </Container>
@@ -58,11 +48,15 @@ function getTime(time: string) {
   }
 }
 
-export function getDate(date: Date) {
-  const d = new Date(date.toString().split('T')[0])
-  const day = d.toLocaleString('default', { month: 'short', day: 'numeric' })
-  return day
-}
+const TrendingEventContainer = styled.div`
+  width: 200px;
+  height: 150px;
+  border-radius: 6px;
+  margin-inline: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0.5rem;
+  border: 1px solid ${(props) => props.theme.border.default};
+`
 
 const Container = styled(FlexContainer)`
   margin: 0.5px 12px;
@@ -74,11 +68,4 @@ const ImgContainer = styled.img`
   height: 90px;
 `
 
-const TrendingEventContainer = styled.div`
-  width: 200px;
-  height: 150px;
-  border-radius: 6px;
-  margin-inline: 6px;
-`
-
-export default TrendingEvent
+export default TrendingEventCard

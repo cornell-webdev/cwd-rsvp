@@ -30,15 +30,18 @@ eventRouter.get('/trending', async (req, res) => {
 
 eventRouter.get('/search', async (req, res) => {
   try {
-    const docs = await Event.find({
-      $or: [
-        { details: { $regex: req.query.query as string, $options: 'i' } },
-        { title: { $regex: req.query.query as string, $options: 'i' } },
-        { location: { $regex: req.query.query as string, $options: 'i' } },
-      ],
-    })
-
-    res.send(docs)
+    if (!req.query?.query || req.query.query === '') {
+      res.send([])
+    } else {
+      const docs = await Event.find({
+        $or: [
+          { details: { $regex: req.query.query as string, $options: 'i' } },
+          { title: { $regex: req.query.query as string, $options: 'i' } },
+          { location: { $regex: req.query.query as string, $options: 'i' } },
+        ],
+      })
+      res.send(docs)
+    }
   } catch (e) {
     res.status(500).send(e)
   }
