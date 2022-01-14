@@ -20,3 +20,9 @@ export const formatDate = (
 
   return fullDate
 }
+
+export function getEventDate(date: Date) {
+  const d = new Date(date.toString().split('T')[0])
+  const day = d.toLocaleString('default', { month: 'short', day: 'numeric' })
+  return day
+}
