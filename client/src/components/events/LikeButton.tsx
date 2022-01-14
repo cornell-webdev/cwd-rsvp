@@ -1,17 +1,22 @@
-import { HeartFilled, HeartOutlined } from '@ant-design/icons'
-import { FlexContainer } from 'cornell-glue-ui'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import { FlexContainer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
 import { useToggleEventLike } from '../../api/event'
+import { useCurrentUser } from 'src/api/user'
 
 interface ILikeProps {
   event: IEvent
 }
 
-const LikeButton: React.FC<ILikeProps> = ({ event }) => {
+const LikeButton: React.FC<ILikeProps> = ({ event }: ILikeProps) => {
   const [likeCount, setLikeCount] = useState(event.likedUserIds.length)
-  const [liked, setLiked] = useState(false)
+  const { currentUser } = useCurrentUser()
+  const [liked, setLiked] = useState(
+    currentUser && !!event.likedUserIds?.find((id) => id === currentUser?._id)
+  )
 
   const { toggleEventLikeAsync } = useToggleEventLike()
 
@@ -24,50 +29,64 @@ const LikeButton: React.FC<ILikeProps> = ({ event }) => {
 
   if (!liked) {
     return (
-      <HeartContainer alignCenter={true}>
-        {likeCount}
-        <HeartButton
-          onClick={() => {
-            setLikeCount(likeCount + 1)
-            setLiked(true)
-            onLike()
-          }}>
-          <HeartOutlined />
-        </HeartButton>
-      </HeartContainer>
-    )
-  } else {
-    return (
-      <HeartContainer alignCenter={true}>
-        {likeCount}
-        <HeartButton
-          onClick={() => {
-            setLikeCount(likeCount - 1)
-            setLiked(false)
-            onLike()
-          }}>
-          <HeartFilled />
-        </HeartButton>
-      </HeartContainer>
+      <HeartButton
+        onClick={() => {
+          setLikeCount(likeCount + 1)
+          setLiked(true)
+          onLike()
+        }}>
+        <FlexContainer alignCenter>
+          <Text variant='meta2' fontWeight={700} color={theme.text.light}>
+            {likeCount}
+          </Text>
+          <HeartOutlinedIcon />
+        </FlexContainer>
+      </HeartButton>
     )
   }
+
+  return (
+    <HeartButton
+      onClick={() => {
+        setLikeCount(likeCount - 1)
+        setLiked(false)
+        onLike()
+      }}>
+      <FlexContainer alignCenter>
+        <Text variant='meta2' fontWeight={700} color={theme.text.light}>
+          {likeCount}
+        </Text>
+        <HeartFilledIcon />
+      </FlexContainer>
+    </HeartButton>
+  )
 }
 
-const HeartContainer = styled(FlexContainer)`
-  font-size: 12px;
-  font-weight: medium;
-  text-align: right;
-  float: right;
+const HeartOutlinedIcon = styled(FavoriteBorderIcon)`
+  width: 20px !important;
+  fill: #d05f5f !important;
+  margin-left: 0.3rem;
 `
+
+const HeartFilledIcon = styled(FavoriteIcon)`
+  width: 20px !important;
+  fill: #d05f5f !important;
+  margin-left: 0.3rem;
+`
+
 const HeartButton = styled.button`
   float: right;
-  width: 15px;
-  height: 13.76px;
-  color: #d05f5f;
   margin-left: 4px;
-  padding: 1px;
-  background: transparent;
+  padding: 0.2rem 0.5rem;
   cursor: pointer;
+  border-radius: 6px;
+  background: ${(props) => props.theme.grey[50]};
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      background: ${(props) => props.theme.grey[100]};
+    }
+  }
 `
 
 export default LikeButton

@@ -49,13 +49,11 @@ function getTime(time: string) {
 }
 
 const TrendingEventContainer = styled.div`
-  width: 200px;
-  height: 150px;
   border-radius: 6px;
-  margin-inline: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin: 0.5rem;
   border: 1px solid ${(props) => props.theme.border.default};
+  padding-bottom: 0.5rem;
 `
 
 const Container = styled(FlexContainer)`

@@ -68,8 +68,10 @@ const EventContainer = styled(FlexContainer)`
   cursor: pointer;
   border-radius: 8px;
 
-  &:hover {
-    background: ${(props) => props.theme.grey[50]};
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      background: ${(props) => props.theme.grey[50]};
+    }
   }
 `
 
