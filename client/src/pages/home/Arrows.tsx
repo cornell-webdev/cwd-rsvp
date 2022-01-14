@@ -1,5 +1,6 @@
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import React from 'react'
-
 import { VisibilityContext } from 'react-horizontal-scrolling-menu'
 import useIsMobile from 'src/hooks/useIsMobile'
 import styled from 'styled-components'
@@ -23,8 +24,8 @@ export function LeftArrow() {
 
   return (
     <ArrowContainer>
-      <ArrowButton disabled={disabled} onClick={() => scrollPrev()}>
-        Left
+      <ArrowButton disabled={disabled} onClick={() => scrollPrev()} isLeft>
+        <LeftIcon />
       </ArrowButton>
     </ArrowContainer>
   )
@@ -50,7 +51,7 @@ export function RightArrow() {
   return (
     <ArrowContainer>
       <ArrowButton disabled={disabled} onClick={() => scrollNext()}>
-        Right
+        <RightIcon />
       </ArrowButton>
     </ArrowContainer>
   )
@@ -58,24 +59,52 @@ export function RightArrow() {
 
 const ArrowContainer = styled.div`
   position: relative;
+  background: transparent;
+  padding: 1.5rem 0;
 `
 
-const ArrowButton = styled.button`
+export interface IArrowButtonProps {
+  isLeft?: boolean
+}
+
+const ArrowButton = styled.button<IArrowButtonProps>`
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   text-align: center;
   margin: auto;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   user-select: none;
   z-index: 2;
-  width: 30px;
+  width: 2.5rem;
+  background: ${(props) => props.theme.grey[50]};
+  border-radius: 6px;
 
   /* disabled */
-  opacity: ${(props) => props.disabled && 0};
+  display: ${(props) => props.disabled && 'none'};
+
+  /* isLeft */
+  left: ${(props) => props.isLeft && 'unset'};
+  right: ${(props) => props.isLeft && 0};
+
+  &:hover {
+    background: ${(props) => props.theme.grey[100]};
+  }
+`
+
+const RightIcon = styled(ChevronRightIcon)`
+  width: 2.8rem !important;
+  height: 5rem !important;
+  fill: ${(props) => props.theme.text.default} !important;
+`
+
+const LeftIcon = styled(ChevronLeftIcon)`
+  width: 2.8rem !important;
+  height: 5rem !important;
+  fill: ${(props) => props.theme.text.default} !important;
 `
