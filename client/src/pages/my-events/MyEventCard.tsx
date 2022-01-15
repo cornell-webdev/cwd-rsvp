@@ -34,13 +34,14 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
             </Text>
           </TextSection>
           <FlexContainer alignCenter justifySpaceBetween fullWidth>
-            <FlexContainer>
+            <FlexContainer alignCenter>
               <Link to={`/edit-event/${event?._id}`}>
                 <Button>Edit</Button>
               </Link>
               <Spacer x={1} />
-              {/* TODO: link buttons after event details page is developed */}
-              <Button variant='text'>View event</Button>
+              <Link to={`/event/${event?._id}`}>
+                <Button variant='text'>View event</Button>
+              </Link>
             </FlexContainer>
             <IconButton icon={<DeleteIcon />} onClick={() => setIsDeleteModoalOpen(true)} />
           </FlexContainer>

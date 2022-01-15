@@ -6,6 +6,7 @@ import MyEvents from 'src/pages/my-events/MyEvents'
 import { IRootState } from 'src/types/redux.type'
 
 const Home = React.lazy(() => import('src/pages/home/Home'))
+const EventDetails = React.lazy(() => import('src/pages/event-details/EventDetails'))
 const AuthCallback = React.lazy(() => import('src/pages/auth-callback/AuthCallback'))
 const Login = React.lazy(() => import('src/pages/login/Login'))
 const Logout = React.lazy(() => import('src/pages/logout/Logout'))
@@ -125,6 +126,15 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/event/:eventId',
+    component: EventDetails,
+    label: 'Event details',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
     isDesktopOnly: false,
   },
   {

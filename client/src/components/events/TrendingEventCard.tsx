@@ -1,5 +1,6 @@
 import { FlexContainer, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
 import { getEventDate } from 'src/util/date'
 import styled from 'styled-components'
@@ -18,22 +19,24 @@ const TrendingEventCard: React.FC<ITrendingEventProps> = ({
   time,
 }: ITrendingEventProps) => {
   return (
-    <TrendingEventContainer className='trendingEvent'>
-      <ImgContainer src={event.imgs[0]} />
-      <div>
-        <Container>
-          <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
-            {getTime(time) + ', ' + getEventDate(date)}
-          </Text>
-        </Container>
-        <Container justifySpaceBetween={true} alignCenter={true}>
-          <Text fontWeight='700' variant='meta1' color='#212121' maxLines={1}>
-            {event?.title}
-          </Text>
-          <LikeButton event={event} />
-        </Container>
-      </div>
-    </TrendingEventContainer>
+    <Link to={`/event/${event?._id}`}>
+      <TrendingEventContainer className='trendingEvent'>
+        <ImgContainer src={event.imgs[0]} />
+        <div>
+          <Container>
+            <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
+              {getTime(time) + ', ' + getEventDate(date)}
+            </Text>
+          </Container>
+          <Container justifySpaceBetween={true} alignCenter={true}>
+            <Text fontWeight='700' variant='meta1' color='#212121' maxLines={1}>
+              {event?.title}
+            </Text>
+            <LikeButton event={event} />
+          </Container>
+        </div>
+      </TrendingEventContainer>
+    </Link>
   )
 }
 
