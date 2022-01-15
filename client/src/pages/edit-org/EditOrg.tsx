@@ -2,6 +2,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { useOrgById } from 'src/api/org'
+import BackButton from 'src/components/BackButton'
 import OrgForm from 'src/components/forms/OrgForm'
 import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
@@ -15,14 +16,7 @@ const EditOrg = () => {
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
-        <Button
-          variant='text'
-          startIcon={<ChevronLeftIcon />}
-          color={theme.text.default}
-          defaultBackground={theme.grey[100]}
-          onClick={() => router.history.goBack()}>
-          Back
-        </Button>
+        <BackButton onClick={() => router.history.goBack()} />
         <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Edit profile

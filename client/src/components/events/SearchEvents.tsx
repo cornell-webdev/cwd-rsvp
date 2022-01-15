@@ -39,7 +39,7 @@ const SearchEvents = ({ events }: ISearchEventsProps) => {
               event={e}
               startTime={ed.startTime}
               endTime={ed.endTime}
-              date={ed.date}
+              date={new Date(ed.date)}
             />
           ))
         )

@@ -21,8 +21,8 @@ const Auth = () => {
       <StyledButton
         variant='text'
         color={theme.text.default}
-        defaultBackground={theme.grey[100]}
-        background={theme.grey[200]}>
+        background={theme.grey[100]}
+        hoverBackground={theme.grey[200]}>
         Sign in
       </StyledButton>
       {/* <img srcSet={`${googleSignin} 2x`} /> */}

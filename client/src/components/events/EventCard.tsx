@@ -2,7 +2,7 @@ import { FlexContainer, Tag, Text } from 'cornell-glue-ui'
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
-import { getEventDate } from 'src/util/date'
+import { getEventDate, getEventTime } from 'src/util/date'
 import { capitalizeFirstChar } from 'src/util/string'
 import styled from 'styled-components'
 import LikeButton from './LikeButton'
@@ -15,17 +15,6 @@ interface IEventProps {
 }
 
 const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: IEventProps) => {
-  function getTime(time: string) {
-    const hour = parseInt(time.substring(0, 2))
-    if (hour < 12) {
-      return hour.toString() + ':' + time.substring(2, 4) + ' am'
-    } else if (hour > 12) {
-      return (hour - 12).toString() + ':' + time.substring(2, 4) + ' pm'
-    } else {
-      return time + ' pm'
-    }
-  }
-
   return (
     <StyledLink to={`/event/${event?._id}`}>
       <EventContainer alignStart>
@@ -50,11 +39,11 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
           <FlexContainer justifySpaceBetween alignCenter>
             {date !== undefined ? (
               <Text variant='meta2' color='#d05f5f' fontWeight='700'>
-                {getTime(startTime)} - {getTime(endTime)}, {getEventDate(date)}
+                {getEventTime(startTime)} - {getEventTime(endTime)}, {getEventDate(date)}
               </Text>
             ) : (
               <Text variant='meta2' color='#d05f5f' fontWeight='700'>
-                {getTime(startTime)} - {getTime(endTime)}
+                {getEventTime(startTime)} - {getEventTime(endTime)}
               </Text>
             )}
             <LikeButton event={event} />

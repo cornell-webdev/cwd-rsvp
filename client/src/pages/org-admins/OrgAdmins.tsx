@@ -2,6 +2,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import BackButton from 'src/components/BackButton'
 import PageContainer from 'src/components/layout/PageContainer'
 import VerticalButtonsContainer from 'src/components/layout/VerticalButtonsContainer'
 import styled from 'styled-components'
@@ -12,13 +13,7 @@ const OrgAdmins = () => {
     <PageContainer isMobileOnly>
       <Container>
         <Link to='/profile/my-orgs'>
-          <Button
-            variant='text'
-            startIcon={<ChevronLeftIcon />}
-            color={theme.text.default}
-            defaultBackground={theme.grey[100]}>
-            Back
-          </Button>
+          <BackButton />
         </Link>
         <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
@@ -36,7 +31,10 @@ const OrgAdmins = () => {
           </Link>
           <Spacer y={0.5625} />
           <Link to='/profile/my-orgs'>
-            <Button color={theme.text.default} background={theme.grey[100]}>
+            <Button
+              color={theme.text.default}
+              background={theme.grey[100]}
+              hoverBackground={theme.grey[200]}>
               Cancel
             </Button>
           </Link>

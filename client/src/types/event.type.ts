@@ -4,7 +4,7 @@ import { ITag } from './tag.type'
 import { IUser } from './user.type'
 
 export interface IEventDate {
-  date: Date
+  date: string | Date
   startTime: string
   endTime: string
 }
