@@ -9,19 +9,21 @@ interface PageContainerProps {
   height?: string
   isMobileOnly?: boolean
   isShowWarning?: boolean
+  isNoPadding?: boolean
 }
 
 const PageContainer = ({
   children,
   height,
-  isMobileOnly = false,
+  isMobileOnly,
   isShowWarning = true,
+  isNoPadding,
 }: PageContainerProps) => {
   const isMobile = useIsMobile()
 
   return (
     <Container height={height}>
-      <InnerContainer isMobileOnly={isMobileOnly}>
+      <InnerContainer isMobileOnly={isMobileOnly} isNoPadding={isNoPadding}>
         {isMobileOnly && !isMobile && isShowWarning && (
           <WarningContainer>
             <StyledInfoIcon />
@@ -51,11 +53,15 @@ const Container = styled.div<ContainerProps>`
 
 interface InnerContainerProps {
   isMobileOnly?: PageContainerProps['isMobileOnly']
+  isNoPadding?: PageContainerProps['isNoPadding']
 }
 
 const InnerContainer = styled.div<InnerContainerProps>`
   width: 100%;
   padding: 0.75rem;
+
+  /* isNoPadding */
+  padding: ${(props) => props.isNoPadding && '0'};
 
   @media (min-width: ${(props) => props.theme.tablet}) {
     /* isMobileOnly */

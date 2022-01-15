@@ -81,6 +81,7 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
             <Button
               color={theme.text.default}
               background={theme.grey[100]}
+              hoverBackground={theme.grey[200]}
               onClick={() => router.history.goBack()}>
               Cancel
             </Button>

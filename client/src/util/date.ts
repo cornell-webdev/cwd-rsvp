@@ -21,8 +21,23 @@ export const formatDate = (
   return fullDate
 }
 
-export function getEventDate(date: Date) {
-  const d = new Date(date.toString().split('T')[0])
+export function getEventDate(dateString: string | Date) {
+  const d = new Date(dateString)
   const day = d.toLocaleString('default', { month: 'short', day: 'numeric' })
   return day
+}
+
+export function getEventTime(time: string) {
+  const hour = parseInt(time.substring(0, 2))
+  if (hour < 12) {
+    return hour.toString() + ':' + time.substring(2, 4) + ' am'
+  } else if (hour > 12) {
+    return (hour - 12).toString() + ':' + time.substring(2, 4) + ' pm'
+  } else {
+    return hour.toString() + ':' + time.substring(2, 4) + ' pm'
+  }
+}
+
+export function getEventDateTime(dateString: string | Date, startTime: string, endTime: string) {
+  return `${getEventTime(startTime)} - ${getEventTime(endTime)}, ${getEventDate(dateString)}`
 }

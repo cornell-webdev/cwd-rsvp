@@ -39,7 +39,7 @@ const TrendingEvents = ({ events }: ITrendingEventsProps) => {
             key={e?._id}
             itemId={e?._id}
             event={e}
-            date={e.dates[0].date}
+            date={new Date(e.dates[0].date)}
             time={e.dates[0].startTime}
           />
         ))}

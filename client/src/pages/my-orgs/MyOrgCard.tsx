@@ -34,7 +34,10 @@ const MyOrgCard = ({ org }: IMyOrgCardProps) => {
             </Link>
             <Spacer x={0.5} />
             <Link to={`/edit-org/${org?._id}`}>
-              <Button color={theme.text.default} background={theme.grey[100]}>
+              <Button
+                color={theme.text.default}
+                background={theme.grey[100]}
+                hoverBackground={theme.grey[200]}>
                 Edit profile
               </Button>
             </Link>
