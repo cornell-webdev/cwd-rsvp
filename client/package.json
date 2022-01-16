@@ -20,7 +20,7 @@
     "axios": "^0.21.1",
     "bson-objectid": "^2.0.1",
     "compressorjs": "^1.0.6",
-    "cornell-glue-ui": "^0.1.51",
+    "cornell-glue-ui": "^0.1.52",
     "date-fns": "^2.11.1",
     "firebase": "^9.6.0",
     "history": "^4.10.1",
