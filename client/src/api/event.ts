@@ -26,6 +26,9 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
 
 export const eventByIdQueryConfig = (eventId: string) => ({
   url: `/public/event/${eventId}`,
+  options: {
+    enabled: !!eventId,
+  },
 })
 
 export const useEventById = (eventId: string) => {
