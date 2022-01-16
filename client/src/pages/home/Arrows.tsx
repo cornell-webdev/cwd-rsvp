@@ -60,7 +60,6 @@ export function RightArrow() {
 const ArrowContainer = styled.div`
   position: relative;
   background: transparent;
-  padding: 1.5rem 0;
 `
 
 export interface IArrowButtonProps {
@@ -69,9 +68,9 @@ export interface IArrowButtonProps {
 
 const ArrowButton = styled.button<IArrowButtonProps>`
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  top: 15px;
+  bottom: 15px;
+  left: 8px;
   text-align: center;
   margin: auto;
   cursor: pointer;
