@@ -1,15 +1,16 @@
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
+import { useCurrentUser } from 'src/api/user'
 import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
 import { useToggleEventLike } from '../../api/event'
-import { useCurrentUser } from 'src/api/user'
+import AvatarGroup from '../AvatarGroup'
 
 interface ILikeProps {
   event: IEvent
-  variant?: 'default' | 'text'
+  variant?: 'default' | 'event-detail'
 }
 
 const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeProps) => {
@@ -17,6 +18,10 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
   const { currentUser } = useCurrentUser()
   const [liked, setLiked] = useState(
     currentUser && !!event.likedUserIds?.find((id) => id === currentUser?._id)
+  )
+  const currentUserAvatarUrl = currentUser?.providerData?.photos[0]?.value
+  const [avatarUrls, setAvatarUrls] = useState<string[]>(
+    event?.likedUsers?.map((user) => user.providerData?.photos[0]?.value)
   )
 
   const { toggleEventLikeAsync } = useToggleEventLike()
@@ -34,6 +39,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
     setLikeCount(likeCount + 1)
     setLiked(true)
     onLike()
+    setAvatarUrls([...avatarUrls, currentUserAvatarUrl])
   }
 
   const handleUnlike = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,19 +48,30 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
     setLikeCount(likeCount - 1)
     setLiked(false)
     onLike()
+    const newAvatarUrls = avatarUrls?.filter((url) => url !== currentUserAvatarUrl)
+    setAvatarUrls(newAvatarUrls)
   }
 
-  if (variant === 'text') {
+  if (variant === 'event-detail') {
     return (
-      <Button
-        variant={liked ? 'contained' : 'outlined'}
-        size='small'
-        startIcon={
-          liked ? <HeartFilledIcon variant={variant} /> : <HeartOutlinedIcon variant={variant} />
-        }
-        onClick={liked ? handleUnlike : handleLike}>
-        Like this event
-      </Button>
+      <FlexContainer alignCenter justifySpaceBetween>
+        <Button
+          variant={liked ? 'contained' : 'outlined'}
+          size='small'
+          startIcon={
+            liked ? <HeartFilledIcon variant={variant} /> : <HeartOutlinedIcon variant={variant} />
+          }
+          onClick={liked ? handleUnlike : handleLike}>
+          Like this event
+        </Button>
+        {likeCount > 0 && (
+          <FlexContainer alignCenter>
+            <AvatarGroup avatarUrls={avatarUrls} />
+            <Spacer x={0.7} />
+            <Text variant='meta1'>{likeCount} likes</Text>
+          </FlexContainer>
+        )}
+      </FlexContainer>
     )
   }
 
@@ -70,7 +87,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
   )
 }
 
-export interface IHeartOutlinedIconProps {
+interface IHeartOutlinedIconProps {
   variant?: ILikeProps['variant']
 }
 
@@ -80,7 +97,7 @@ const HeartOutlinedIcon = styled(FavoriteBorderIcon)<IHeartOutlinedIconProps>`
   margin-left: 0.3rem;
 
   /* variant */
-  margin-left: ${(props) => props.variant === 'text' && 'unset'};
+  margin-left: ${(props) => props.variant === 'event-detail' && 'unset'};
 `
 
 interface IHeartFilledIconProps {
@@ -93,8 +110,8 @@ const HeartFilledIcon = styled(FavoriteIcon)<IHeartFilledIconProps>`
   margin-left: 0.3rem;
 
   /* variant */
-  margin-left: ${(props) => props.variant === 'text' && 'unset'};
-  fill: ${(props) => props.variant === 'text' && props.theme.brand[900]} !important;
+  margin-left: ${(props) => props.variant === 'event-detail' && 'unset'};
+  fill: ${(props) => props.variant === 'event-detail' && props.theme.brand[900]} !important;
 `
 
 const HeartButton = styled.button`

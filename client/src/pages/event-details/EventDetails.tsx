@@ -1,8 +1,8 @@
 import CalendarIcon from '@material-ui/icons/CalendarTodayOutlined'
 import LocationIcon from '@material-ui/icons/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
-import React from 'react'
-import { useEventById } from 'src/api/event'
+import React, { useEffect, useState } from 'react'
+import { useEventById, useIncrementEventViews } from 'src/api/event'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import PageContainer from 'src/components/layout/PageContainer'
@@ -13,10 +13,17 @@ import styled from 'styled-components'
 const EventDetails = () => {
   const router = useRouter()
   const eventId = router.match.params.eventId
-
   const { event } = useEventById(eventId)
 
-  console.log('event', event)
+  const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
+  const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
+  const { incrementEventViews } = useIncrementEventViews()
+
+  useEffect(() => {
+    incrementEventViews({
+      _id: event?._id,
+    })
+  }, [])
 
   if (!event) {
     return (
@@ -53,46 +60,45 @@ const EventDetails = () => {
             <LocationIcon />
             <Text>{event?.location}</Text>
           </IconRow>
-          <LikesRow alignCenter justifySpaceBetween>
-            {event?.likedUserIds?.length > 0 ? (
-              <Text>{event?.likedUserIds?.length} likes</Text>
-            ) : (
-              <div />
-            )}
-            <LikeButton event={event} variant='text' />
-          </LikesRow>
-          <Text variant='h5' fontWeight={700}>
+          <LikesContainer>
+            <LikeButton event={event} variant='event-detail' />
+          </LikesContainer>
+          <SectionHeading variant='h5' fontWeight={700}>
             Event details
-          </Text>
-          <Text maxLines={2}>{event?.details}</Text>
+          </SectionHeading>
+          <Text maxLines={isDetailsExpanded ? undefined : 2}>{event?.details}</Text>
           <Spacer y={0.5} />
           <Button
             variant='text'
             size='small'
             color={theme.text.default}
             background={theme.grey[50]}
-            hoverBackground={theme.grey[100]}>
-            Show more
+            hoverBackground={theme.grey[100]}
+            onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}>
+            {isDetailsExpanded ? 'Show less' : 'Show more'}
           </Button>
           <Spacer y={2} />
-          <Text variant='h5' fontWeight={700}>
+          <SectionHeading variant='h5' fontWeight={700}>
             Host
-          </Text>
+          </SectionHeading>
           <FlexContainer alignCenter justifySpaceBetween>
-            <Avatar name={event?.org?.name} />
-            <Button variant='text'>Claim organization</Button>
+            <Avatar name={event?.org?.name} underline={event?.org?.email} />
+            {/* TODO: claim org feature */}
+            {/* <Button variant='text'>Claim organization</Button> */}
           </FlexContainer>
+          <Spacer y={0.75} />
           {event?.org?.desc?.length > 0 && (
             <div>
-              <Text maxLines={2}>{event?.org?.desc}</Text>
+              <Text maxLines={isHostExpanded ? undefined : 2}>{event?.org?.desc}</Text>
               <Spacer y={0.5} />
               <Button
                 variant='text'
                 size='small'
                 color={theme.text.default}
                 background={theme.grey[50]}
-                hoverBackground={theme.grey[100]}>
-                Show more
+                hoverBackground={theme.grey[100]}
+                onClick={() => setIsHostExpanded(!isHostExpanded)}>
+                {isHostExpanded ? 'Show less' : 'Show more'}
               </Button>
             </div>
           )}
@@ -103,7 +109,7 @@ const EventDetails = () => {
 }
 
 const Container = styled.div`
-  padding: 1.5rem 0;
+  padding: 2rem 0 8rem 0;
   overflow: hidden;
 `
 
@@ -117,6 +123,10 @@ const ImgContainer = styled.div`
   @media (min-width: ${(props) => props.theme.small}) {
     padding: 0 0.75rem;
   }
+`
+
+const SectionHeading = styled(Text)`
+  margin-bottom: 0.75rem;
 `
 
 const EventImg = styled.img`
@@ -141,7 +151,7 @@ const IconRow = styled(FlexContainer)`
   }
 `
 
-const LikesRow = styled(FlexContainer)`
+const LikesContainer = styled.div`
   margin: 2rem 0;
 `
 
