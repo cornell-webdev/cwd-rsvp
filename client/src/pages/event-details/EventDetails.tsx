@@ -122,6 +122,7 @@ const HoriPadding = styled.div`
 const ImgContainer = styled.div`
   width: 100%;
   margin: 1rem 0;
+
   @media (min-width: ${(props) => props.theme.small}) {
     padding: 0 0.75rem;
   }
@@ -141,6 +142,7 @@ const EventImg = styled.img`
   @media (min-width: ${(props) => props.theme.small}) {
     border-radius: 10px;
     height: 25vw;
+    border: 1px solid ${(props) => props.theme.border.default};
   }
 `
 
