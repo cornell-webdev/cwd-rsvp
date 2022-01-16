@@ -60,7 +60,7 @@ const StyledTextarea = styled(ResizedTextarea)<TextareaProps>`
   -webkit-appearance: none;
 
   // disabled
-  background: ${(props) => props.disabled && props.theme.bg.wash};
+  background: ${(props) => props.disabled && props.theme.background.wash};
 
   // error
   border-color: ${(props) => props.error != null && props.theme.danger[500]};

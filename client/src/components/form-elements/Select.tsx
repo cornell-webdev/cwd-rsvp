@@ -37,7 +37,7 @@ const Select = forwardRef<HTMLSelectElement, ISelectProps>((props: ISelectProps,
           colors: {
             ...defaultStyles.colors,
             primary25: theme.brand[50],
-            primary50: theme.bg.grey,
+            primary50: theme.background.grey,
             primary: theme.brand[500],
           },
         })}

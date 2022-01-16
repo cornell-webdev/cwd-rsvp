@@ -93,7 +93,7 @@ const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
 
   // disabled
-  background: ${(props) => props.disabled && props.theme.bg.wash};
+  background: ${(props) => props.disabled && props.theme.background.wash};
 
   // width
   width: ${(props) => props.width && `${props.width}px`};
