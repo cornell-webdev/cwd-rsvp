@@ -34,6 +34,7 @@ const Img = styled.img`
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  border: 2px solid ${(props) => props.theme.background.default};
 `
 
 export default AvatarGroup
