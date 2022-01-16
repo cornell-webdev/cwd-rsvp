@@ -20,10 +20,12 @@ const EventDetails = () => {
   const { incrementEventViews } = useIncrementEventViews()
 
   useEffect(() => {
-    incrementEventViews({
-      _id: event?._id,
-    })
-  }, [])
+    if (event) {
+      incrementEventViews({
+        _id: event?._id,
+      })
+    }
+  }, [event])
 
   if (!event) {
     return (
