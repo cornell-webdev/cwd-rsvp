@@ -86,7 +86,7 @@ const eventSchema = new Schema(
 
 eventSchema.virtual('likedUsers', {
   ref: User,
-  localField: 'likeUserIds',
+  localField: 'likedUserIds',
   foreignField: '_id',
   justOne: false,
   autopopulate: true,
