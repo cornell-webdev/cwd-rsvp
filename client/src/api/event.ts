@@ -24,6 +24,23 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
   }
 }
 
+export const likedEventsQueryConfig = () => ({
+  url: `/private/event/liked-events`,
+  options: {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  },
+})
+
+export const useLikedEvents = () => {
+  const { data: likedEvents, ...rest } = useCustomQuery<IEvent[]>(likedEventsQueryConfig())
+
+  return {
+    ...rest,
+    likedEvents,
+  }
+}
+
 export const eventByIdQueryConfig = (eventId: string) => ({
   url: `/public/event/${eventId}`,
   options: {

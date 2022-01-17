@@ -98,7 +98,7 @@ export const routes: IRoute[] = [
     component: MyLikes,
     label: 'My likes',
     isPublicNav: false,
-    isPrivateNav: false,
+    isPrivateNav: true,
     isPrivateRoute: true,
     isDesktopOnly: false,
   },

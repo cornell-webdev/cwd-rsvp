@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import Auth from '../auth/Auth'
-import { Button, FlexContainer, Spacer, theme } from 'cornell-glue-ui'
-import PageContainer from '../layout/PageContainer'
-import Logo from '../Logo'
 import AddIcon from '@material-ui/icons/Add'
+import { Button, FlexContainer, theme } from 'cornell-glue-ui'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from 'src/api/user'
-import useNavs from 'src/hooks/useNavs'
 import useIsMobile from 'src/hooks/useIsMobile'
+import useNavs from 'src/hooks/useNavs'
+import styled from 'styled-components'
+import Auth from '../auth/Auth'
+import PageContainer from '../layout/PageContainer'
+import Logo from '../Logo'
 
 const Header = () => {
   const { currentUser } = useCurrentUser()
@@ -45,14 +45,15 @@ const Header = () => {
 }
 
 const Container = styled.div`
-  padding: 1rem 0.4rem 0.4rem 0.4rem;
+  padding: 0.4rem;
+  padding-top: 1rem;
   @media (min-width: ${(props) => props.theme.small}) {
-    padding: 0.4rem;
+    padding-top: 0.6rem;
   }
 `
 
 const NavLink = styled(Link)`
-  margin-left: 0.5rem !important;
+  margin-left: 0.75rem !important;
 `
 
 const NavButton = styled(Button)`

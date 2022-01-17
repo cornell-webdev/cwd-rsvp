@@ -50,6 +50,16 @@ eventRouter.get('/', async (req, res) => {
   }
 })
 
+eventRouter.get('/liked-events', async (req, res) => {
+  try {
+    const events = await Event.find({ likedUserIds: req.user?._id })
+    console.log('events', events)
+    res.send(events)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 eventRouter.delete('/', async (req, res) => {
   try {
     const result = await Event.findByIdAndDelete(req?.body?._id)
