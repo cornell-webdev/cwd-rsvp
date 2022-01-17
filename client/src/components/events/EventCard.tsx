@@ -46,7 +46,9 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
                 {getEventTime(startTime)} - {getEventTime(endTime)}
               </Text>
             )}
-            <LikeButton event={event} />
+            <LikeButtonContainer>
+              <LikeButton event={event} />
+            </LikeButtonContainer>
           </FlexContainer>
         </TextContainer>
       </EventContainer>
@@ -60,6 +62,7 @@ const StyledLink = styled(Link)`
 `
 
 const EventContainer = styled(FlexContainer)`
+  position: relative;
   padding: 0.5rem 0.375rem;
   cursor: pointer;
   border-radius: 8px;
@@ -89,6 +92,12 @@ const TagContainer = styled.div`
 
 const TextContainer = styled.div`
   width: 70%;
+`
+
+const LikeButtonContainer = styled.div`
+  position: absolute;
+  right: 5px;
+  bottom: 8px;
 `
 
 export default memo(EventCard)
