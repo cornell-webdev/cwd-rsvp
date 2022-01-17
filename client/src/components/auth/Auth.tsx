@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from 'src/api/user'
 import { IRootState } from 'src/types/redux.type'
-import styled from 'styled-components'
 import AuthedAvatar from './AuthedAvatar'
 
 const Auth = () => {
@@ -18,18 +17,16 @@ const Auth = () => {
 
   return (
     <Link to='/login'>
-      <StyledButton
+      <Button
         variant='text'
         color={theme.text.default}
         background={theme.grey[100]}
         hoverBackground={theme.grey[200]}>
         Sign in
-      </StyledButton>
+      </Button>
       {/* <img srcSet={`${googleSignin} 2x`} /> */}
     </Link>
   )
 }
-
-const StyledButton = styled(Button)``
 
 export default Auth

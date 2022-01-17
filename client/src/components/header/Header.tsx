@@ -1,24 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
 import Auth from '../auth/Auth'
-import { Button, FlexContainer } from 'cornell-glue-ui'
+import { Button, FlexContainer, Spacer, theme } from 'cornell-glue-ui'
 import PageContainer from '../layout/PageContainer'
 import Logo from '../Logo'
 import AddIcon from '@material-ui/icons/Add'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from 'src/api/user'
+import useNavs from 'src/hooks/useNavs'
+import useIsMobile from 'src/hooks/useIsMobile'
 
 const Header = () => {
   const { currentUser } = useCurrentUser()
+  const isMobile = useIsMobile()
+  const navs = useNavs()
 
   return (
     <Container>
-      <PageContainer>
+      <PageContainer isNoPadding>
         <Row alignCenter justifySpaceBetween fullWidth>
           <Logo />
           <RightSection isSignedIn={currentUser !== null}>
+            {!isMobile &&
+              navs?.map(({ path, label }) => (
+                <NavLink key={path} to={path}>
+                  <NavButton
+                    variant='text'
+                    color={theme.text.default}
+                    background={theme.background.default}
+                    hoverBackground={theme.grey[100]}>
+                    {label}
+                  </NavButton>
+                </NavLink>
+              ))}
             <Link to='/new-event'>
-              <Button startIcon={<AddIcon />}>Event</Button>
+              <Button startIcon={<StyledAddIcon />}>Event</Button>
             </Link>
             <Auth />
           </RightSection>
@@ -29,7 +45,25 @@ const Header = () => {
 }
 
 const Container = styled.div`
-  border-bottom: 1px solid ${(props) => props.theme.border.default};
+  padding: 1rem 0.4rem 0.4rem 0.4rem;
+  @media (min-width: ${(props) => props.theme.small}) {
+    padding: 0.4rem;
+  }
+`
+
+const NavLink = styled(Link)`
+  margin-left: 0.5rem !important;
+`
+
+const NavButton = styled(Button)`
+  font-weight: 600;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+`
+
+const StyledAddIcon = styled(AddIcon)`
+  width: 18px;
+  height: 18px;
 `
 
 const Row = styled(FlexContainer)`
