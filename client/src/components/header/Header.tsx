@@ -45,8 +45,9 @@ const Header = () => {
 }
 
 const Container = styled.div`
-  padding: 0.4rem;
+  padding: 0.4rem 0.75rem;
   padding-top: 1rem;
+
   @media (min-width: ${(props) => props.theme.small}) {
     padding-top: 0.6rem;
   }
@@ -67,9 +68,7 @@ const StyledAddIcon = styled(AddIcon)`
   height: 18px;
 `
 
-const Row = styled(FlexContainer)`
-  padding-left: 0.5rem;
-`
+const Row = styled(FlexContainer)``
 
 interface IRightSectionProps {
   isSignedIn: boolean
