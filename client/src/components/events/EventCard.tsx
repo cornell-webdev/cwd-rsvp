@@ -79,11 +79,14 @@ const ImgContainer = styled.img`
   border-radius: 6px;
   min-width: 87px;
   width: 35%;
-  min-height: 87px;
-  height: 8vw;
   margin-right: 10px;
   object-fit: contain;
   border: 1px solid ${(props) => props.theme.border.default};
+  height: 87px;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    height: 120px;
+  }
 `
 
 const TagContainer = styled.div`

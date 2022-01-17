@@ -134,14 +134,14 @@ const SectionHeading = styled(Text)`
 
 const EventImg = styled.img`
   width: 100%;
-  height: 187px;
+  height: 200px;
   object-fit: cover;
   border-top: 1px solid ${(props) => props.theme.border.default};
   border-bottom: 1px solid ${(props) => props.theme.border.default};
 
   @media (min-width: ${(props) => props.theme.small}) {
     border-radius: 10px;
-    height: 25vw;
+    height: 300px;
     border: 1px solid ${(props) => props.theme.border.default};
   }
 `
