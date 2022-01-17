@@ -24,14 +24,14 @@ const PageContainer = ({
   return (
     <Container height={height}>
       <InnerContainer isMobileOnly={isMobileOnly} isNoPadding={isNoPadding}>
-        {isMobileOnly && !isMobile && isShowWarning && (
+        {/* {isMobileOnly && !isMobile && isShowWarning && (
           <WarningContainer>
             <StyledInfoIcon />
             <Text variant='meta1' color={theme.warning[600]}>
               The desktop version of this page is currently under development
             </Text>
           </WarningContainer>
-        )}
+        )} */}
         {children}
       </InnerContainer>
     </Container>

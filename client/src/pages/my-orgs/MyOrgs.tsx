@@ -7,6 +7,7 @@ import { ReactComponent as EmptyStateIllust } from 'src/assets/svgs/my-orgs-empt
 import { Link } from 'react-router-dom'
 import { useMyOrgs } from 'src/api/org'
 import MyOrgCard from './MyOrgCard'
+import EmptyState from 'src/components/EmptyState'
 
 const MyOrgs = () => {
   const { myOrgs } = useMyOrgs()
@@ -29,15 +30,11 @@ const MyOrgs = () => {
             ))}
           </>
         ) : (
-          <EmptyStateContainer>
-            <FixedWidthContainer>
-              <StyledEmptyStateIllust />
-              <Text variant='meta1' textAlign='center'>
-                Your account is not linked with any organizations at this moment. You may claim an
-                existing organization or create an organization.
-              </Text>
-            </FixedWidthContainer>
-          </EmptyStateContainer>
+          <EmptyState
+            illustration={<EmptyStateIllust />}
+            text1='Your account is not linked with any organizations at this moment.'
+            text2='You may claim an existing organization or create an organization.'
+          />
         )}
       </Container>
     </PageContainer>
@@ -45,27 +42,5 @@ const MyOrgs = () => {
 }
 
 const Container = styled.div``
-
-const EmptyStateContainer = styled.div`
-  margin-top: 5rem;
-  display: flex;
-  justify-content: center;
-`
-
-const FixedWidthContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 360px;
-`
-
-const StyledEmptyStateIllust = styled(EmptyStateIllust)`
-  margin-bottom: 1rem;
-  width: 60vw;
-
-  @media (min-width: ${(props) => props.theme.large}) {
-    width: 30vw;
-  }
-`
 
 export default MyOrgs
