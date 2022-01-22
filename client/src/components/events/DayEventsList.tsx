@@ -1,4 +1,4 @@
-import { Button, FlexContainer, Text } from 'cornell-glue-ui'
+import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
 import React, { memo, useState } from 'react'
 import { useEvents } from 'src/api/event'
 import EventCard from 'src/components/events/EventCard'
@@ -60,14 +60,17 @@ const DayEventsList = ({ date, tagId }: IDayEventProps) => {
       {getEventByDate()}
       {events?.length > 2 ? (
         <ButtonContainer justifyEnd={true}>
-          <ExpandButton
-            background='#F9ECEC'
-            color='#212121'
+          <Button
+            variant='text'
+            size='small'
+            background={theme.grey[50]}
+            hoverBackground={theme.grey[100]}
+            color={theme.text.default}
             onClick={() => {
               setExpand(!expand)
             }}>
             {expand ? 'Show less' : 'Show more'}
-          </ExpandButton>
+          </Button>
         </ButtonContainer>
       ) : null}
     </Container>
@@ -80,24 +83,12 @@ const Container = styled.div`
 
 const DateText = styled(Text)`
   font-weight: 700;
-  /* padding: 8px 6px; */
   padding-left: 0.375rem;
   font-size: 16px;
 `
 
 const ButtonContainer = styled(FlexContainer)`
   padding: 10px 0px 6px 0px;
-`
-
-const ExpandButton = styled(Button)`
-  width: 91px;
-  height: 22px;
-  font-size: 14px;
-  padding: 3px 0px;
-  float: right;
-  display: flex;
-  align-items: center;
-  justify-content: center; ;
 `
 
 export default memo(DayEventsList)
