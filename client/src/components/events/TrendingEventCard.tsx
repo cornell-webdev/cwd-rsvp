@@ -22,19 +22,17 @@ const TrendingEventCard: React.FC<ITrendingEventProps> = ({
     <Link to={`/event/${event?._id}`}>
       <TrendingEventContainer className='trendingEvent'>
         <ImgContainer src={event.imgs[0]} />
-        <div>
-          <Container>
-            <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
-              {getEventTime(time) + ', ' + getEventDate(date)}
-            </Text>
-          </Container>
-          <Container justifySpaceBetween={true} alignCenter={true}>
+        <TextContainer>
+          <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
+            {getEventTime(time) + ', ' + getEventDate(date)}
+          </Text>
+          <TitleRow justifySpaceBetween={true} alignCenter={true}>
             <Text fontWeight='700' variant='meta1' color='#212121' maxLines={1}>
               {event?.title}
             </Text>
             <LikeButton event={event} />
-          </Container>
-        </div>
+          </TitleRow>
+        </TextContainer>
       </TrendingEventContainer>
     </Link>
   )
@@ -48,8 +46,13 @@ const TrendingEventContainer = styled.div`
   padding-bottom: 0.5rem;
 `
 
-const Container = styled(FlexContainer)`
-  margin: 0.5px 12px;
+const TextContainer = styled.div`
+  border-top: 1px solid ${(props) => props.theme.border.light};
+  padding: 0.625rem 0.75rem 0 0.75rem;
+`
+
+const TitleRow = styled(FlexContainer)`
+  margin-top: -0.3rem;
 `
 
 const ImgContainer = styled.img`
