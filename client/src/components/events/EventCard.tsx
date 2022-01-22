@@ -80,7 +80,8 @@ const ImgContainer = styled.img`
   min-width: 87px;
   width: 35%;
   margin-right: 10px;
-  object-fit: contain;
+  /* object-fit: contain; */
+  object-fit: cover;
   border: 1px solid ${(props) => props.theme.border.default};
   height: 87px;
 
