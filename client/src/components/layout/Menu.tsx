@@ -12,13 +12,16 @@ export interface IOption {
   onClick: () => void
 }
 
+type TPopperProps = React.ComponentProps<typeof Popper>
+
 interface MenuProps {
   options: IOption[]
   children: React.ReactNode
   offset?: number
+  placement?: TPopperProps['placement']
 }
 
-const Menu = ({ options, children, offset }: MenuProps) => {
+const Menu = ({ options, children, offset, placement }: MenuProps) => {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
 
@@ -51,12 +54,15 @@ const Menu = ({ options, children, offset }: MenuProps) => {
             enabled: true,
             offset: `0, ${offset || 0}`,
           },
-        }}>
+        }}
+        placement={placement}>
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin: ['bottom', 'bottom-start', 'bottom-end'].includes(placement)
+                ? 'center top'
+                : 'center bottom',
             }}>
             <Paper>
               <OutsideClickListener onOutsideClick={handleOutsideClick} isListening>

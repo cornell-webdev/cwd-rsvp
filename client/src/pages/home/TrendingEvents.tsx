@@ -1,10 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
-import useDrag from 'src/hooks/useDrag'
-import { IEvent } from 'src/types/event.type'
+import { ScrollMenu } from 'react-horizontal-scrolling-menu'
 import TrendingEventCard from 'src/components/events/TrendingEventCard'
-import useIsMobile from 'src/hooks/useIsMobile'
+import { IEvent } from 'src/types/event.type'
+import styled from 'styled-components'
 import { LeftArrow, RightArrow } from './Arrows'
 
 interface ITrendingEventsProps {
@@ -12,28 +10,11 @@ interface ITrendingEventsProps {
 }
 
 const TrendingEvents = ({ events }: ITrendingEventsProps) => {
-  const { dragStart, dragStop, dragMove } = useDrag()
-  const isMobile = useIsMobile()
-
-  const handleDrag =
-    ({ scrollContainer }: React.ContextType<typeof VisibilityContext>) =>
-    (ev: React.MouseEvent) =>
-      dragMove(ev, (posDiff) => {
-        if (isMobile && scrollContainer.current) {
-          scrollContainer.current.scrollLeft += posDiff
-        }
-      })
-
   if (!events) return null
 
   return (
-    <Container onMouseLeave={dragStop}>
-      <ScrollMenu
-        LeftArrow={LeftArrow}
-        RightArrow={RightArrow}
-        onMouseDown={() => dragStart}
-        onMouseUp={() => dragStop}
-        onMouseMove={handleDrag}>
+    <Container>
+      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {events?.map((e) => (
           <TrendingEventCard
             key={e?._id}
@@ -49,6 +30,9 @@ const TrendingEvents = ({ events }: ITrendingEventsProps) => {
 }
 
 const Container = styled.div`
+  & .react-horizontal-scrolling-menu--scroll-container {
+    overflow-x: auto;
+  }
   & .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
     display: none;
   }
