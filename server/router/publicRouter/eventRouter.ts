@@ -7,21 +7,7 @@ const eventRouter = express.Router()
 
 eventRouter.get('/trending', async (req, res) => {
   try {
-    const sortedDocs = await Event.aggregate([
-      {
-        $project: {
-          likedUserIds: 1,
-          length: { $size: '$likedUserIds' },
-        },
-      },
-      { $sort: { length: -1 } },
-      { $limit: 10 },
-    ])
-    const ids = sortedDocs.map((doc) => doc._id)
-    const docs = await Event.find({
-      _id: { $in: ids },
-    })
-
+    const docs = await Event.find().sort({ likedUserIds: -1 }).limit(10)
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)
