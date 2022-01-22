@@ -81,7 +81,7 @@ export const routes: IRoute[] = [
     label: 'New event',
     isPublicNav: false,
     isPrivateNav: false,
-    isPrivateRoute: false,
+    isPrivateRoute: true,
     isDesktopOnly: false,
   },
   {

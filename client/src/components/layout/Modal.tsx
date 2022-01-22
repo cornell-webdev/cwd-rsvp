@@ -35,25 +35,42 @@ const Modal = ({
     }
   }, [isOpen])
 
+  const stopPropagation = (
+    event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>
+  ) => {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  const handleRequestClose = (
+    event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>
+  ) => {
+    console.log('modal component handle request close')
+    stopPropagation(event)
+    onRequestClose()
+  }
+
   if (!isOpen) return null
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      onAfterOpen={onAfterOpen}
-      style={customStyles}
-      ariaHideApp={false}>
-      {isShowHeader && (
-        <TopRow justifySpaceBetween alignCenter heading={heading}>
-          <Text variant='h4'>{heading}</Text>
-          <StyledCloseButton size='small' onClick={onRequestClose}>
-            <CloseIcon fontSize='inherit' />
-          </StyledCloseButton>
-        </TopRow>
-      )}
-      <ContentContainer>{children}</ContentContainer>
-    </ReactModal>
+    <div onClick={stopPropagation}>
+      <ReactModal
+        isOpen={isOpen}
+        onRequestClose={handleRequestClose}
+        onAfterOpen={onAfterOpen}
+        style={customStyles}
+        ariaHideApp={false}>
+        {isShowHeader && (
+          <TopRow justifySpaceBetween alignCenter heading={heading}>
+            <Text variant='h4'>{heading}</Text>
+            <StyledCloseButton size='small' onClick={handleRequestClose}>
+              <CloseIcon fontSize='inherit' />
+            </StyledCloseButton>
+          </TopRow>
+        )}
+        <ContentContainer>{children}</ContentContainer>
+      </ReactModal>
+    </div>
   )
 }
 

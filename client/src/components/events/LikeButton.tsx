@@ -3,6 +3,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useCurrentUser } from 'src/api/user'
+import useRouter from 'src/hooks/useRouter'
 import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
 import { useToggleEventLike } from '../../api/event'
@@ -23,10 +24,11 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
   const [avatarUrls, setAvatarUrls] = useState<string[]>(
     event?.likedUsers?.map((user) => user.providerData?.photos[0]?.value)
   )
+  const router = useRouter()
 
   const { toggleEventLikeAsync } = useToggleEventLike()
 
-  const onLike = async () => {
+  const toggleLike = async () => {
     const eventId = event._id
     await toggleEventLikeAsync({
       _id: eventId,
@@ -36,20 +38,30 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
   const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    setLikeCount(likeCount + 1)
-    setLiked(true)
-    onLike()
-    setAvatarUrls([...avatarUrls, currentUserAvatarUrl])
+
+    if (!currentUser) {
+      router.push('/login')
+    } else {
+      setLikeCount(likeCount + 1)
+      setLiked(true)
+      toggleLike()
+      setAvatarUrls([...avatarUrls, currentUserAvatarUrl])
+    }
   }
 
   const handleUnlike = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    setLikeCount(likeCount - 1)
-    setLiked(false)
-    onLike()
-    const newAvatarUrls = avatarUrls?.filter((url) => url !== currentUserAvatarUrl)
-    setAvatarUrls(newAvatarUrls)
+
+    if (!currentUser) {
+      router.push('/login')
+    } else {
+      setLikeCount(likeCount - 1)
+      setLiked(false)
+      toggleLike()
+      const newAvatarUrls = avatarUrls?.filter((url) => url !== currentUserAvatarUrl)
+      setAvatarUrls(newAvatarUrls)
+    }
   }
 
   if (variant === 'event-detail') {
@@ -76,14 +88,16 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
   }
 
   return (
-    <HeartButton onClick={liked ? handleUnlike : handleLike}>
-      <FlexContainer alignCenter>
-        <Text variant='meta2' fontWeight={700} color={theme.text.light}>
-          {likeCount}
-        </Text>
-        {liked ? <HeartFilledIcon /> : <HeartOutlinedIcon />}
-      </FlexContainer>
-    </HeartButton>
+    <>
+      <HeartButton onClick={liked ? handleUnlike : handleLike}>
+        <FlexContainer alignCenter>
+          <Text variant='meta2' fontWeight={700} color={theme.text.light}>
+            {likeCount}
+          </Text>
+          {liked ? <HeartFilledIcon /> : <HeartOutlinedIcon />}
+        </FlexContainer>
+      </HeartButton>
+    </>
   )
 }
 

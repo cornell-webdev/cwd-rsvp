@@ -31,6 +31,7 @@ const ConfirmationModal = ({
             <Button
               color={theme.text.default}
               background={theme.grey[100]}
+              hoverBackground={theme.grey[200]}
               onClick={onRequestClose}>
               Cancel
             </Button>
