@@ -16,7 +16,7 @@ interface IEventProps {
 
 const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: IEventProps) => {
   return (
-    <StyledLink to={`/event/${event?._id}`} onClick={() => console.log('clicked card')}>
+    <StyledLink to={`/event/${event?._id}`}>
       <EventContainer alignStart>
         <ImgContainer src={event.imgs[0]} />
         <TextContainer>
@@ -46,7 +46,7 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
                 {getEventTime(startTime)} - {getEventTime(endTime)}
               </Text>
             )}
-            <LikeButtonContainer onClick={() => console.log('clicked like button container')}>
+            <LikeButtonContainer>
               <LikeButton event={event} />
             </LikeButtonContainer>
           </FlexContainer>

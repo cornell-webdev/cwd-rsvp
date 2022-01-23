@@ -45,7 +45,6 @@ const Modal = ({
   const handleRequestClose = (
     event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>
   ) => {
-    console.log('modal component handle request close')
     stopPropagation(event)
     onRequestClose()
   }
