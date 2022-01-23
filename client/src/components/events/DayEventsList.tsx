@@ -2,6 +2,7 @@ import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
 import React, { memo, useState } from 'react'
 import { useEvents } from 'src/api/event'
 import EventCard from 'src/components/events/EventCard'
+import { getEventDate } from 'src/util/date'
 import styled from 'styled-components'
 
 interface IDayEventProps {
@@ -52,11 +53,15 @@ const DayEventsList = ({ date, tagId }: IDayEventProps) => {
       .flat()
     return eventByDate
   }
+
   if (!events || events?.length === 0) return <div />
 
   return (
     <Container>
-      <DateText>{date.getTime() === today.getTime() ? 'Today' : days[date.getDay()]}</DateText>
+      <DateText>
+        {date.getTime() === today.getTime() ? 'Today' : days[date.getDay()].slice(0, 3)},{' '}
+        {getEventDate(date)}
+      </DateText>
       {getEventByDate()}
       {events?.length > 2 ? (
         <ButtonContainer justifyEnd={true}>
