@@ -27,11 +27,21 @@ const convertTime12to24 = (time12h: string): string => {
 
 const fileUrl = (path: string): string => (path ? `https://static1.campusgroups.com${path}` : '')
 
-const formatLocation = (location: string): string =>
-  location === 'Private Location (sign in to display)' ||
-  location === 'Private Location (register to display)'
-    ? 'Private location'
-    : location
+export const formatLocation = (location: string): string => {
+  if (!location) {
+    return ''
+  } else if (location?.includes('<div')) {
+    const text = location.split('<div')[0]
+    const $ = cheerio.load(`<html>${location}</html>`)
+    const link = $('a').attr('href')
+    return `${text} ${link}`
+  } else {
+    return location === 'Private Location (sign in to display)' ||
+      location === 'Private Location (register to display)'
+      ? 'Private location'
+      : location
+  }
+}
 
 const parseEvent = async (eventObj: any) => {
   // parse given data
@@ -123,14 +133,28 @@ const mergeParsedByDate = async (parsedEvents: any) => {
   parsedEvents.forEach((parsed: any) => {
     if (Object.hasOwnProperty.call(eventNameToIndex, parsed.eventName)) {
       const existingEvent = mergedEvents[eventNameToIndex[parsed.eventName]]
-      existingEvent.dates = [
-        ...existingEvent.dates,
-        {
-          date: parsed.date,
-          startTime: parsed.startTime,
-          endTime: parsed.endTime,
-        },
-      ]
+
+      let isDuplicate = false
+      existingEvent.dates?.forEach((existingDate: IEventDate) => {
+        if (
+          existingDate.date.toString() === parsed.date.toString() &&
+          existingDate.startTime === parsed.startTime &&
+          existingDate.endTime === parsed.endTime
+        ) {
+          isDuplicate = true
+        }
+      })
+
+      if (!isDuplicate) {
+        existingEvent.dates = [
+          ...existingEvent.dates,
+          {
+            date: parsed.date,
+            startTime: parsed.startTime,
+            endTime: parsed.endTime,
+          },
+        ]
+      }
     } else {
       eventNameToIndex[parsed.eventName] = mergedEvents.length
       const formattedParsed = {

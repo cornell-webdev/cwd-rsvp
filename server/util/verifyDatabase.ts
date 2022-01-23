@@ -1,6 +1,7 @@
 import Org from '../models/Org'
 import Event from '../models/Event'
 import { IEventDate } from '../types/event.type'
+import { formatLocation } from './scrapeCampusGroups'
 
 const verifyDatabase = async () => {
   console.log('*** checking event duplicates')
@@ -43,6 +44,18 @@ const verifyDatabase = async () => {
   const emptyDatesEvents = await Event.find({ dates: [] })
   const eventNames = emptyDatesEvents.map((event) => event.title)
   console.log('empty date event names:', eventNames)
+
+  console.log('*** checking for unformatted virtual events')
+  const unformattedEvents = await Event.find({ location: { $regex: '<div', $options: 'i' } })
+  console.log(`found ${unformattedEvents?.length} events with unformatted virtual location`)
+  const promises = unformattedEvents?.map(async (event) => {
+    const newLocation = formatLocation(event?.location)
+    event.location = newLocation
+    event.save()
+  })
+  await Promise.all(promises)
+
+  console.log('*** DB verification complete')
 }
 
 export default verifyDatabase
