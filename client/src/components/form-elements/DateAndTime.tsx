@@ -1,11 +1,11 @@
+import DeleteIcon from '@material-ui/icons/Delete'
 import { Button, FlexContainer, IconButton, Spacer } from 'cornell-glue-ui'
 import React from 'react'
 import DatePicker from 'src/components/form-elements/DatePicker'
 import Select, { ISelectOption } from 'src/components/form-elements/Select'
+import useIsMobile from 'src/hooks/useIsMobile'
 import { IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
-import DeleteIcon from '@material-ui/icons/Delete'
-import useIsDesktop from 'src/hooks/useIsDesktop'
 
 interface IDateAndTimeProps {
   dates: IEventDate[]
@@ -73,7 +73,7 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
     setDates(newDates)
   }
 
-  const isDesktop = useIsDesktop()
+  const isMobile = useIsMobile()
 
   const handleDelete = (targetIdx: number) => {
     setDates(dates.filter((_, idx) => idx !== targetIdx))
@@ -83,9 +83,9 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
     <Container>
       {dates.map(({ date, startTime, endTime }, idx) => (
         <div key={`${date.toString()}${startTime}${endTime}`}>
-          <FlexContainer alignCenter justifySpaceBetween key={date.toString()}>
+          <DateRow alignCenter justifySpaceBetween={isMobile}>
             <DatePicker
-              isHideYear={!isDesktop}
+              isHideYear={isMobile}
               date={new Date(date)}
               onChange={(date) => changeDate(idx, date)}
             />
@@ -95,7 +95,7 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               onChange={(selectedOption) =>
                 handleTimeChange('start', selectedOption as ISelectOption, idx)
               }
-              width='105px'
+              width={isMobile ? '105px' : '120px'}
             />
             <Select
               value={timeOptions?.find((option) => option.value === endTime)}
@@ -103,18 +103,18 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
               onChange={(selectedOption) =>
                 handleTimeChange('end', selectedOption as ISelectOption, idx)
               }
-              width='105px'
+              width={isMobile ? '105px' : '120px'}
             />
             {idx !== 0 ? (
               <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />
             ) : (
               <SpacePlaceholder />
             )}
-          </FlexContainer>
+          </DateRow>
           <Spacer y={1} />
         </div>
       ))}
-      <Button variant='text' onClick={handleAddDate} type='button'>
+      <Button variant='text' onClick={handleAddDate} type='button' size='small'>
         Add another date
       </Button>
     </Container>
@@ -125,6 +125,14 @@ const Container = styled.div``
 
 const SpacePlaceholder = styled.div`
   width: 40px;
+`
+
+const DateRow = styled(FlexContainer)`
+  @media (min-width: ${(props) => props.theme.small}) {
+    & > * {
+      margin-right: 1rem;
+    }
+  }
 `
 
 export default DateAndTime

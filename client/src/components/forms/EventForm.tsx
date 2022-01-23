@@ -126,7 +126,9 @@ const EventForm = ({ initValues }: IEventFormProps) => {
           options={orgOptions}
         />
         <Link to='/new-org'>
-          <Button variant='text'>Create organization</Button>
+          <Button variant='text' size='small'>
+            Create organization
+          </Button>
         </Link>
         <Spacer y={0.25} />
         <HookedTextarea
