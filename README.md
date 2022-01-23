@@ -1,3 +1,3 @@
 # RSVP
 
-Events at Cornell
+RSVP: the events platform for the Cornell community.
