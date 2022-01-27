@@ -4,9 +4,9 @@ import createTags from './createTags'
 
 export default async () => {
   if (process.env.NODE_ENV !== 'development') {
-    scrapeAtMidnight()
-    await scrapeCampusGroups()
-    await verifyDatabase()
-    await createTags()
+    // scrapeAtMidnight()
+    // await scrapeCampusGroups()
+    // await verifyDatabase()
+    // await createTags()
   }
 }
