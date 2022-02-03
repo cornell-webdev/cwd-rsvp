@@ -20,6 +20,7 @@ interface ISelectProps {
   maxMenuHeight?: number
   width?: string
   isSearchable?: boolean
+  placeholder?: string
   error?: string
 }
 
@@ -47,6 +48,7 @@ const Select = forwardRef<HTMLSelectElement, ISelectProps>((props: ISelectProps,
         classNamePrefix='react-select'
         isError={!!props?.error}
         width={props?.width}
+        placeholder={props?.placeholder}
       />
     </div>
   )

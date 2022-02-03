@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom'
 import { useCreateEvent, useUpdateEventById } from 'src/api/event'
 import { useAllOrgs } from 'src/api/org'
 import { useAllTags } from 'src/api/tag'
+import DateAndTime from 'src/components/form-elements/DateAndTime'
 import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import useRouter from 'src/hooks/useRouter'
-import { IEvent, IEventDate } from 'src/types/event.type'
+import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { HookedInput } from '../form-elements/Input'
-import DateAndTime from 'src/components/form-elements/DateAndTime'
 
 interface IEventFormProps {
   initValues?: IEvent
@@ -56,14 +56,14 @@ const EventForm = ({ initValues }: IEventFormProps) => {
   const [urls, setUrls] = useState<string[]>(
     initValues && initValues?.imgs?.length > 0 ? [initValues?.imgs[0]] : []
   )
-  const [dates, setDates] = useState<IEventDate[]>(
+  const [dates, setDates] = useState(
     initValues && initValues?.dates
       ? initValues.dates
       : [
           {
             date: new Date(),
-            startTime: '0000',
-            endTime: '0000',
+            startTime: undefined,
+            endTime: undefined,
           },
         ]
   )
