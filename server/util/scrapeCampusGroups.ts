@@ -257,7 +257,9 @@ const saveParsed = async (parsed: any) => {
     }
 
     // scrape org page
-    const URL = `https://cornell.campusgroups.com/club_signup?group_type=&search=${parsed.clubName}&category_tags=&order=name_asc`
+    const URL = encodeURI(
+      `https://cornell.campusgroups.com/club_signup?group_type=&search=${parsed.clubName}&category_tags=&order=name_asc`
+    )
     const { data } = await axios.get(URL)
     const $ = cheerio.load(data)
 
