@@ -22,12 +22,12 @@ const EventDetails = () => {
   const { incrementEventViews } = useIncrementEventViews()
 
   useEffect(() => {
-    if (event) {
+    if (eventId) {
       incrementEventViews({
-        _id: event?._id,
+        _id: eventId,
       })
     }
-  }, [event])
+  }, [])
 
   if (!event) {
     return (

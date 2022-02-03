@@ -1,11 +1,12 @@
+import DeleteIcon from '@material-ui/icons/Delete'
 import { Button, FlexContainer, IconButton, Spacer, Text } from 'cornell-glue-ui'
 import React, { useState } from 'react'
-import { IEvent } from 'src/types/event.type'
-import styled from 'styled-components'
-import DeleteIcon from '@material-ui/icons/Delete'
-import ConfirmationModal from 'src/components/layout/ConfirmationModal'
-import { useDeleteEvent } from 'src/api/event'
 import { Link } from 'react-router-dom'
+import { useDeleteEvent } from 'src/api/event'
+import ConfirmationModal from 'src/components/layout/ConfirmationModal'
+import { IEvent } from 'src/types/event.type'
+import getBumpedCount from 'src/util/getBumpedCount'
+import styled from 'styled-components'
 
 interface IMyEventCardProps {
   event: IEvent
@@ -27,7 +28,7 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
         <RightSection>
           <TextSection>
             <Text variant='meta2'>
-              {event?.likedUserIds?.length} likes • {event?.views} views
+              {getBumpedCount(event, 'LIKES')} likes • {getBumpedCount(event, 'VIEWS')} views
             </Text>
             <Text variant='meta1' fontWeight={700}>
               {event?.title}

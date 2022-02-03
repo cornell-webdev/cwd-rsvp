@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useCurrentUser } from 'src/api/user'
 import useRouter from 'src/hooks/useRouter'
 import { IEvent } from 'src/types/event.type'
+import getBumpedCount from 'src/util/getBumpedCount'
 import styled from 'styled-components'
 import { useToggleEventLike } from '../../api/event'
 import AvatarGroup from '../AvatarGroup'
@@ -15,7 +16,7 @@ interface ILikeProps {
 }
 
 const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeProps) => {
-  const [likeCount, setLikeCount] = useState(event.likedUserIds.length)
+  const [likeCount, setLikeCount] = useState(getBumpedCount(event, 'LIKES'))
   const { currentUser } = useCurrentUser()
   const [liked, setLiked] = useState(
     currentUser && !!event.likedUserIds?.find((id) => id === currentUser?._id)
@@ -45,7 +46,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
       setLikeCount(likeCount + 1)
       setLiked(true)
       toggleLike()
-      setAvatarUrls([...avatarUrls, currentUserAvatarUrl])
+      setAvatarUrls([currentUserAvatarUrl, ...avatarUrls])
     }
   }
 
@@ -78,7 +79,11 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
         </Button>
         {likeCount > 0 && (
           <FlexContainer alignCenter>
-            <AvatarGroup avatarUrls={avatarUrls} />
+            <AvatarGroup
+              avatarUrls={avatarUrls}
+              spoofCount={likeCount >= 3 ? 3 - avatarUrls?.length : likeCount - avatarUrls?.length}
+              spoofOffset={event.title?.length % 20}
+            />
             <Spacer x={0.7} />
             <Text variant='meta1'>{likeCount} likes</Text>
           </FlexContainer>
