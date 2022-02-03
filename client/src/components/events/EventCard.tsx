@@ -1,4 +1,4 @@
-import { FlexContainer, Tag, Text } from 'cornell-glue-ui'
+import { FlexContainer, Spacer, Tag, Text } from 'cornell-glue-ui'
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
@@ -36,6 +36,7 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
               </Tag>
             </TagContainer>
           )}
+          <Spacer y={0.2} />
           <FlexContainer justifySpaceBetween alignCenter>
             {date !== undefined ? (
               <Text variant='meta2' color='#d05f5f' fontWeight='700'>
@@ -46,9 +47,9 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
                 {getEventTime(startTime)} - {getEventTime(endTime)}
               </Text>
             )}
-            <LikeButtonContainer>
+            <div>
               <LikeButton event={event} />
-            </LikeButtonContainer>
+            </div>
           </FlexContainer>
         </TextContainer>
       </EventContainer>
@@ -78,12 +79,12 @@ const ImgContainer = styled.img`
   float: left;
   border-radius: 6px;
   min-width: 87px;
-  width: 35%;
+  width: 45%;
   margin-right: 10px;
-  /* object-fit: contain; */
-  object-fit: cover;
+  object-fit: contain;
+  /* object-fit: cover; */
   border: 1px solid ${(props) => props.theme.border.default};
-  height: 87px;
+  height: 76px;
 
   @media (min-width: ${(props) => props.theme.small}) {
     height: 120px;
@@ -95,13 +96,7 @@ const TagContainer = styled.div`
 `
 
 const TextContainer = styled.div`
-  width: 70%;
-`
-
-const LikeButtonContainer = styled.div`
-  position: absolute;
-  right: 5px;
-  bottom: 8px;
+  width: 55%;
 `
 
 export default memo(EventCard)
