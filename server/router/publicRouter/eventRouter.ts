@@ -7,7 +7,17 @@ const eventRouter = express.Router()
 
 eventRouter.get('/trending', async (req, res) => {
   try {
-    const docs = await Event.find().sort({ likedUserIds: -1 }).limit(10)
+    const docs = await Event.find({
+      dates: {
+        $elemMatch: {
+          date: {
+            $gte: startOfDay(new Date()),
+          },
+        },
+      },
+    })
+      .sort({ likedUserIds: -1 })
+      .limit(10)
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

@@ -26,9 +26,9 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
     setDates(newDates)
   }
 
-  const timeOptions: ISelectOption[] = []
+  let timeOptions: ISelectOption[] = []
 
-  for (let i = 0; i <= 1425; i += 15) {
+  for (let i = 0; i <= 1425; i += 5) {
     let hours = Math.floor(i / 60)
     const minutesValue = i % 60
     const minutes = ('0' + minutesValue).slice(-2)
@@ -44,6 +44,10 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
       value,
     })
   }
+
+  const endTimes = timeOptions.slice(96)
+  const startTimes = timeOptions.slice(0, 96)
+  timeOptions = [...endTimes, ...startTimes]
 
   const handleAddDate = () => {
     setDates([
@@ -96,6 +100,7 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
                 handleTimeChange('start', selectedOption as ISelectOption, idx)
               }
               width={isMobile ? '105px' : '120px'}
+              placeholder='Start'
             />
             <Select
               value={timeOptions?.find((option) => option.value === endTime)}
@@ -104,6 +109,7 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
                 handleTimeChange('end', selectedOption as ISelectOption, idx)
               }
               width={isMobile ? '105px' : '120px'}
+              placeholder='End'
             />
             {idx !== 0 ? (
               <IconButton type='button' icon={<DeleteIcon />} onClick={() => handleDelete(idx)} />

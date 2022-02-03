@@ -6,12 +6,14 @@ import { useEventById, useIncrementEventViews } from 'src/api/event'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import PageContainer from 'src/components/layout/PageContainer'
+import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDateTime } from 'src/util/date'
 import styled from 'styled-components'
 
 const EventDetails = () => {
   const router = useRouter()
+  const isMobile = useIsMobile()
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
 
@@ -20,12 +22,12 @@ const EventDetails = () => {
   const { incrementEventViews } = useIncrementEventViews()
 
   useEffect(() => {
-    if (event) {
+    if (eventId) {
       incrementEventViews({
-        _id: event?._id,
+        _id: eventId,
       })
     }
-  }, [event])
+  }, [])
 
   if (!event) {
     return (
@@ -68,17 +70,21 @@ const EventDetails = () => {
           <SectionHeading variant='h5' fontWeight={700}>
             Event details
           </SectionHeading>
-          <Text maxLines={isDetailsExpanded ? undefined : 2}>{event?.details}</Text>
-          <Spacer y={0.5} />
-          <Button
-            variant='text'
-            size='small'
-            color={theme.text.default}
-            background={theme.grey[50]}
-            hoverBackground={theme.grey[100]}
-            onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}>
-            {isDetailsExpanded ? 'Show less' : 'Show more'}
-          </Button>
+          <Text maxLines={!isMobile || isDetailsExpanded ? undefined : 3}>{event?.details}</Text>
+          {isMobile && (
+            <>
+              <Spacer y={0.5} />
+              <Button
+                variant='text'
+                size='small'
+                color={theme.text.default}
+                background={theme.grey[50]}
+                hoverBackground={theme.grey[100]}
+                onClick={() => setIsDetailsExpanded(!isDetailsExpanded)}>
+                {isDetailsExpanded ? 'Show less' : 'Show more'}
+              </Button>
+            </>
+          )}
           <Spacer y={2} />
           <SectionHeading variant='h5' fontWeight={700}>
             Host
@@ -91,17 +97,21 @@ const EventDetails = () => {
           <Spacer y={0.75} />
           {event?.org?.desc?.length > 0 && (
             <div>
-              <Text maxLines={isHostExpanded ? undefined : 2}>{event?.org?.desc}</Text>
-              <Spacer y={0.5} />
-              <Button
-                variant='text'
-                size='small'
-                color={theme.text.default}
-                background={theme.grey[50]}
-                hoverBackground={theme.grey[100]}
-                onClick={() => setIsHostExpanded(!isHostExpanded)}>
-                {isHostExpanded ? 'Show less' : 'Show more'}
-              </Button>
+              <Text maxLines={!isMobile || isHostExpanded ? undefined : 3}>{event?.org?.desc}</Text>
+              {isMobile && (
+                <>
+                  <Spacer y={0.5} />
+                  <Button
+                    variant='text'
+                    size='small'
+                    color={theme.text.default}
+                    background={theme.grey[50]}
+                    hoverBackground={theme.grey[100]}
+                    onClick={() => setIsHostExpanded(!isHostExpanded)}>
+                    {isHostExpanded ? 'Show less' : 'Show more'}
+                  </Button>
+                </>
+              )}
             </div>
           )}
         </HoriPadding>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useCreateEvent, useUpdateEventById } from 'src/api/event'
 import { useAllOrgs } from 'src/api/org'
 import { useAllTags } from 'src/api/tag'
+import DateAndTime from 'src/components/form-elements/DateAndTime'
 import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
@@ -14,7 +15,6 @@ import { IEvent, IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { HookedInput } from '../form-elements/Input'
-import DateAndTime from 'src/components/form-elements/DateAndTime'
 
 interface IEventFormProps {
   initValues?: IEvent
@@ -62,8 +62,8 @@ const EventForm = ({ initValues }: IEventFormProps) => {
       : [
           {
             date: new Date(),
-            startTime: '0000',
-            endTime: '0000',
+            startTime: '0800',
+            endTime: '0800',
           },
         ]
   )
@@ -102,6 +102,18 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     <FormProvider {...form}>
       <StyledForm onSubmit={form.handleSubmit(onSubmit)}>
         <Text fontWeight={700}>Basic information</Text>
+        <HookedSelect
+          name='org'
+          label='Organization'
+          placeholder='Choose organization'
+          width='300px'
+          options={orgOptions}
+        />
+        <Link to='/new-org'>
+          <Button variant='text' size='small'>
+            Create organization
+          </Button>
+        </Link>
         <StyledInput label='Event title' placeholder='The name of your event' name='title' />
         <StyledInput
           label='Location'
@@ -118,18 +130,6 @@ const EventForm = ({ initValues }: IEventFormProps) => {
             value: tag?._id,
           }))}
         />
-        <HookedSelect
-          name='org'
-          label='Organization'
-          placeholder='Choose organization'
-          width='300px'
-          options={orgOptions}
-        />
-        <Link to='/new-org'>
-          <Button variant='text' size='small'>
-            Create organization
-          </Button>
-        </Link>
         <Spacer y={0.25} />
         <HookedTextarea
           name='details'

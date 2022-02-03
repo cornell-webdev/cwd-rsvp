@@ -36,6 +36,7 @@
     "react-dom": "^17.0.0",
     "react-hook-form": "^7.4.2",
     "react-horizontal-scrolling-menu": "^2.7.0",
+    "react-image-file-resizer": "^0.4.7",
     "react-indiana-drag-scroll": "^2.0.1",
     "react-infinite-scroll-hook": "^4.0.1",
     "react-modal": "^3.13.1",
