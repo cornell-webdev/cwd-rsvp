@@ -27,8 +27,8 @@ export const useEvents = ({ date, tagId }: IUseEvents) => {
 export const likedEventsQueryConfig = () => ({
   url: `/private/event/liked-events`,
   options: {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   },
 })
 
