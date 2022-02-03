@@ -102,6 +102,18 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     <FormProvider {...form}>
       <StyledForm onSubmit={form.handleSubmit(onSubmit)}>
         <Text fontWeight={700}>Basic information</Text>
+        <HookedSelect
+          name='org'
+          label='Organization'
+          placeholder='Choose organization'
+          width='300px'
+          options={orgOptions}
+        />
+        <Link to='/new-org'>
+          <Button variant='text' size='small'>
+            Create organization
+          </Button>
+        </Link>
         <StyledInput label='Event title' placeholder='The name of your event' name='title' />
         <StyledInput
           label='Location'
@@ -118,18 +130,6 @@ const EventForm = ({ initValues }: IEventFormProps) => {
             value: tag?._id,
           }))}
         />
-        <HookedSelect
-          name='org'
-          label='Organization'
-          placeholder='Choose organization'
-          width='300px'
-          options={orgOptions}
-        />
-        <Link to='/new-org'>
-          <Button variant='text' size='small'>
-            Create organization
-          </Button>
-        </Link>
         <Spacer y={0.25} />
         <HookedTextarea
           name='details'
