@@ -11,7 +11,7 @@ import ImageUpload from 'src/components/form-elements/ImageUpload'
 import { HookedSelect } from 'src/components/form-elements/Select'
 import { HookedTextarea } from 'src/components/form-elements/Textarea'
 import useRouter from 'src/hooks/useRouter'
-import { IEvent } from 'src/types/event.type'
+import { IEvent, IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { HookedInput } from '../form-elements/Input'
@@ -56,7 +56,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
   const [urls, setUrls] = useState<string[]>(
     initValues && initValues?.imgs?.length > 0 ? [initValues?.imgs[0]] : []
   )
-  const [dates, setDates] = useState(
+  const [dates, setDates] = useState<IEventDate[]>(
     initValues && initValues?.dates
       ? initValues.dates
       : [
