@@ -62,8 +62,8 @@ const EventForm = ({ initValues }: IEventFormProps) => {
       : [
           {
             date: new Date(),
-            startTime: undefined,
-            endTime: undefined,
+            startTime: '0800',
+            endTime: '0800',
           },
         ]
   )
