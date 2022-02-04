@@ -90,7 +90,7 @@ const EventDetails = () => {
             Host
           </SectionHeading>
           <FlexContainer alignCenter justifySpaceBetween>
-            <Avatar name={event?.org?.name} underline={event?.org?.email} />
+            <Avatar name={event?.org?.name} underline={event?.org?.website} />
             {/* TODO: claim org feature */}
             {/* <Button variant='text'>Claim organization</Button> */}
           </FlexContainer>

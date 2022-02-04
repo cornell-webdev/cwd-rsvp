@@ -409,7 +409,14 @@ const scrapeOrgs = async () => {
 
     if (existingOrg) {
       console.log('found existing org:', existingOrg.name)
-      return false
+      if (!existingOrg?.website) {
+        existingOrg.website = org?.website
+        const updatedOrg = await existingOrg.save()
+        console.log('added website url:', org?.website)
+        return updatedOrg
+      } else {
+        return false
+      }
     }
 
     console.log('saving new org:', org?.name)
