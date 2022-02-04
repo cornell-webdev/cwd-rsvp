@@ -31,19 +31,15 @@ const SearchEvents = ({ events }: ISearchEventsProps) => {
 
   return (
     <div>
-      {events
-        .map((e) =>
-          e.dates.map((ed) => (
-            <EventCard
-              key={`${e?._id}${ed.date}${ed.startTime}${ed.endTime}`}
-              event={e}
-              startTime={ed.startTime}
-              endTime={ed.endTime}
-              date={new Date(ed.date)}
-            />
-          ))
-        )
-        .flat()}
+      {events.map((event) => (
+        <EventCard
+          key={`${event?._id}${event.dates[0].date}${event.dates[0].startTime}${event.dates[0].endTime}`}
+          event={event}
+          startTime={event.dates[0].startTime}
+          endTime={event.dates[0].endTime}
+          date={new Date(event.dates[0].date)}
+        />
+      ))}
     </div>
   )
 }
