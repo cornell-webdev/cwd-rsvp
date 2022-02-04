@@ -12,7 +12,7 @@ const getBumpedCount = (event: IEvent, variant: 'LIKES' | 'VIEWS'): number => {
   const multiValues = variant === 'LIKES' ? [0.5, 1] : [6, 7]
   const multiplier = mod === 0 ? multiValues[0] : multiValues[1]
   const trueCount = variant === 'LIKES' ? event.likedUserIds?.length : event.views
-  const baseBumped = trueCount + Math.floor(datesSinceCreation * multiplier)
+  const baseBumped = trueCount + datesSinceCreation * multiplier
 
   // exponential bump
   let expBumpbed = baseBumped
@@ -27,7 +27,7 @@ const getBumpedCount = (event: IEvent, variant: 'LIKES' | 'VIEWS'): number => {
   // increment value by event name length
   // this value is stable, yet random, so that different events don't have the same bumped value
   const randValue = datesSinceCreation > 0 ? event.title?.length % 8 : 0
-  const finalCount = expBumpbed + randValue
+  const finalCount = Math.floor(expBumpbed + randValue)
 
   return finalCount
 }
