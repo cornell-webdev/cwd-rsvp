@@ -1,0 +1,53 @@
+<div class="desc-block col-xxs-10 col-xxs-offset-2 col-xs-10 col-xs-offset-2 col-sm-10_5 col-sm-offset-1_5 col-md-offset-0 col-md-3_5 text-left">
+[1]                             <div id="info_showed_xxs" style="display:none">
+[1] 
+[1] 
+[1]                                     <p class="h5 media-heading" style="margin-top: 10px;">
+[1]                                                  
+[1]                                                     <a style="margin-right: 15px;" target="_blank" aria-label="Aikido Club, Cornell Website. Website will open in a new tab." href="http://cornellaikidoclub.com/"><span class="mdi mdi-web"></span>Website</a>
+[1] 
+[1]                                                     <a style="margin-right: 15px;" href="javascript:toggle_ecg('club_26547-small');"><span class="mdi mdi-checkbox-marked-circle-outline"></span>Mission</a>
+[1]                                              <span class="mdi mdi-comment-text-outline" style="color: #337ab7;"></span> Contact: <a title="Send a message to the group:" href="javascript:;" onclick="openModal('/send_message_boot?club_uid=c50469bf-ba21-11e9-a04e-0a85c368333a&amp;club_id=26547&amp;ax=1&amp;async=1&amp;modal=true');">Email group officers</a>
+[1] 
+[1]                                     </p>
+[1] 
+[1] 
+[1]                                     <p style="display:none" aria-label="Mission Statement" tabindex="0" id="club_26547-small">
+[1]                                             <strong>Mission</strong><br>
+[1]                                             The Cornell Aikido Club promotes the study of the Japanese martial art, Aikido. We offer classes, resources on learning more about Aikido, and information on upcoming seminars.
+[1]                                     </p>
+[1]                                     <p style="display:none" id="club_whatwedo_26547-small"><strong>Membership Benefits</strong><br></p>
+[1] 
+[1] 
+[1]                                             <div id="xxs_div_waiver_26547" class="alert alert-info" style="display:none; margin:5px 0px;">
+[1]                                                     <span class="mdi mdi-information"></span>
+[1]                                                     <strong> Waiver: </strong> 
+[1]                                                     You must read and agree with a waiver.<br>
+[1] 
+[1]                                                     <div class="checkbox checkbox-cg--group">
+[1]                                                             <input id="xxs_waiver_26547" type="checkbox" name="waiver_26547">
+[1]                                                             <label for="xxs_waiver_26547">
+[1]                                                                     <span>
+[1]                                                                             <a class="alert-link" href="javascript:;" style="white-space:normal;" onclick="openModal('/div_waiver?ax=1&amp;id=26547');">I read the waiver and I agree (click to read)</a>
+[1]                                                                     </span>
+[1]                                                             </label>
+[1]                                                     </div>
+[1]                                                     <label style="color: inherit;" for="waiver_signature_26547" aria-label="Please sign (enter your full name)">Please sign (enter your full name):</label>
+[1]                                                     <input id="xxs_waiver_signature_26547" type="text" name="waiver_signature_26547" size="40" value="" class="form-control">
+[1] 
+[1]                                             </div>
+[1] 
+[1] 
+[1]                             </div>
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+
+[1] 
+[1]                             <strong></strong><p><span style="color:#686868;">  Lifetime membership</span></p>         
+[1]                     </div>

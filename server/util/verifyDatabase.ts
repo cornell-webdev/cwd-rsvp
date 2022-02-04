@@ -31,14 +31,23 @@ const verifyDatabase = async () => {
 
   console.log('*** checking org duplicates')
   const orgs = await Org.find()
-  const dupOrgs = []
+  const dupOrgNames: string[] = []
   for (const org of orgs) {
     const duplicates = await Org.find({ name: org.name })
-    if (duplicates?.length > 1) {
-      dupOrgs.push(org.name)
+    if (duplicates?.length > 1 && !dupOrgNames.includes(org.name)) {
+      dupOrgNames.push(org.name)
     }
   }
-  console.log('duplicate org names:', dupOrgs)
+  console.log('duplicate org names:', dupOrgNames)
+
+  /* script to remove duplicate orgs
+    do not send to production, as it could delete org documents that are linked to events
+  */
+  // const deletePromises = dupOrgNames.map(async (orgName: string) => {
+  //   await Org.findOneAndDelete({ name: orgName })
+  // })
+  // const deleteRes = await Promise.all(deletePromises)
+  // console.log(`removed ${deleteRes?.length} dup orgs`)
 
   console.log('*** checking for events with empty dates')
   const emptyDatesEvents = await Event.find({ dates: [] })

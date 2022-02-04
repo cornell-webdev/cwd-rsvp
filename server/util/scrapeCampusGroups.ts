@@ -25,7 +25,8 @@ const convertTime12to24 = (time12h: string): string => {
   return `${('0' + hours).slice(-2)}${minutes || '00'}`
 }
 
-const fileUrl = (path: string): string => (path ? `https://static1.campusgroups.com${path}` : '')
+export const fileUrl = (path?: string): string =>
+  path ? `https://static1.campusgroups.com${path}` : ''
 
 export const formatLocation = (location: string): string => {
   if (!location) {
@@ -348,6 +349,87 @@ const scrapeAndTagEvents = async () => {
   eventsByTag.forEach((events) => events.forEach((event) => allEvents.push(event)))
   console.log('scraped', allEvents.length, 'tagged events')
   return allEvents
+}
+
+export const scrapeOrgs = async () => {
+  // WARNING: do not call in production
+  // will cause a memory leak + application crash
+  console.log('*** scraping all orgs')
+
+  const URL = 'https://cornell.campusgroups.com/club_signup?view=all'
+  // const URL = 'https://cornell.campusgroups.com/club_signup'
+  const { data } = await axios.get(URL)
+  const $ = cheerio.load(data)
+
+  const orgs: IOrg[] = []
+
+  $('.desc-block').each((i, el) => {
+    // console.log('$(el).html()', $(el).html())
+
+    // id
+    const rawId = $(el).find('p[aria-label="Mission Statement"]').attr('id')
+    const providerId = rawId?.substring(5, rawId?.length - 6)
+
+    // name
+    const rawName = $(el).find('p.media-heading a').first().attr('aria-label')
+    const name = rawName?.substring(0, rawName.length - 40)?.trim()
+
+    // website
+    const website = $(el).find('p.media-heading a').first().attr('href')
+
+    // desc
+    const rawDesc = $(el).find('p[aria-label="Mission Statement"]').text().split('\n')
+    const desc = rawDesc[2]?.trim()
+
+    const src = $('.media-object--bordered').first().attr('src')
+    const avatar = fileUrl(src)
+
+    if (providerId && name && website && desc && avatar) {
+      const orgData: IOrg = {
+        name,
+        website,
+        desc,
+        avatar,
+        linkedUserIds: [],
+        linkedUsers: [],
+        providerId,
+        provider: 'campusgroups',
+        providerData: {
+          name,
+          website,
+          desc,
+          avatar,
+          providerId,
+        },
+      }
+      orgs.push(orgData)
+    }
+  })
+
+  const promises = orgs.map(async (org) => {
+    const existingOrg = await Org.findOne({
+      $or: [{ providerId: org?.providerId }, { name: org?.name }],
+    })
+
+    if (existingOrg) {
+      console.log('found existing org:', existingOrg.name)
+      if (!existingOrg?.website) {
+        existingOrg.website = org?.website
+        const updatedOrg = await existingOrg.save()
+        console.log('added website url:', org?.website)
+        return updatedOrg
+      } else {
+        return false
+      }
+    }
+
+    console.log('saving new org:', org?.name)
+    const res = await new Org(org).save()
+    return res
+  })
+
+  const savedOrgs = (await Promise.all(promises)).filter((org) => org)
+  console.log(`scraped and saved ${savedOrgs?.length} new orgs`)
 }
 
 export const scrapeCampusGroups = async () => {

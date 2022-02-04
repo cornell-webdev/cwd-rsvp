@@ -4,10 +4,10 @@ import { IUser } from './user.type'
 export interface IOrg extends IDocument {
   name: string
   desc: string
+  website?: string
   linkedUserIds: string[]
   linkedUsers: string[]
   avatar?: string
-  email?: string
   provider?: 'campusgroups'
   providerId?: string
   providerData?: any
