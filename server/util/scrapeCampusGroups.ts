@@ -32,9 +32,10 @@ export const formatLocation = (location: string): string => {
     return ''
   } else if (location?.includes('<div')) {
     const text = location.split('<div')[0]
+    const locationText = text.includes('Private Location') ? 'Online Event' : text
     const $ = cheerio.load(`<html>${location}</html>`)
     const link = $('a').attr('href')
-    return `${text} ${link}`
+    return `${locationText} ${link}`
   } else {
     return location === 'Private Location (sign in to display)' ||
       location === 'Private Location (register to display)'
@@ -66,15 +67,21 @@ const parseEvent = async (eventObj: any) => {
           .toArray()
           .map((element) => (element.type === 'text' ? $(element).text().trim() : null))
           .filter((text) => text) as string[]
-        if (dateText[0].length === 17 && dateText[1]) {
+
+        if (dateText?.length === 2 && dateText[0]?.length > 15 && dateText[1]) {
+          // dateText exists
           const date = new Date(dateText[0])
           const [start, end] = dateText[1].split('–')
-          const startTime = convertTime12to24(start.trim())
-          const endTime = convertTime12to24(end.trim())
+          if (start && end) {
+            const startTime = convertTime12to24(start.trim())
+            const endTime = convertTime12to24(end.trim())
 
-          parsed.date = date
-          parsed.startTime = startTime
-          parsed.endTime = endTime
+            parsed.date = date
+            parsed.startTime = startTime
+            parsed.endTime = endTime
+          } else {
+            isInvalid = true
+          }
         } else {
           isInvalid = true
         }
@@ -97,6 +104,8 @@ const parseEvent = async (eventObj: any) => {
   ]
   requiredFields.forEach((fieldName) => {
     if (!(fieldName in parsed)) {
+      console.log('missing field:', fieldName)
+      console.log('event invalidated')
       isInvalid = true
     }
   })
@@ -110,8 +119,10 @@ const parseEvent = async (eventObj: any) => {
 
   $('#event_details > div').each((i, el) => {
     const texts = $(el).contents().text().split('\n')
+
     let maxLength = 0
     let details = ''
+
     texts.forEach((text) => {
       if (text.length > maxLength) {
         maxLength = text.length
@@ -178,16 +189,18 @@ const mergeParsedByDate = async (parsedEvents: any) => {
 
 const scrapeAndParseEvents = async (count: number = 100) => {
   // fetch and parse events
-  const URL_OPEN_EVENTS = `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=${count}&filter4_contains=OR&filter4_notcontains=OR&filter5=82904,82905,82910,82906,82912,82908&order=undefined&search_word=&&1636993315827`
+  const URL_ALL_EVENTS = `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=${count}&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=&&1643931022946`
+  // const URL_OPEN_EVENTS = `https://cornell.campusgroups.com/mobile_ws/v17/mobile_events_list?range=0&limit=${count}&filter4_contains=OR&filter4_notcontains=OR&filter5=82904,82905,82910,82906,82912,82908&order=undefined&search_word=&&1636993315827`
 
-  const { data } = await axios.get(URL_OPEN_EVENTS)
+  const { data } = await axios.get(URL_ALL_EVENTS)
 
   const eventPromises: any[] = data
     .map((eventObj: any) => parseEvent(eventObj))
     .filter((parsed: any) => parsed)
 
-  const parsedEvents: any[] = (await Promise.all(eventPromises)).filter((parsed) => parsed)
-  const mergedEvents = await mergeParsedByDate(parsedEvents)
+  const parsedEvents: any[] = await Promise.all(eventPromises)
+  const notNullEvents = parsedEvents.filter((parsed) => parsed)
+  const mergedEvents = await mergeParsedByDate(notNullEvents)
 
   console.log('scraped', mergedEvents.length, 'events')
 
