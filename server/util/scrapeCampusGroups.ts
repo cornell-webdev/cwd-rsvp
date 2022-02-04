@@ -351,7 +351,11 @@ const scrapeAndTagEvents = async () => {
   return allEvents
 }
 
-const scrapeOrgs = async () => {
+export const scrapeOrgs = async () => {
+  // WARNING: do not call in production
+  // will cause a memory leak + application crash
+  console.log('*** scraping all orgs')
+
   const URL = 'https://cornell.campusgroups.com/club_signup?view=all'
   // const URL = 'https://cornell.campusgroups.com/club_signup'
   const { data } = await axios.get(URL)
@@ -440,10 +444,6 @@ export const scrapeCampusGroups = async () => {
   const parsedTaggedEvents = await scrapeAndTagEvents()
   console.log('*** STAGE 2.2: saving tags to existing events ***')
   await saveParsedEvents(parsedTaggedEvents)
-
-  /* scrape orgs */
-  console.log('*** STAGE 3.1: scraping orgs ***')
-  await scrapeOrgs()
 
   console.log('*** Scrape complete')
   await verifyDatabase()
