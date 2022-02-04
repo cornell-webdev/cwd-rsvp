@@ -2,6 +2,8 @@ import express from 'express'
 import Event from '../../models/Event'
 import endOfDay from 'date-fns/endOfDay'
 import startOfDay from 'date-fns/startOfDay'
+import Org from '../../models/Org'
+import { IEvent } from '../../types/event.type'
 
 const eventRouter = express.Router()
 
@@ -29,14 +31,32 @@ eventRouter.get('/search', async (req, res) => {
     if (!req.query?.query || req.query.query === '') {
       res.send([])
     } else {
-      const docs = await Event.find({
+      const orgs = await Org.find({
+        name: { $regex: req.query.query as string, $options: 'i' },
+      })
+      const uniqueEvents: IEvent[] = []
+      const eventIds: { [id: string]: boolean } = {}
+      const orgPromises = orgs.map(async (org) => {
+        const events = await Event.find({ orgId: org?._id })
+        events?.forEach((event) => {
+          eventIds[event?._id.toString()] = true
+          uniqueEvents.push(event)
+        })
+      })
+      await Promise.all(orgPromises)
+      const events = await Event.find({
         $or: [
-          { details: { $regex: req.query.query as string, $options: 'i' } },
+          // { details: { $regex: req.query.query as string, $options: 'i' } },
           { title: { $regex: req.query.query as string, $options: 'i' } },
           { location: { $regex: req.query.query as string, $options: 'i' } },
         ],
       })
-      res.send(docs)
+      events.forEach((event) => {
+        if (!eventIds[event?._id.toString()]) {
+          uniqueEvents.push(event)
+        }
+      })
+      res.send(uniqueEvents)
     }
   } catch (e) {
     res.status(500).send(e)
