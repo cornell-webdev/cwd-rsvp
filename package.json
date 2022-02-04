@@ -54,7 +54,7 @@
     "vite-tsconfig-paths": "^3.3.10"
   },
   "scripts": {
-    "start": "node server/build/app.js",
+    "start": "node --max-old-space-size=4096 server/build/app.js",
     "build": "npm run build:client && npm run build:server",
     "build:client": "cd client && npm run build && cd ..",
     "build:server": "cd server && npm run build && cd ..",
