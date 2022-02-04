@@ -8,7 +8,7 @@ const orgSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
+    website: {
       type: String,
     },
     desc: {

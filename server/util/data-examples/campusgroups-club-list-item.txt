@@ -1,0 +1,35 @@
+<div class="desc-block col-xxs-10 col-xxs-offset-2 col-xs-10 col-xs-offset-2 col-sm-10_5 col-sm-offset-1_5 col-md-offset-0 col-md-3_5 text-left">
+[1]                             <div id="info_showed_xxs" style="display:none">
+[1] 
+[1] 
+[1]                                     <p class="h5 media-heading" style="margin-top: 10px;">
+[1] 
+[1]                                                     <a style="margin-right: 15px;" target="_blank" aria-label="Zeta Psi Website. Website will open in a new tab." href="https://cornell.campusgroups.com/ZPsi/"><span class="mdi mdi-web"></span>Website</a>
+[1] 
+[1]                                                     <a style="margin-right: 15px;" href="javascript:toggle_ecg('club_25353-small');"><span class="mdi mdi-checkbox-marked-circle-outline"></span>Mission</a>
+[1] 
+[1] 
+[1]                                     </p>
+[1] 
+[1] 
+[1]                                     <p style="display:none" aria-label="Mission Statement" tabindex="0" id="club_25353-small">
+[1]                                             <strong>Mission</strong><br>
+[1]                                             The Zeta Psi Fraternity of North America was founded June 1, 1847 as a social college fraternity. The organization now comprises about fifty active chapters and twenty-five inactive chapters, encompassing roughly twenty thousand brothers, and is a member of the North-American Interfraternity Conference. It has historically been selective about the campuses at which it establishes chapters, focusing on forging new territory and maintaining a presence at prestigious institutions: it was the first Fraternity on the West Coast at the University of California at Berkeley June 10, 1870, the first Fraternity in Canada at the University of Toronto, March 27, 1879, and the only Fraternity to have chapters simultaneously at all eight Ivy League schools with the chartering of Eta at Yale University in 1889 (though this claim lasted only a few years, owing to burgeoning faculty opposition to the Princeton chapter). The fraternity became bi-continental on May 3, 2008 with the chartering of Iota Omicron at the University of Oxford .<br>The Greek letters of the Fraternity are the capital letters Zeta and Psi: ΖΨ.<br>It's considered by many scholars to be one of the most secretive Fraternities.<br>Its international headquarters is located in Pearl River, New York.<br>
+[1]                                     </p>
+[1]                                     <p style="display:none" id="club_whatwedo_25353-small"><strong>Membership Benefits</strong><br></p>
+[1] 
+[1] 
+[1] 
+[1]                             </div>
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1] 
+[1]                             <strong></strong><p><span style="color:#686868;">  Lifetime membership</span></p>         
+[1]                     </div>
