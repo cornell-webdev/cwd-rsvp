@@ -12,11 +12,16 @@ const getBumpedCount = (event: IEvent, variant: 'LIKES' | 'VIEWS'): number => {
   const multiValues = variant === 'LIKES' ? [0.5, 1] : [6, 7]
   const multiplier = mod === 0 ? multiValues[0] : multiValues[1]
   const trueCount = variant === 'LIKES' ? event.likedUserIds?.length : event.views
-  const baseBumped = trueCount + datesSinceCreation * multiplier
+  const baseBumped =
+    trueCount +
+    Math.min(
+      datesSinceCreation * multiplier,
+      variant === 'LIKES' ? event.title?.length * 1.5 : event.title?.length * 10
+    )
 
   // exponential bump
   let expBumpbed = baseBumped
-  const expBumpBoundary = variant === 'LIKES' ? [20, 40] : [100, 200]
+  const expBumpBoundary = variant === 'LIKES' ? [20, 40] : [150, 250]
 
   if (baseBumped >= expBumpBoundary[0] && baseBumped < expBumpBoundary[1]) {
     expBumpbed = baseBumped * 1.1
