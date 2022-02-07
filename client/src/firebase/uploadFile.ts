@@ -25,40 +25,27 @@ const uploadFile = (file: any, path: string) =>
     const fullPath = `${path}/${file.name}`
     const storagePathRef = ref(storage, fullPath)
 
-    // check if file already exists in storage
-    getDownloadURL(storagePathRef)
-      .then((url: string) => {
-        resolve(url)
-      })
-      .catch(() => {
-        // file doesn't already exist in storage
-        // upload file after compression
-
-        // eslint-disable-next-line
-        new Compressor(file, {
-          quality: 0.6,
-          convertSize: 1,
-          success(compressedFile) {
-            const uploadTask = uploadBytesResumable(storagePathRef, compressedFile)
-            uploadTask.on(
-              'state_changed',
-              () => {},
-              (error) => {
-                reject(error)
-              },
-              () => {
-                // successfully uploaded
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                  resolve(downloadURL)
-                })
-              }
-            )
-          },
-          error(error) {
+    // eslint-disable-next-line
+    new Compressor(file, {
+      quality: 0.7,
+      convertSize: 1,
+      success(compressedFile) {
+        const uploadTask = uploadBytesResumable(storagePathRef, compressedFile)
+        uploadTask.on(
+          'state_changed',
+          () => {},
+          (error) => {
             reject(error)
           },
-        })
-      })
+          () => {
+            // successfully uploaded
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL)
+            })
+          }
+        )
+      },
+    })
   })
 
 export default uploadFile

@@ -1,20 +1,17 @@
 import { CloseCircleFilled, SearchOutlined } from '@ant-design/icons'
 import { FlexContainer } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
+import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
-
-interface ISearchboxProps {
-  query: string
-  setQuery: React.Dispatch<React.SetStateAction<string>>
-}
-
-function SearchBox({ query, setQuery }: ISearchboxProps) {
-  const [value, setValue] = useState<string>('')
+function SearchBox() {
+  const router = useRouter()
+  const query = router.query?.query
+  const [value, setValue] = useState<string>(query)
   const [debouncedValue] = useDebounce(value, 1000)
 
   useEffect(() => {
-    setQuery(debouncedValue)
+    router.updateQuery({ query: debouncedValue })
   }, [debouncedValue])
 
   return (
@@ -31,7 +28,7 @@ function SearchBox({ query, setQuery }: ISearchboxProps) {
           <Clear
             onClick={() => {
               setValue('')
-              setQuery('')
+              router.updateQuery({ query: '' })
             }}
             role='button'
             onMouseDown={(e) => e.preventDefault()}

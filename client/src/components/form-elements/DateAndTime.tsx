@@ -54,8 +54,8 @@ const DateAndTime = ({ dates, setDates }: IDateAndTimeProps) => {
       ...dates,
       {
         date: new Date(),
-        startTime: '0000',
-        endTime: '0000',
+        startTime: '0800',
+        endTime: '0800',
       },
     ])
   }

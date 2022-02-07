@@ -6,15 +6,16 @@ import FilterButton from 'src/components/events/FilterButton'
 import SearchBox from 'src/components/events/SearchBox'
 import SearchEvents from 'src/components/events/SearchEvents'
 import PageContainer from 'src/components/layout/PageContainer'
+import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import { useSearchedEvents } from '../../api/event'
 import DayList from './DayList'
 import TrendingEvents from './TrendingEvents'
 
 function Home() {
-  const [query, setQuery] = useState('')
   const [tagId, setTagId] = useState<string>()
-
+  const router = useRouter()
+  const query = router.query?.query
   const { searchedEvents } = useSearchedEvents(query)
   const { trendingEvents } = useTrendingEvents()
   const { tags } = useAllTags()
@@ -43,7 +44,7 @@ function Home() {
     <PageContainer isMobileOnly isShowWarning={false}>
       <EventText>Trending</EventText>
       <TrendingEvents events={trendingEvents} />
-      <SearchBox query={query} setQuery={setQuery} />
+      <SearchBox />
       {!query && (
         <FiltersContainer>
           {tags?.map((tag) => (

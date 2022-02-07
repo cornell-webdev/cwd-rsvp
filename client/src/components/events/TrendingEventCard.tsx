@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
 import { getEventDate, getEventTime } from 'src/util/date'
+import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
 import LikeButton from './LikeButton'
 
@@ -21,7 +22,7 @@ const TrendingEventCard: React.FC<ITrendingEventProps> = ({
   return (
     <Link to={`/event/${event?._id}`}>
       <TrendingEventContainer className='trendingEvent'>
-        <ImgContainer src={event.imgs[0]} />
+        <Thumbnail src={getEventThumbnail(event)} />
         <TextContainer>
           <Text fontWeight='700' variant='meta1' color='#9E9E9E'>
             {getEventTime(time) + ', ' + getEventDate(date)}
@@ -47,7 +48,6 @@ const TrendingEventContainer = styled.div`
 `
 
 const TextContainer = styled.div`
-  border-top: 1px solid ${(props) => props.theme.border.light};
   padding: 0.625rem 0.75rem 0 0.75rem;
 `
 
@@ -55,10 +55,12 @@ const TitleRow = styled(FlexContainer)`
   margin-top: -0.3rem;
 `
 
-const ImgContainer = styled.img`
+const Thumbnail = styled.img`
   border-radius: 6px 6px 0px 0px;
   width: 200px;
-  height: 90px;
+  object-fit: cover;
+  height: 100px;
+  border-bottom: 2px solid ${(props) => props.theme.border.light};
 `
 
 export default TrendingEventCard
