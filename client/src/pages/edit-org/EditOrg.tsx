@@ -1,5 +1,4 @@
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
+import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
 import { useOrgById } from 'src/api/org'
 import BackButton from 'src/components/BackButton'
@@ -27,6 +26,7 @@ const EditOrg = () => {
               _id: org?._id,
               name: org?.name,
               desc: org?.desc,
+              website: org?.website,
               avatar: org?.avatar,
             }}
           />

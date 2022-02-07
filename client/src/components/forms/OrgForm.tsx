@@ -16,6 +16,7 @@ interface IOrgFormInitValues {
   _id?: string
   name?: string
   desc?: string
+  website?: string
   avatar?: string
 }
 
@@ -30,6 +31,7 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
     .object({
       name: yup.string().required(),
       desc: yup.string().required(),
+      website: yup.string().required(),
     })
     .required()
 
@@ -48,7 +50,6 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
   const onSubmit = async (formData: any) => {
     const data = {
       ...formData,
-      // TODO: add default org avatar
     }
 
     if (urls?.length > 0) {
@@ -71,6 +72,7 @@ const OrgForm = ({ initValues = {} }: IOrgFormProps) => {
           <Spacer y={0.375} />
           <Text fontWeight={700}>Basic information</Text>
           <StyledInput name='name' label='Organization name' />
+          <StyledInput name='website' label='Website' />
           <HookedTextarea name='desc' label='Organization description' minRows={5} />
           <Text fontWeight={700}>Profile image</Text>
           {/* TODO: hooked image upload */}
