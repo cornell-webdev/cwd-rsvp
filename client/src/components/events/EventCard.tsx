@@ -3,6 +3,7 @@ import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
 import { getEventDate, getEventTime } from 'src/util/date'
+import getEventThumbnail from 'src/util/getEventThumbnail'
 import { capitalizeFirstChar } from 'src/util/string'
 import styled from 'styled-components'
 import LikeButton from './LikeButton'
@@ -18,7 +19,7 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
   return (
     <StyledLink to={`/event/${event?._id}`}>
       <EventContainer alignStart>
-        <ImgContainer src={event.imgs[0]} />
+        <Thumbnail src={getEventThumbnail(event)} />
         <TextContainer>
           <Text variant='meta2' maxLines={1}>
             {event.org.name}
@@ -75,14 +76,13 @@ const EventContainer = styled(FlexContainer)`
   }
 `
 
-const ImgContainer = styled.img`
-  float: left;
+const Thumbnail = styled.img`
   border-radius: 6px;
   min-width: 87px;
   width: 45%;
   margin-right: 10px;
-  object-fit: contain;
-  /* object-fit: cover; */
+  /* object-fit: contain; */
+  object-fit: cover;
   border: 1px solid ${(props) => props.theme.border.default};
   height: 76px;
 

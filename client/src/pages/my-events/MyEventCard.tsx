@@ -6,6 +6,7 @@ import { useDeleteEvent } from 'src/api/event'
 import ConfirmationModal from 'src/components/layout/ConfirmationModal'
 import { IEvent } from 'src/types/event.type'
 import getBumpedCount from 'src/util/getBumpedCount'
+import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
 
 interface IMyEventCardProps {
@@ -24,7 +25,7 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
   return (
     <>
       <Container>
-        {event?.imgs?.length >= 1 ? <Thumbnail src={event?.imgs[0]} /> : <ImgPlaceholder />}
+        <Thumbnail src={getEventThumbnail(event)} />
         <RightSection>
           <TextSection>
             <Text variant='meta2'>
@@ -67,17 +68,16 @@ const Container = styled.div`
 `
 
 const Thumbnail = styled.img`
-  border-radius: 6px;
   height: 87px;
   width: 87px;
   object-fit: cover;
-`
-
-const ImgPlaceholder = styled.div`
-  height: 87px;
-  width: 87px;
-  background: ${(props) => props.theme.grey[200]};
   border-radius: 6px;
+  border: 1px solid ${(props) => props.theme.border.default};
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    width: 45%;
+    height: 120px;
+  }
 `
 
 const RightSection = styled.div`
