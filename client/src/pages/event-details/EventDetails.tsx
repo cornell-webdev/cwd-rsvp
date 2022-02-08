@@ -9,6 +9,7 @@ import PageContainer from 'src/components/layout/PageContainer'
 import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDateTime } from 'src/util/date'
+import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
 
 const EventDetails = () => {
@@ -44,7 +45,7 @@ const EventDetails = () => {
           <BackButton onClick={() => router.history.goBack()} />
         </HoriPadding>
         <ImgContainer>
-          <EventImg src={event?.imgs?.length > 0 ? event?.imgs[0] : ''} />
+          <EventImg src={getEventThumbnail(event)} />
         </ImgContainer>
         <HoriPadding>
           <Text variant='h5' fontWeight={700}>
