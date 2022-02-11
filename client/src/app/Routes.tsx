@@ -17,6 +17,7 @@ const EditOrg = React.lazy(() => import('src/pages/edit-org/EditOrg'))
 const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
 const MyLikes = React.lazy(() => import('src/pages/my-likes/MyLikes'))
 const OrgAdmins = React.lazy(() => import('src/pages/org-admins/OrgAdmins'))
+const DevTraining = React.lazy(() => import('src/pages/dev-training/DevTraining'))
 
 interface IRoute {
   path: string
@@ -100,6 +101,15 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: true,
     isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/dev-training',
+    component: DevTraining,
+    label: 'Dev training',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
     isDesktopOnly: false,
   },
   {
