@@ -23,4 +23,11 @@ export interface IEvent {
   providerId?: string
   providerUrl?: string
   providerData?: any
+  isTicketed: boolean
+  price: number
+  isEarlyPrice: boolean
+  earlyPrice: number
+  earlyDeadline: Date
+  venmoId: string
+  checkInInstructions: string
 }
