@@ -15,6 +15,7 @@ import { IEvent, IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
 import { HookedInput } from '../form-elements/Input'
+import TicketingForm from './TicketingForm'
 
 interface IEventFormProps {
   initValues?: IEvent
@@ -139,6 +140,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
         />
         <Text fontWeight={700}>Date and time</Text>
         <DateAndTime dates={dates} setDates={setDates} />
+        <TicketingForm />
         <Text fontWeight={700}>Thumbnail image</Text>
         <ImageUpload urls={urls} setUrls={setUrls} maxImgs={1} />
         <Button type='submit'>Publish</Button>
