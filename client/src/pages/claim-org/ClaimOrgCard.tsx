@@ -13,7 +13,7 @@ interface IClaimOrgCardProps {
 const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
   return (
     <Container>
-      <FlexContainer>
+      <FlexContainer alignCenter>
         {org?.avatar ? (
           <Avatar src={org?.avatar} />
         ) : (
@@ -41,7 +41,7 @@ const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
             </Text>
           </TextContainer> */}
         </RightSection>
-        <Button>Claim</Button>
+        <ClaimButton>Claim</ClaimButton>
       </FlexContainer>
     </Container>
   )
@@ -54,8 +54,8 @@ const Container = styled.div`
 `
 
 const FallbackContainer = styled.div`
-  height: 87px;
-  width: 87px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
   border: 2px solid ${(props) => props.theme.border.default};
   flex-shrink: 0;
@@ -69,9 +69,20 @@ const FallbackAvatar = styled(FallbackAvatarIllust)`
   width: 100%;
 `
 
+const ClaimButton = styled(Button)`
+  height: 28px;
+  width: 57px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  flex-shrink: 0;
+  flex-grow: 0;
+  float: right;
+`
+
 const Avatar = styled.img`
-  height: 87px;
-  width: 87px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
   border: 2px solid ${(props) => props.theme.border.default};
   flex-shrink: 0;
