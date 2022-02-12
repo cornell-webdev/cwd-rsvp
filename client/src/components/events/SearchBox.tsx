@@ -4,7 +4,12 @@ import React, { useEffect, useState } from 'react'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
-function SearchBox() {
+
+interface ISearchBoxProps {
+  placeholder: string
+}
+
+const SearchBox: React.FC<ISearchBoxProps> = ({ placeholder }: ISearchBoxProps) => {
   const router = useRouter()
   const query = router.query?.query
   const [value, setValue] = useState<string>(query)
@@ -20,7 +25,7 @@ function SearchBox() {
         <SearchIcon />
         <SearchInput
           type='text'
-          placeholder='Search event'
+          placeholder={placeholder}
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
