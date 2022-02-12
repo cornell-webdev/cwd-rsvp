@@ -123,3 +123,16 @@ export const useOrgRemoveLinkedUser = (orgId: string) => {
     removeLinkedUserAsync,
   }
 }
+
+export const searchedOrgsQueryConfig = (query: string) => ({
+  url: `/public/org/search?query=${query}`,
+})
+
+export const useSearchedOrgs = (query: string) => {
+  const { data: searchedOrgs, ...rest } = useCustomQuery<IOrg[]>(searchedOrgsQueryConfig(query))
+
+  return {
+    ...rest,
+    searchedOrgs,
+  }
+}

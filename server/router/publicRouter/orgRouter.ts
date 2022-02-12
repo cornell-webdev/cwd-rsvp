@@ -21,4 +21,20 @@ orgRouter.get('/', async (req, res) => {
   }
 })
 
+orgRouter.get('/search', async (req, res) => {
+  try {
+    if (!req.query?.query || req.query?.query === '') {
+      res.send([])
+    } else {
+      const orgs = await Org.find({
+        name: { $regex: req.query.query as string, $options: 'i' },
+      })
+      res.send(orgs)
+    }
+  } catch (e) {
+    console.log(e)
+    res.status(500).send(e)
+  }
+})
+
 export default orgRouter
