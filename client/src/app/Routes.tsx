@@ -14,6 +14,7 @@ const Logout = React.lazy(() => import('src/pages/logout/Logout'))
 const NewEvent = React.lazy(() => import('src/pages/new-event/NewEvent'))
 const EditEvent = React.lazy(() => import('src/pages/edit-event/EditEvent'))
 const NewOrg = React.lazy(() => import('src/pages/new-org/NewOrg'))
+const ClaimOrg = React.lazy(() => import('src/pages/claim-org/ClaimOrg'))
 const EditOrg = React.lazy(() => import('src/pages/edit-org/EditOrg'))
 const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
 const MyLikes = React.lazy(() => import('src/pages/my-likes/MyLikes'))
@@ -92,6 +93,15 @@ export const routes: IRoute[] = [
     path: '/new-org',
     component: NewOrg,
     label: 'New org',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/claim-org',
+    component: ClaimOrg,
+    label: 'Claim org',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,
