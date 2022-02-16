@@ -4,7 +4,7 @@ import useScript from 'src/hooks/useScript'
 import styled from 'styled-components'
 
 const TestTicketing = () => {
-  const IS_PROD = false
+  const IS_PROD = import.meta.env.VITE_NODE_ENV === 'production'
 
   const PAYPAL_CLIENT_ID_PROD =
     'AXpcp5QBJP8WFzcs4EYeQzHxktf5XrtMaFwDdUdQlvJBDLDLSKlOy5Y7KFUt89IWHhlbOodnHSZJy3as'
@@ -23,6 +23,7 @@ const TestTicketing = () => {
 
   useEffect(() => {
     if (paypal) {
+      console.log('init paypal env:', IS_PROD ? 'prod' : 'dev')
       paypal
         .Buttons({
           // Sets up the transaction when a payment button is clicked
