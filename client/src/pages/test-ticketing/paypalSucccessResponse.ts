@@ -1,5 +1,5 @@
 export const prodSuccessResponse = {
-  id: '91K48614G7672683D',
+  id: '5WB35932UP9935003',
   intent: 'CAPTURE',
   status: 'COMPLETED',
   purchase_units: [
@@ -10,10 +10,10 @@ export const prodSuccessResponse = {
         value: '0.10',
       },
       payee: {
-        email_address: 'sb-sueeb13849060@business.example.com',
-        merchant_id: 'XTVBE94X3QMLJ',
+        email_address: 'cornellwebdev@gmail.com',
+        merchant_id: 'RBM6ULD24872A',
       },
-      soft_descriptor: 'PAYPAL *TEST STORE',
+      soft_descriptor: 'PAYPAL *WEBDEV',
       shipping: {
         name: {
           full_name: 'JAEHYUNG JOO',
@@ -29,8 +29,11 @@ export const prodSuccessResponse = {
       payments: {
         captures: [
           {
-            id: '1XC11668CM433882A',
-            status: 'COMPLETED',
+            id: '06F10221PV692635H',
+            status: 'PENDING',
+            status_details: {
+              reason: 'PENDING_REVIEW',
+            },
             amount: {
               currency_code: 'USD',
               value: '0.10',
@@ -39,8 +42,8 @@ export const prodSuccessResponse = {
             seller_protection: {
               status: 'NOT_ELIGIBLE',
             },
-            create_time: '2022-02-16T15:23:46Z',
-            update_time: '2022-02-16T15:23:46Z',
+            create_time: '2022-02-16T15:46:50Z',
+            update_time: '2022-02-16T15:46:50Z',
           },
         ],
       },
@@ -52,16 +55,16 @@ export const prodSuccessResponse = {
       surname: 'JOO',
     },
     email_address: 'jj534@cornell.edu',
-    payer_id: 'H9PJYQ4NPFYBS',
+    payer_id: 'YWEWU3WFE3B5C',
     address: {
       country_code: 'US',
     },
   },
-  create_time: '2022-02-16T15:22:53Z',
-  update_time: '2022-02-16T15:23:46Z',
+  create_time: '2022-02-16T15:44:50Z',
+  update_time: '2022-02-16T15:46:50Z',
   links: [
     {
-      href: 'https://api.sandbox.paypal.com/v2/checkout/orders/91K48614G7672683D',
+      href: 'https://api.paypal.com/v2/checkout/orders/5WB35932UP9935003',
       rel: 'self',
       method: 'GET',
     },
