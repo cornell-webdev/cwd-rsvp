@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 const TestTicketing = () => {
   const IS_PROD = import.meta.env.VITE_NODE_ENV === 'production'
+  // const IS_PROD = true
 
   const PAYPAL_CLIENT_ID_PROD =
     'AXpcp5QBJP8WFzcs4EYeQzHxktf5XrtMaFwDdUdQlvJBDLDLSKlOy5Y7KFUt89IWHhlbOodnHSZJy3as'
@@ -12,11 +13,7 @@ const TestTicketing = () => {
     'AYSVsYzaqgrGAFGHTn-ZKX6sQr3YVU8J8nWDli6EZtk4_C6-KrtGNlaK_FuLS1vNHAfiNzWBmcHHZC5X'
   const PAYPAL_CLIENT_ID = IS_PROD ? PAYPAL_CLIENT_ID_PROD : PAYPAY_CLIENT_ID_SANDBOX
 
-  const DOMAIN = IS_PROD ? 'https://api-m.paypal.com' : 'https://www.paypal.com'
-
-  useScript(
-    `${DOMAIN}/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&enable-funding=venmo`
-  )
+  useScript(`https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons`)
 
   // @ts-ignore
   const paypal = window.paypal
