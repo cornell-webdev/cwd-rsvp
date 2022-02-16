@@ -304,6 +304,7 @@ const saveParsed = async (parsed: any) => {
     providerId: parsed.eventId,
     providerUrl: `https://cornell.campusgroups.com${parsed.eventUrl}`,
     providerData: parsed,
+    isTicketed: false,
   }
 
   const newEvent = await new Event(eventData).save()

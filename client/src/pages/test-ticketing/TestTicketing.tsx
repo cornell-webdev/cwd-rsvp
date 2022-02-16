@@ -14,7 +14,9 @@ const TestTicketing = () => {
 
   const DOMAIN = IS_PROD ? 'https://api-m.paypal.com' : 'https://www.paypal.com'
 
-  useScript(`${DOMAIN}/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons`)
+  useScript(
+    `${DOMAIN}/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&enable-funding=venmo`
+  )
 
   // @ts-ignore
   const paypal = window.paypal
