@@ -81,6 +81,9 @@ const eventSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    totalTicketCount: {
+      type: Number,
+    },
     price: {
       type: Number,
     },
