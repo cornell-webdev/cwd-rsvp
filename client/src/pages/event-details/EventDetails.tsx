@@ -2,6 +2,7 @@ import CalendarIcon from '@material-ui/icons/CalendarTodayOutlined'
 import LocationIcon from '@material-ui/icons/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
@@ -13,8 +14,8 @@ import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
 
 const EventDetails = () => {
-  const router = useRouter()
   const isMobile = useIsMobile()
+  const router = useRouter()
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
 
@@ -68,6 +69,12 @@ const EventDetails = () => {
           <LikesContainer>
             <LikeButton event={event} variant='event-detail' />
           </LikesContainer>
+          <SectionHeading variant='h5' fontWeight={700}>
+            Tickets
+          </SectionHeading>
+          <Link to={`/buy-ticket/${event?._id}`}>
+            <Button>Buy ticket</Button>
+          </Link>
           <SectionHeading variant='h5' fontWeight={700}>
             Event details
           </SectionHeading>

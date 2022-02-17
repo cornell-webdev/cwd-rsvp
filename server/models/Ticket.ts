@@ -17,10 +17,6 @@ const ticketSchema = new Schema(
     sellerId: {
       type: String,
     },
-    fullName: {
-      type: String,
-      required: true,
-    },
     name: {
       type: String,
       required: true,
@@ -36,6 +32,12 @@ const ticketSchema = new Schema(
     isCheckedIn: {
       type: Boolean,
       default: false,
+    },
+    providerId: {
+      type: String,
+    },
+    providerData: {
+      type: Schema.Types.Mixed,
     },
   },
   {

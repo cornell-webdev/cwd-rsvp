@@ -43,8 +43,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     reValidateMode: 'onBlur',
     defaultValues:
       {
-        title: initValues?.title,
-        location: initValues?.location,
+        ...initValues,
         tag: initValues?.tag && {
           label: initValues?.tag?.name,
           value: initValues?.tag?._id,
@@ -53,7 +52,6 @@ const EventForm = ({ initValues }: IEventFormProps) => {
           label: initValues?.org?.name,
           value: initValues?.org?._id,
         },
-        details: initValues?.details,
       } || {},
   })
 

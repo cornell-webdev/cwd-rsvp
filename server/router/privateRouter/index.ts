@@ -3,6 +3,7 @@ import passport from 'passport'
 import userRouter from './userRouter'
 import eventRouter from './eventRouter'
 import orgRouter from './orgRouter'
+import ticketRouter from './ticketRouter'
 
 const privateRouter = express.Router()
 
@@ -13,5 +14,6 @@ privateRouter.use(passport.authenticate('jwt', { session: false }))
 privateRouter.use('/user', userRouter)
 privateRouter.use('/event', eventRouter)
 privateRouter.use('/org', orgRouter)
+privateRouter.use('/ticket', ticketRouter)
 
 export default privateRouter
