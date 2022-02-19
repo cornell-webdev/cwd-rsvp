@@ -5,12 +5,29 @@ import styled from 'styled-components'
 import GroupIcon from '@material-ui/icons/Group'
 import { Link } from 'react-router-dom'
 import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
+import { useOrgAddLinkedUser } from 'src/api/org'
+import { useCurrentUser } from 'src/api/user'
+import useRouter from 'src/hooks/useRouter'
 
 interface IClaimOrgCardProps {
   org: IOrg
 }
 
 const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
+  const router = useRouter()
+  const { addLinkedUserAsync } = useOrgAddLinkedUser(org._id)
+  const { currentUser } = useCurrentUser()
+
+  const addLinkedUser = async () => {
+    // const orgId = org._id
+    var email
+    if (currentUser !== undefined && currentUser !== null) {
+      email = currentUser.email
+    }
+    await addLinkedUserAsync({
+      email: email,
+    })
+  }
   return (
     <Container>
       <FlexContainer alignCenter>
@@ -28,20 +45,14 @@ const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
             {org?.name}
           </Text>
           <Spacer y={1} />
-          {/* <FlexContainer>
-            <Link to={`/profile/org-admins/${org?._id}`}>
-              <Button startIcon={<GroupIcon />}>Manage</Button>
-            </Link>
-            <Spacer x={0.5} />          
-          </FlexContainer>
-          <Spacer y={0.875} /> */}
-          {/* <TextContainer>
-            <Text variant='meta1' maxLines={2}>
-              {org?.desc}
-            </Text>
-          </TextContainer> */}
         </RightSection>
-        <ClaimButton>Claim</ClaimButton>
+        <ClaimButton
+          onClick={() => {
+            router.history.goBack()
+            addLinkedUser()
+          }}>
+          Claim
+        </ClaimButton>
       </FlexContainer>
     </Container>
   )
