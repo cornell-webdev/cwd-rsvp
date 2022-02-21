@@ -11,7 +11,7 @@ import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDateTime } from 'src/util/date'
 import getEventThumbnail from 'src/util/getEventThumbnail'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const EventDetails = () => {
   const isMobile = useIsMobile()
@@ -69,12 +69,49 @@ const EventDetails = () => {
           <LikesContainer>
             <LikeButton event={event} variant='event-detail' />
           </LikesContainer>
-          <SectionHeading variant='h5' fontWeight={700}>
-            Tickets
-          </SectionHeading>
-          <Link to={`/buy-ticket/${event?._id}`}>
-            <Button>Buy ticket</Button>
-          </Link>
+          {event?.isTicketed && (
+            <>
+              {/* <SectionHeading variant='h5' fontWeight={700}>
+                Tickets
+              </SectionHeading> */}
+              <TicketSection>
+                <BuyticketButton>
+                  <FlexContainer flexDirection='column' alignStart>
+                    {/* TODO: conditionally display early price */}
+                    <Text variant='h3' color={theme.background.default}>
+                      ${event?.price}
+                    </Text>
+                    <Spacer y={0.5} />
+                    <Text variant='meta2' color={theme.background.default}>
+                      Early bird pricing
+                    </Text>
+                    <Text variant='meta2' color={theme.background.default}>
+                      until Feb. 28
+                    </Text>
+                  </FlexContainer>
+                  <FlexContainer flexDirection='column' alignEnd>
+                    <Text variant='meta2' color={theme.background.default}>
+                      21 / 300 sold
+                    </Text>
+                    {/* TODO: conditionally render this based on if seller is in request query */}
+                    <Text variant='meta2' color={theme.background.default}>
+                      Buying from Jay Joo
+                    </Text>
+                    <Spacer y={0.3} />
+                    <Link to={`/buy-ticket/${event?._id}`}>
+                      <Button
+                        background={theme.background.default}
+                        color={theme.brand[500]}
+                        hoverBackground={theme.brand[50]}>
+                        Buy ticket
+                      </Button>
+                    </Link>
+                  </FlexContainer>
+                </BuyticketButton>
+                {/* <Button>Buy ticket</Button> */}
+              </TicketSection>
+            </>
+          )}
           <SectionHeading variant='h5' fontWeight={700}>
             Event details
           </SectionHeading>
@@ -175,6 +212,44 @@ const IconRow = styled(FlexContainer)`
 
 const LikesContainer = styled.div`
   margin: 2rem 0;
+`
+
+const TicketSection = styled.div`
+  width: 100%;
+  margin-bottom: 2rem;
+`
+
+const GradientAnimation = keyframes`
+  0% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 70% center;
+  }
+
+  100% {
+    background-position: 0% center;
+  }
+`
+
+const BuyticketButton = styled.button`
+  width: 100%;
+  background: ${(props) => props.theme.brand[500]};
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1rem;
+
+  background: linear-gradient(45deg, #ff3683, #ef903c);
+  background-size: 200% auto;
+
+  /* background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+
+  animation: ${GradientAnimation} 4s linear infinite;
 `
 
 export default EventDetails
