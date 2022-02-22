@@ -6,12 +6,13 @@ import { Link } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
+import GradientAnimation from 'src/components/GradientAnimation'
 import PageContainer from 'src/components/layout/PageContainer'
 import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDateTime } from 'src/util/date'
 import getEventThumbnail from 'src/util/getEventThumbnail'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 const EventDetails = () => {
   const isMobile = useIsMobile()
@@ -219,20 +220,6 @@ const TicketSection = styled.div`
   margin-bottom: 2rem;
 `
 
-const GradientAnimation = keyframes`
-  0% {
-    background-position: 0% center;
-  }
-
-  50% {
-    background-position: 70% center;
-  }
-
-  100% {
-    background-position: 0% center;
-  }
-`
-
 const BuyticketButton = styled.button`
   width: 100%;
   background: ${(props) => props.theme.brand[500]};
@@ -244,11 +231,6 @@ const BuyticketButton = styled.button`
 
   background: linear-gradient(45deg, #ff3683, #ef903c);
   background-size: 200% auto;
-
-  /* background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-
   animation: ${GradientAnimation} 4s linear infinite;
 `
 

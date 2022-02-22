@@ -1,4 +1,4 @@
-import { FlexContainer, Spacer, Tag, Text } from 'cornell-glue-ui'
+import { FlexContainer, Spacer, Tag, Text, theme } from 'cornell-glue-ui'
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { IEvent } from 'src/types/event.type'
@@ -8,6 +8,8 @@ import { capitalizeFirstChar } from 'src/util/string'
 import styled from 'styled-components'
 import LikeButton from './LikeButton'
 import TicketIcon from '@mui/icons-material/ConfirmationNumber'
+import GradientAnimation from '../GradientAnimation'
+import useIsMobile from 'src/hooks/useIsMobile'
 
 interface IEventProps {
   event: IEvent
@@ -17,18 +19,28 @@ interface IEventProps {
 }
 
 const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: IEventProps) => {
+  const isMobile = useIsMobile()
+
   return (
     <StyledLink to={`/event/${event?._id}`}>
       <EventContainer alignStart>
         <Thumbnail src={getEventThumbnail(event)} />
         <TextContainer>
-          <Text variant='meta2' maxLines={1}>
+          <Text variant={isMobile ? 'meta2' : 'meta1'} maxLines={1}>
             {event.org.name}
           </Text>
-          <Text fontWeight='700' variant='meta1' maxLines={2}>
+          <Text fontWeight='700' variant={isMobile ? 'meta1' : 'h6'} maxLines={2}>
             {event.title}
           </Text>
-          {event?.tag && (
+          {event?.isTicketed && (
+            <TicketSaleContainer>
+              <StyledTicketIcon />
+              <Text variant='meta1' color={theme.background.default}>
+                Buy tickets
+              </Text>
+            </TicketSaleContainer>
+          )}
+          {event?.tag && !event?.isTicketed && (
             <TagContainer>
               <Tag
                 variant='contained'
@@ -53,12 +65,6 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
               <LikeButton event={event} />
             </div>
           </FlexContainer>
-          {event?.isTicketed && (
-            <TicketSaleContainer>
-              <StyledTicketIcon />
-              <Text>Selling tickets</Text>
-            </TicketSaleContainer>
-          )}
         </TextContainer>
       </EventContainer>
     </StyledLink>
@@ -106,8 +112,24 @@ const TextContainer = styled.div`
   width: 55%;
 `
 
-const TicketSaleContainer = styled.div``
+const TicketSaleContainer = styled.div`
+  margin: 0.3rem 0;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
 
-const StyledTicketIcon = styled(TicketIcon)``
+  background: linear-gradient(45deg, #ff3683, #ef903c);
+  background-size: 200% auto;
+  animation: ${GradientAnimation} 4s linear infinite;
+`
+
+const StyledTicketIcon = styled(TicketIcon)`
+  margin-right: 0.5rem;
+  height: 20px;
+  width: 20px;
+  fill: ${(props) => props.theme.background.default};
+`
 
 export default memo(EventCard)
