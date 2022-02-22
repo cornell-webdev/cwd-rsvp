@@ -1,5 +1,5 @@
-import CalendarIcon from '@material-ui/icons/CalendarTodayOutlined'
-import LocationIcon from '@material-ui/icons/LocationOnOutlined'
+import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
+import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'

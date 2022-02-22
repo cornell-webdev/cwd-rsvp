@@ -1,4 +1,4 @@
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteIcon from '@mui/icons-material/Delete'
 import { Button, FlexContainer, IconButton, Spacer } from 'cornell-glue-ui'
 import React from 'react'
 import DatePicker from 'src/components/form-elements/DatePicker'

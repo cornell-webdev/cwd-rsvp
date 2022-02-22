@@ -1,4 +1,4 @@
-import CalendarIcon from '@material-ui/icons/CalendarTodayOutlined'
+import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import React, { useState } from 'react'
 import { Calendar, OnChangeProps } from 'react-date-range'
 import 'react-date-range/dist/styles.css'

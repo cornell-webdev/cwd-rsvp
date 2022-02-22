@@ -2,7 +2,7 @@ import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { IOrg } from 'src/types/org.type'
 import styled from 'styled-components'
-import GroupIcon from '@material-ui/icons/Group'
+import GroupIcon from '@mui/icons-material/Group'
 import { Link } from 'react-router-dom'
 import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
 

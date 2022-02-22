@@ -1,6 +1,6 @@
 import { Button, theme } from 'cornell-glue-ui'
 import React from 'react'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import useRouter from 'src/hooks/useRouter'
 
 export interface IBackButtonProps {

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import RSVPInput from '../form-elements/RSVPInput'
 import { HookedTextarea } from '../form-elements/Textarea'
 import FormSectionContainer from './FormSectionContainer'
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const TicketingForm = () => {
   const { watch, setValue } = useFormContext()

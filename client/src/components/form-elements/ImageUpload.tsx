@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Loading from 'src/components/Loading'
 import uploadFile from 'src/firebase/uploadFile'
 import styled from 'styled-components'
-import CloseIcon from '@material-ui/icons/Cancel'
+import CloseIcon from '@mui/icons-material/Cancel'
 import { Controller, useFormContext } from 'react-hook-form'
 import ErrorMsg from './ErrorMsg'
 

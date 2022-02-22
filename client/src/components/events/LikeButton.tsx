@@ -1,5 +1,5 @@
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useCurrentUser } from 'src/api/user'

@@ -7,6 +7,7 @@ import getEventThumbnail from 'src/util/getEventThumbnail'
 import { capitalizeFirstChar } from 'src/util/string'
 import styled from 'styled-components'
 import LikeButton from './LikeButton'
+import TicketIcon from '@mui/icons-material/ConfirmationNumber'
 
 interface IEventProps {
   event: IEvent
@@ -52,6 +53,12 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
               <LikeButton event={event} />
             </div>
           </FlexContainer>
+          {event?.isTicketed && (
+            <TicketSaleContainer>
+              <StyledTicketIcon />
+              <Text>Selling tickets</Text>
+            </TicketSaleContainer>
+          )}
         </TextContainer>
       </EventContainer>
     </StyledLink>
@@ -98,5 +105,9 @@ const TagContainer = styled.div`
 const TextContainer = styled.div`
   width: 55%;
 `
+
+const TicketSaleContainer = styled.div``
+
+const StyledTicketIcon = styled(TicketIcon)``
 
 export default memo(EventCard)
