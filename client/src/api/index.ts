@@ -49,7 +49,12 @@ const api = (method: 'get' | 'post' | 'put' | 'delete', url: string, variables: 
               //   msg: 'Session expired',
               // })
               store.dispatch(logout())
-              history.push('/login')
+              history.push({
+                pathname: '/login',
+                state: {
+                  prevPath: location.pathname,
+                },
+              })
             }
           } else {
             reject(error)

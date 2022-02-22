@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import useIsMobile from 'src/hooks/useIsMobile'
+import useRouter from 'src/hooks/useRouter'
 import MyEvents from 'src/pages/my-events/MyEvents'
 import { IRootState } from 'src/types/redux.type'
 
@@ -210,9 +211,10 @@ export const routes: IRoute[] = [
 
 const PrivateRoute = ({ component: Component, ...rest }: IRoute) => {
   const { accessToken } = useSelector((state: IRootState) => state.authState)
+  const router = useRouter()
 
   if (!accessToken || accessToken.length === 0) {
-    return <Redirect to='/login' />
+    return <Redirect to={{ pathname: '/login', state: { prevPath: router.location.pathname } }} />
   }
 
   return <Route {...rest} render={() => <Component />} />

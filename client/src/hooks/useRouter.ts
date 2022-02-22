@@ -4,7 +4,7 @@ import { parse, stringify } from 'query-string'
 
 export default function useRouter() {
   const params = useParams()
-  const location = useLocation()
+  const location = useLocation<{ prevPath?: string }>()
   const match: any = useRouteMatch()
   const history = useHistory()
 
@@ -24,9 +24,18 @@ export default function useRouter() {
     setQuery(overwrite ? obj : newQuery)
   }
 
+  const push = (pathname: string) => {
+    history.push({
+      pathname,
+      state: {
+        prevPath: location.pathname,
+      },
+    })
+  }
+
   return useMemo(() => {
     return {
-      push: history.push,
+      push,
       replace: history.replace,
       pathname: location.pathname,
       query,

@@ -14,7 +14,7 @@ const SigninModal = ({ isOpen, onRequestClose }: ISigninModalProps) => {
     <ConfirmationModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      onConfirm={() => router.history.push('/login')}
+      onConfirm={() => router.push('/login')}
       heading='Sign in'
       body='Sign in to access this feature.'
       confirmationText='Sign in'
