@@ -16,6 +16,19 @@ ticketRouter.post('/', async (req, res) => {
   }
 })
 
+ticketRouter.get('/:ticketId', async (req, res) => {
+  try {
+    const ticket = await Ticket.findById(req.params?.ticketId)
+    if (ticket?.user?._id?.toString() !== req?.user?._id?.toString()) {
+      res.status(401).send('Unauthorized')
+    } else {
+      res.send(ticket)
+    }
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 ticketRouter.get('/', async (req, res) => {
   try {
     const tickets = await Ticket.find({ userId: req.user?._id })

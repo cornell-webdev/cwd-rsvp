@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
 import api from 'src/api'
 
@@ -8,7 +9,7 @@ export interface IQueryConfig {
 }
 
 const useCustomQuery = <T>({ url, variables, options }: IQueryConfig) => {
-  return useQuery<T>({
+  return useQuery<T, AxiosError>({
     queryKey: [url, variables],
     queryFn: () =>
       new Promise((resolve, reject) => {

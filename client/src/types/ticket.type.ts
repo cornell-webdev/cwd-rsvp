@@ -10,7 +10,6 @@ export interface ITicket extends IDocument {
   user: IUser
   sellerId: string
   seller: ISeller
-  fullName: string
   name: string
   email: string
   pricePaid: number

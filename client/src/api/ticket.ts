@@ -27,3 +27,16 @@ export const useMyTickets = () => {
     myTickets,
   }
 }
+
+export const ticketByIdQueryConfig = (ticketId: string) => ({
+  url: `/private/ticket/${ticketId}`,
+})
+
+export const useTicketById = (ticketId: string) => {
+  const { data: ticket, ...rest } = useCustomQuery<ITicket>(ticketByIdQueryConfig(ticketId))
+
+  return {
+    ...rest,
+    ticket,
+  }
+}
