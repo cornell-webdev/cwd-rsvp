@@ -6,6 +6,7 @@ import BackButton from 'src/components/BackButton'
 import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
+import ParticipantList from './ParticipantList'
 import SellersLinkForm from './SellersLinkForm'
 import TicketSalesList from './TicketSalesList'
 
@@ -57,6 +58,7 @@ const TicketingDashboard = () => {
           <Text variant='h4' fontWeight={700}>
             Participants
           </Text>
+          <ParticipantList eventId={eventId} />
         </Section>
       </PageContainer>
     </Container>

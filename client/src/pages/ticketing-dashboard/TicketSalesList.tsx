@@ -37,27 +37,27 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
         value={filterString}
         onChange={(event) => setFilterString(event.target.value)}
       />
-      <Spacer y={1} />
-      {tickets
-        ?.filter((ticket) => ticket?.name?.toLowerCase()?.includes(filterString?.toLowerCase()))
-        ?.map((ticket) => (
-          <TicketItem key={ticket?._id} alignStart justifySpaceBetween>
-            <div>
-              <Text variant='meta1'>{ticket?.name}</Text>
-              {ticket?.seller && <Text variant='meta1'>sold by {ticket?.seller?.fullName}</Text>}
-            </div>
-            <FlexContainer flexDirection='column' alignCenter>
-              <Text variant='meta1'>{formatDate(ticket?.createdAt)}</Text>
-              <Text variant='meta1' color={theme.text.muted}>
-                {getEventTime(ticket?.createdAt?.toString())}
+      <TicketSalesListContainer>
+        {tickets
+          ?.filter((ticket) => ticket?.name?.toLowerCase()?.includes(filterString?.toLowerCase()))
+          ?.map((ticket) => (
+            <TicketItem key={ticket?._id} alignStart justifySpaceBetween>
+              <div>
+                <Text variant='meta1'>{ticket?.name}</Text>
+                {ticket?.seller && <Text variant='meta1'>sold by {ticket?.seller?.fullName}</Text>}
+              </div>
+              <FlexContainer flexDirection='column' alignCenter>
+                <Text variant='meta1'>{formatDate(ticket?.createdAt)}</Text>
+                <Text variant='meta1' color={theme.text.muted}>
+                  {getEventTime(ticket?.createdAt?.toString())}
+                </Text>
+              </FlexContainer>
+              <Text variant='meta1' fontWeight={700} color={theme.success[500]}>
+                ${ticket?.pricePaid.toFixed(2)}
               </Text>
-            </FlexContainer>
-            <Text variant='meta1' fontWeight={700} color={theme.success[500]}>
-              ${ticket?.pricePaid.toFixed(2)}
-            </Text>
-          </TicketItem>
-        ))}
-      <Spacer y={1} />
+            </TicketItem>
+          ))}
+      </TicketSalesListContainer>
       <Button variant='text' size='small' onClick={() => setCount(count + 10)}>
         Show more
       </Button>
@@ -77,6 +77,14 @@ const Label = styled.span`
   color: ${(props) => props.theme.text.muted};
   font-weight: 300;
   margin-left: 0.75rem;
+`
+
+const TicketSalesListContainer = styled.div`
+  background: ${(props) => props.theme.grey[50]};
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border-radius: 8px;
+  max-width: 400px;
 `
 
 const TicketItem = styled(FlexContainer)`

@@ -14,7 +14,7 @@ const FilterInput = styled.input`
   }
 
   &::placeholder {
-    color: ${(props) => props.theme.text.muted};
+    color: ${(props) => props.theme.text.placeholder};
   }
 `
 

@@ -7,6 +7,10 @@ ticketRouter.get('/event/:eventId', async (req, res) => {
   try {
     const allTickets = await Ticket.find({ eventId: req.params?.eventId })
     const revenue = allTickets?.reduce((prev, ticket) => prev + ticket?.pricePaid, 0)
+    const checkinCount = allTickets?.reduce(
+      (prev, ticket) => prev + (ticket?.isCheckedIn ? 1 : 0),
+      0
+    )
     let tickets
 
     if (req.query?.filterString) {
@@ -23,8 +27,18 @@ ticketRouter.get('/event/:eventId', async (req, res) => {
     res.send({
       tickets,
       revenue,
+      checkinCount,
       soldCount: allTickets?.length,
     })
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+ticketRouter.put('/check-in', async (req, res) => {
+  try {
+    const ticket = await Ticket.findByIdAndUpdate(req.body?.ticketId, { isCheckedIn: true })
+    res.send(ticket)
   } catch (e) {
     res.status(500).send(e)
   }

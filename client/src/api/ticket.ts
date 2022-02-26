@@ -1,10 +1,9 @@
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
-import { IEvent } from 'src/types/event.type'
 import { ITicket } from 'src/types/ticket.type'
 
 export const useCreateTicket = () => {
-  const { mutateAsync: createTicketAsync, ...rest } = useCustomMutation<IEvent>({
+  const { mutateAsync: createTicketAsync, ...rest } = useCustomMutation<ITicket>({
     url: '/private/ticket',
     method: 'post',
   })
@@ -45,6 +44,7 @@ interface IEventTicketResponse {
   tickets: ITicket[]
   revenue: string
   soldCount: string
+  checkinCount: string
 }
 
 export const ticketsByEventIdQueryConfig = (
@@ -65,5 +65,18 @@ export const useTicketsByEventId = (eventId: string, count: number, filterString
     tickets: data?.tickets,
     revenue: data?.revenue,
     soldCount: data?.soldCount,
+    checkinCount: data?.checkinCount,
+  }
+}
+
+export const useCheckinTicket = () => {
+  const { mutateAsync: checkinTicketAsync, ...rest } = useCustomMutation<ITicket>({
+    url: `/public/ticket/check-in`,
+    method: 'put',
+  })
+
+  return {
+    ...rest,
+    checkinTicketAsync,
   }
 }
