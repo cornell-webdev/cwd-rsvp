@@ -25,6 +25,7 @@ const TicketingDashboard = () => {
             <Text variant='h4' fontWeight={700}>
               {event?.title}
             </Text>
+            1
           </div>
           <Link to={`/event/${event?._id}`}>
             <Button>View event</Button>
@@ -34,8 +35,8 @@ const TicketingDashboard = () => {
           <Text variant='h4' fontWeight={700}>
             Seller's link
           </Text>
-          <Text>
-            Tickets purchased through the seller’s link will attribute the ticket sale to the
+          <Text color={theme.text.light}>
+            Tickets purchased through the seller's link will attribute the ticket sale to the
             seller.
           </Text>
           <div>

@@ -41,15 +41,25 @@ export const useTicketById = (ticketId: string) => {
   }
 }
 
-export const ticketsByEventIdQueryConfig = (eventId: string) => ({
-  url: `/public/ticket/event/${eventId}`,
+interface IEventTicketResponse {
+  tickets: ITicket[]
+  revenue: string
+  soldCount: string
+}
+
+export const ticketsByEventIdQueryConfig = (eventId: string, count: number) => ({
+  url: `/public/ticket/event/${eventId}?count=${count}`,
 })
 
-export const useTicketsByEventId = (eventId: string) => {
-  const { data: tickets, ...rest } = useCustomQuery<ITicket[]>(ticketsByEventIdQueryConfig(eventId))
+export const useTicketsByEventId = (eventId: string, count: number) => {
+  const { data, ...rest } = useCustomQuery<IEventTicketResponse>(
+    ticketsByEventIdQueryConfig(eventId, count)
+  )
 
   return {
     ...rest,
-    tickets,
+    tickets: data?.tickets,
+    revenue: data?.revenue,
+    soldCount: data?.soldCount,
   }
 }
