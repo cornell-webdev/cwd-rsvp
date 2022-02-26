@@ -25,7 +25,6 @@ const TicketingDashboard = () => {
             <Text variant='h4' fontWeight={700}>
               {event?.title}
             </Text>
-            1
           </div>
           <Link to={`/event/${event?._id}`}>
             <Button>View event</Button>

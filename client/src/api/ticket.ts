@@ -47,13 +47,17 @@ interface IEventTicketResponse {
   soldCount: string
 }
 
-export const ticketsByEventIdQueryConfig = (eventId: string, count: number) => ({
-  url: `/public/ticket/event/${eventId}?count=${count}`,
+export const ticketsByEventIdQueryConfig = (
+  eventId: string,
+  count: number,
+  filterString: string
+) => ({
+  url: `/public/ticket/event/${eventId}?count=${count}&filterString=${filterString}`,
 })
 
-export const useTicketsByEventId = (eventId: string, count: number) => {
+export const useTicketsByEventId = (eventId: string, count: number, filterString: string) => {
   const { data, ...rest } = useCustomQuery<IEventTicketResponse>(
-    ticketsByEventIdQueryConfig(eventId, count)
+    ticketsByEventIdQueryConfig(eventId, count, filterString)
   )
 
   return {

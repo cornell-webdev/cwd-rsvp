@@ -5,6 +5,7 @@ import { formatDate, getEventTime } from 'src/util/date'
 import styled from 'styled-components'
 import FilterInput from './FilterInput'
 import StatLabel from './StatLabel'
+import { useDebounce } from 'use-debounce'
 
 interface ITicketSalesListProps {
   eventId: string
@@ -13,8 +14,9 @@ interface ITicketSalesListProps {
 
 const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) => {
   const [count, setCount] = useState<number>(3)
-  const { tickets, revenue, soldCount } = useTicketsByEventId(eventId, count)
   const [filterString, setFilterString] = useState<string>('')
+  const [debouncedFilterString] = useDebounce(filterString, 1000)
+  const { tickets, revenue, soldCount } = useTicketsByEventId(eventId, count, debouncedFilterString)
 
   return (
     <Container>

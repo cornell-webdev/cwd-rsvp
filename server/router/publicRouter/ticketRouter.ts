@@ -7,9 +7,19 @@ ticketRouter.get('/event/:eventId', async (req, res) => {
   try {
     const allTickets = await Ticket.find({ eventId: req.params?.eventId })
     const revenue = allTickets?.reduce((prev, ticket) => prev + ticket?.pricePaid, 0)
-    const tickets = await Ticket.find({ eventId: req.params?.eventId })
-      .sort({ createdAt: -1 })
-      .limit(Number(req?.query?.count))
+    let tickets
+
+    if (req.query?.filterString) {
+      tickets = await Ticket.find({
+        eventId: req.params?.eventId,
+        name: { $regex: req.query?.filterString as string, $options: 'i' },
+      }).sort({ createdAt: -1 })
+    } else {
+      tickets = await Ticket.find({ eventId: req.params?.eventId })
+        .sort({ createdAt: -1 })
+        .limit(Number(req?.query?.count))
+    }
+
     res.send({
       tickets,
       revenue,
