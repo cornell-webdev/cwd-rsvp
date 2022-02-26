@@ -7,6 +7,7 @@ import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import SellersLinkForm from './SellersLinkForm'
+import TicketSalesList from './TicketSalesList'
 
 const TicketingDashboard = () => {
   const router = useRouter()
@@ -50,6 +51,7 @@ const TicketingDashboard = () => {
           <Text variant='h4' fontWeight={700}>
             Ticket sales
           </Text>
+          <TicketSalesList eventId={eventId} ticketsTotalCount={event?.totalTicketCount} />
         </Section>
         <Section>
           <Text variant='h4' fontWeight={700}>

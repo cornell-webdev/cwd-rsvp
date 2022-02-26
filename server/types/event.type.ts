@@ -24,6 +24,7 @@ export interface IEvent {
   providerUrl?: string
   providerData?: any
   isTicketed: boolean
+  totalTicketCount?: number
   price?: number
   isEarlyPrice?: boolean
   earlyPrice?: number
