@@ -16,8 +16,6 @@ const TicketDetails = () => {
   const ticketId = router.match.params.ticketId
   const { ticket, error } = useTicketById(ticketId)
 
-  console.log('ticket', ticket)
-
   if (error?.response?.status === 401) {
     return (
       <PageContainer isMobileOnly>

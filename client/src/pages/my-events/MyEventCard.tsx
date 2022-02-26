@@ -3,11 +3,14 @@ import { Button, FlexContainer, IconButton, Spacer, Text } from 'cornell-glue-ui
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDeleteEvent } from 'src/api/event'
+import GradientAnimation from 'src/components/GradientAnimation'
 import ConfirmationModal from 'src/components/layout/ConfirmationModal'
+import useIsMobile from 'src/hooks/useIsMobile'
 import { IEvent } from 'src/types/event.type'
 import getBumpedCount from 'src/util/getBumpedCount'
 import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 interface IMyEventCardProps {
   event: IEvent
@@ -16,6 +19,7 @@ interface IMyEventCardProps {
 const MyEventCard = ({ event }: IMyEventCardProps) => {
   const [isDeleteModoalOpen, setIsDeleteModoalOpen] = useState<boolean>(false)
   const { deleteEventAsync } = useDeleteEvent()
+  const isMobile = useIsMobile()
 
   const handleDelete = async () => {
     await deleteEventAsync({ _id: event?._id })
@@ -42,11 +46,21 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
               </Link>
               <Spacer x={1} />
               <Link to={`/event/${event?._id}`}>
-                <Button variant='text'>View event</Button>
+                <Button variant='text'>View {!isMobile && 'event'}</Button>
               </Link>
             </FlexContainer>
             <IconButton icon={<DeleteIcon />} onClick={() => setIsDeleteModoalOpen(true)} />
           </FlexContainer>
+          {event?.isTicketed && (
+            <>
+              <Spacer y={0.5} />
+              <Link to={`/dashboard/${event?._id}`} target='_blank' rel='noopener noreferrer'>
+                <TicketingButton startIcon={<StyledOpenInNewIcon />}>
+                  Ticketing dashboard
+                </TicketingButton>
+              </Link>
+            </>
+          )}
         </RightSection>
       </Container>
       <ConfirmationModal
@@ -91,6 +105,19 @@ const RightSection = styled.div`
 
 const TextSection = styled.div`
   margin-bottom: 12px;
+`
+
+const TicketingButton = styled(Button)`
+  border: none;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background: linear-gradient(45deg, #ff3683, #ef903c);
+  background-size: 200% auto;
+  animation: ${GradientAnimation} 4s linear infinite;
+`
+
+const StyledOpenInNewIcon = styled(OpenInNewIcon)`
+  fill: ${(props) => props.theme.background.default} !important;
 `
 
 export default MyEventCard

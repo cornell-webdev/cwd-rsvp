@@ -23,6 +23,9 @@ const TestTicketing = React.lazy(() => import('src/pages/test-ticketing/TestTick
 const BuyTicket = React.lazy(() => import('src/pages/buy-ticket/BuyTicket'))
 const MyTickets = React.lazy(() => import('src/pages/my-tickets/MyTickets'))
 const TicketDetails = React.lazy(() => import('src/pages/ticket-details/TicketDetails'))
+const TicketingDashboard = React.lazy(
+  () => import('src/pages/ticketing-dashboard/TicketingDashboard')
+)
 
 interface IRoute {
   path: string
@@ -97,6 +100,15 @@ export const routes: IRoute[] = [
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/dashboard/:eventId',
+    component: TicketingDashboard,
+    label: 'Ticketing dashboard',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
     isDesktopOnly: false,
   },
   {
