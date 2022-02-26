@@ -76,7 +76,7 @@ const EventDetails = () => {
                 Tickets
               </SectionHeading> */}
               <TicketSection>
-                <BuyticketButton>
+                <BuyticketSection>
                   <FlexContainer flexDirection='column' alignStart>
                     {/* TODO: conditionally display early price */}
                     <Text variant='h3' color={theme.background.default}>
@@ -108,7 +108,7 @@ const EventDetails = () => {
                       </Button>
                     </Link>
                   </FlexContainer>
-                </BuyticketButton>
+                </BuyticketSection>
                 {/* <Button>Buy ticket</Button> */}
               </TicketSection>
             </>
@@ -220,7 +220,7 @@ const TicketSection = styled.div`
   margin-bottom: 2rem;
 `
 
-const BuyticketButton = styled.button`
+const BuyticketSection = styled.div`
   width: 100%;
   background: ${(props) => props.theme.brand[500]};
   border-radius: 10px;
