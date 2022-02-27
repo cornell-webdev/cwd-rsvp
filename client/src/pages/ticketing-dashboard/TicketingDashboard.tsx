@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useEventById } from 'src/api/event'
 import BackButton from 'src/components/BackButton'
 import PageContainer from 'src/components/layout/PageContainer'
+import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import ParticipantList from './ParticipantList'
@@ -14,7 +15,7 @@ const TicketingDashboard = () => {
   const router = useRouter()
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
-  console.log('event', event)
+  const isMobile = useIsMobile()
 
   return (
     <Container>
@@ -35,12 +36,12 @@ const TicketingDashboard = () => {
           <Text variant='h4' fontWeight={700}>
             Seller's link
           </Text>
-          <Text color={theme.text.light}>
+          <Text color={theme.text.light} variant={isMobile ? 'meta1' : 'p'}>
             Tickets purchased through the seller's link will attribute the ticket sale to the
             seller.
           </Text>
           <div>
-            <SellersLinkForm />
+            <SellersLinkForm eventId={eventId} />
           </div>
         </Section>
         <Section>

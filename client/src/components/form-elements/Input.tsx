@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import ErrorMsg from './ErrorMsg'
 import Label from './Label'
 
-interface InputProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onEnterPress?: () => void
   width?: string | number
   label?: string
@@ -29,7 +28,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) 
   delete passedProps.onEnterPress
 
   return (
-    <InputContainer>
+    <InputContainer width={props?.width}>
       {props.label && <Label>{props.label}</Label>}
       <div>
         <StyledInput
@@ -70,10 +69,17 @@ export const HookedInput = (props: HookedInputProps) => {
   )
 }
 
-const InputContainer = styled.div`
+export interface IInputContainerProps {
+  width: InputProps['width']
+}
+
+const InputContainer = styled.div<IInputContainerProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  /* width */
+  width: ${(props) => props.width && `${props.width}px`};
 `
 
 interface StyledInputProps {
