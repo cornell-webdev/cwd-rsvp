@@ -2,6 +2,7 @@ import SwapVertOutlinedIcon from '@mui/icons-material/SwapVertOutlined'
 import { Button, FlexContainer, Spacer, Text } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useSellerStats } from 'src/api/seller'
+import useIsMobile from 'src/hooks/useIsMobile'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
 import FilterInput from './FilterInput'
@@ -16,6 +17,7 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
   const [isShowAll, setIsShowAll] = useState<boolean>(false)
   const [debouncedFilterString] = useDebounce(filterString, 1000)
   const { sellerStats } = useSellerStats(eventId, isReversed, isShowAll, debouncedFilterString)
+  const isMobile = useIsMobile()
 
   return (
     <Container>
@@ -30,7 +32,7 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
           size='small'
           startIcon={<SwapVertOutlinedIcon />}
           onClick={() => setIsReversed(!isReversed)}>
-          Reverse order
+          Reverse {!isMobile && 'order'}
         </Button>
       </FlexContainer>
       <ListContainer>
