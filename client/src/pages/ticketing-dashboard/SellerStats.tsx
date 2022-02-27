@@ -17,7 +17,6 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
   const [debouncedFilterString] = useDebounce(filterString, 1000)
   const { sellerStats } = useSellerStats(eventId, isReversed, isShowAll, debouncedFilterString)
 
-  console.log('sellerStats', sellerStats)
   return (
     <Container>
       <FlexContainer justifySpaceBetween alignCenter>
