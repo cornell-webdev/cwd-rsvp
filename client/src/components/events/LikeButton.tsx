@@ -75,7 +75,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
             liked ? <HeartFilledIcon variant={variant} /> : <HeartOutlinedIcon variant={variant} />
           }
           onClick={liked ? handleUnlike : handleLike}>
-          Like this event
+          Like event
         </Button>
         {likeCount > 0 && (
           <FlexContainer alignCenter>
