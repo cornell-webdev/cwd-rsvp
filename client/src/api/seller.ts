@@ -1,5 +1,6 @@
 import useCustomMutation from 'src/hooks/useCustomMutation'
-import { ISeller } from 'src/types/seller.type'
+import useCustomQuery from 'src/hooks/useCustomQuery'
+import { ISeller, ISellerStat } from 'src/types/seller.type'
 
 interface IGenerateSellerVariables {
   eventId: string
@@ -19,5 +20,30 @@ export const useGenerateSeller = () => {
   return {
     ...rest,
     generateSellerAsync,
+  }
+}
+
+const sellerStatsConfig = (
+  eventId: string,
+  isReversed: boolean,
+  isShowAll: boolean,
+  filterString: string
+) => ({
+  url: `/public/seller/event/${eventId}?isReversed=${isReversed}&isShowAll=${isShowAll}&filterString=${filterString}`,
+})
+
+export const useSellerStats = (
+  eventId: string,
+  isReversed: boolean,
+  isShowAll: boolean,
+  filterString: string
+) => {
+  const { data: sellerStats, ...rest } = useCustomQuery<ISellerStat[]>(
+    sellerStatsConfig(eventId, isReversed, isShowAll, filterString)
+  )
+
+  return {
+    ...rest,
+    sellerStats,
   }
 }

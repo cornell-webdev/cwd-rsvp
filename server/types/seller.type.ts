@@ -7,3 +7,9 @@ export interface ISeller {
   fullName: string
   netId: string
 }
+
+export interface ISellerStat {
+  _id: string
+  fullName: string
+  soldCount: number
+}

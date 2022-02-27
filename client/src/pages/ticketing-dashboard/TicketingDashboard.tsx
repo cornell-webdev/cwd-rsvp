@@ -9,6 +9,7 @@ import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import ParticipantList from './ParticipantList'
 import SellersLinkForm from './SellersLinkForm'
+import SellerStats from './SellerStats'
 import TicketSalesList from './TicketSalesList'
 
 const TicketingDashboard = () => {
@@ -48,6 +49,7 @@ const TicketingDashboard = () => {
           <Text variant='h4' fontWeight={700}>
             Sellers
           </Text>
+          <SellerStats eventId={eventId} />
         </Section>
         <Section>
           <Text variant='h4' fontWeight={700}>
