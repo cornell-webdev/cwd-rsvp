@@ -21,6 +21,7 @@ const BackButton = ({ onClick }: IBackButtonProps) => {
   return (
     <Button
       variant='text'
+      size='small'
       startIcon={<ChevronLeftIcon />}
       color={theme.text.default}
       background={theme.grey[100]}
