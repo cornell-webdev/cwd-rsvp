@@ -42,10 +42,10 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
           ?.filter((ticket) => ticket?.name?.toLowerCase()?.includes(filterString?.toLowerCase()))
           ?.map((ticket) => (
             <TicketItem key={ticket?._id} alignStart justifySpaceBetween>
-              <div>
+              <LeftBlockContainer>
                 <Text variant='meta1'>{ticket?.name}</Text>
                 {ticket?.seller && <Text variant='meta1'>sold by {ticket?.seller?.fullName}</Text>}
-              </div>
+              </LeftBlockContainer>
               <FlexContainer flexDirection='column' alignCenter>
                 <Text variant='meta1'>{formatDate(ticket?.createdAt)}</Text>
                 <Text variant='meta1' color={theme.text.muted}>
@@ -80,7 +80,7 @@ const Label = styled.span`
 `
 
 const TicketSalesListContainer = styled.div`
-  background: ${(props) => props.theme.grey[50]};
+  /* background: ${(props) => props.theme.grey[100]}; */
   margin: 1rem 0;
   padding: 0.5rem;
   border-radius: 8px;
@@ -89,6 +89,11 @@ const TicketSalesListContainer = styled.div`
 
 const TicketItem = styled(FlexContainer)`
   padding: 0.75rem 0.2rem;
+`
+
+const LeftBlockContainer = styled.div`
+  width: 120px;
+  overflow: hidden;
 `
 
 export default TicketSalesList

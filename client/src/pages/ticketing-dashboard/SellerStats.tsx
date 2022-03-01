@@ -35,21 +35,25 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
           Reverse {!isMobile && 'order'}
         </Button>
       </FlexContainer>
-      <ListContainer>
-        {sellerStats?.map((seller) => (
-          <SellerListItem key={seller?._id}>
-            <Text variant='meta1'>{seller?.fullName}</Text>
-            <FlexContainer alignCenter>
-              <HoriBar />
-              <Spacer x={0.5} />
-              <Text variant='meta1'>{seller?.soldCount}</Text>
-            </FlexContainer>
-          </SellerListItem>
-        ))}
-      </ListContainer>
-      <Button variant='text' size='small' onClick={() => setIsShowAll(true)}>
-        Show all
-      </Button>
+      {sellerStats && sellerStats?.length > 0 && (
+        <>
+          <ListContainer>
+            {sellerStats?.map((seller) => (
+              <SellerListItem key={seller?._id}>
+                <Text variant='meta1'>{seller?.fullName}</Text>
+                <FlexContainer alignCenter>
+                  <HoriBar width={(seller?.soldCount / sellerStats[0]?.soldCount) * 100} />
+                  <Spacer x={0.5} />
+                  <Text variant='meta1'>{seller?.soldCount}</Text>
+                </FlexContainer>
+              </SellerListItem>
+            ))}
+          </ListContainer>
+          <Button variant='text' size='small' onClick={() => setIsShowAll(true)}>
+            Show all
+          </Button>
+        </>
+      )}
     </Container>
   )
 }
@@ -64,11 +68,16 @@ const SellerListItem = styled.div`
   margin: 0.5rem 0;
 `
 
-const HoriBar = styled.div`
+interface HoriBarProps {
+  width: number
+}
+
+const HoriBar = styled.div<HoriBarProps>`
   height: 11px;
   min-width: 16px;
   border-radius: 8px;
   background: ${(props) => props.theme.brand[500]};
+  width: ${(props) => `${props.width - 10}%`};
 `
 
 export default SellerStats
