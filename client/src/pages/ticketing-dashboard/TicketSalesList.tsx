@@ -80,11 +80,9 @@ const Label = styled.span`
 `
 
 const TicketSalesListContainer = styled.div`
-  /* background: ${(props) => props.theme.grey[100]}; */
   margin: 1rem 0;
   padding: 0.5rem;
   border-radius: 8px;
-  max-width: 400px;
 `
 
 const TicketItem = styled(FlexContainer)`
