@@ -1,21 +1,20 @@
-import { FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
-import React, { useState } from 'react'
 import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
+import { FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
+import React, { useState, useEffect } from 'react'
+
 import { useEventById } from 'src/api/event'
+import { useEventSeller, useSellerById } from 'src/api/seller'
 import { useCreateTicket } from 'src/api/ticket'
 import { useCurrentUser } from 'src/api/user'
 import BackButton from 'src/components/BackButton'
+import Input from 'src/components/form-elements/Input'
+import Select, { ISelectOption } from 'src/components/form-elements/Select'
 import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
+import { getEventDate, getEventTime } from 'src/util/date'
 import styled from 'styled-components'
 import Paypal from './Paypal'
-import { getEventDate, getEventTime } from 'src/util/date'
-import * as yup from 'yup'
-import { FormProvider, useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import Input from 'src/components/form-elements/Input'
-import Select from 'src/components/form-elements/Select'
 
 const BuyTicket = () => {
   const router = useRouter()
@@ -25,32 +24,48 @@ const BuyTicket = () => {
   const { currentUser } = useCurrentUser()
   const [name, setName] = useState<string>(currentUser?.name || '')
   const [email, setEmail] = useState<string>(currentUser?.email || '')
-  const [sellerId, setSellerId] = useState<string>(router.query?.sellerId)
+  const [seller, setSeller] = useState<ISelectOption>()
+  const { sellers } = useEventSeller(eventId)
+  const { seller: querySeller } = useSellerById(router.query?.sellerId)
+
+  useEffect(() => {
+    if (querySeller) {
+      setSeller({
+        label: querySeller?.fullName,
+        value: querySeller?._id,
+      })
+    }
+  }, [querySeller])
+
+  const sellerOptions = sellers?.map((seller) => ({
+    label: seller?.fullName,
+    value: seller?._id,
+  }))
 
   const handlePayment = async (orderData: any) => {
-    console.log('handle payment: ', orderData)
     const paypalOrderId = orderData?.purchase_units[0]?.payments?.captures[0]?.id
     const paypalAmountPaid = orderData?.purchase_units[0]?.payments?.captures[0]?.amount?.value
-    console.log('paypalOrderId', paypalOrderId)
-    console.log('paypalAmountPaid', paypalAmountPaid)
-    const ticket = await createTicketAsync({
+
+    await createTicketAsync({
       eventId,
-      // TODO: sellerId
-      name: currentUser?.name,
-      email: currentUser?.email,
+      sellerId: seller?.value,
+      name,
+      email,
       pricePaid: paypalAmountPaid,
       providerId: paypalOrderId,
       providerData: orderData,
     })
-    console.log('ticket', ticket)
     router.push('/profile/my-tickets')
   }
 
   if (!event) return null
 
   return (
-    <PageContainer>
-      <BackButton />
+    <PageContainer isMobileOnly>
+      <Spacer y={2} />
+      <BackButton
+        onClick={() => router.push(`/event/${eventId}?sellerId=${router.query?.sellerId}`)}
+      />
       <Spacer y={1} />
       <Text variant='h3'>{event?.title}</Text>
       <Spacer y={1} />
@@ -80,7 +95,13 @@ const BuyTicket = () => {
         </Text>
       </InfoTextContainer>
       <Spacer y={1} />
-      <Select label='Seller' />
+      <Select
+        label='Seller'
+        options={sellerOptions}
+        value={seller}
+        disabled={!!querySeller}
+        onChange={(newOption) => setSeller(newOption)}
+      />
       <Spacer y={1} />
       <InfoTextContainer>
         <Text variant='meta1' color={theme.text.muted}>
@@ -88,7 +109,6 @@ const BuyTicket = () => {
           credit for this ticket sale.
         </Text>
       </InfoTextContainer>
-      <Spacer y={2} />
       <PriceBreakdownContainer>
         <PriceSection>
           <FlexContainer justifySpaceBetween>
@@ -119,7 +139,6 @@ const BuyTicket = () => {
           </FlexContainer>
         </PriceSection>
       </PriceBreakdownContainer>
-      <Spacer y={0.5} />
       <FlexContainer justifyCenter>
         <Text variant='meta2' color={theme.text.muted} textAlign='center'>
           By purchasing a ticket, you agree to the terms and conditions.
@@ -136,6 +155,8 @@ const BuyTicket = () => {
 const PriceBreakdownContainer = styled.div`
   border-radius: 8px;
   border: 1px solid ${(props) => props.theme.border.default};
+  margin-top: 3rem;
+  margin-bottom: 0.5rem;
 
   & > div:first-of-type {
     border-bottom: 1px solid ${(props) => props.theme.border.default};

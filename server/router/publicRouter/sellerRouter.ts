@@ -5,7 +5,7 @@ import { ISellerStat } from '../../types/seller.type'
 
 const sellerRouter = express.Router()
 
-sellerRouter.get('/event/:eventId', async (req, res) => {
+sellerRouter.get('/event/:eventId/stats', async (req, res) => {
   try {
     let sellers
     if (req.query?.filterString) {
@@ -43,6 +43,24 @@ sellerRouter.get('/event/:eventId', async (req, res) => {
     }
 
     res.send(counts)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+sellerRouter.get('/event/:eventId', async (req, res) => {
+  try {
+    const sellers = await Seller.find({ eventId: req.params?.eventId })
+    res.send(sellers)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+sellerRouter.get('/:sellerId', async (req, res) => {
+  try {
+    const seller = await Seller.findById(req.params?.sellerId)
+    res.send(seller)
   } catch (e) {
     res.status(500).send(e)
   }

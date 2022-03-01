@@ -4,6 +4,7 @@ import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
+import { useSellerById } from 'src/api/seller'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import GradientAnimation from 'src/components/GradientAnimation'
@@ -23,6 +24,9 @@ const EventDetails = () => {
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
+
+  const sellerId = router.query?.sellerId
+  const { seller } = useSellerById(sellerId)
 
   useEffect(() => {
     if (eventId) {
@@ -77,29 +81,38 @@ const EventDetails = () => {
               </SectionHeading> */}
               <TicketSection>
                 <BuyticketSection>
-                  <FlexContainer flexDirection='column' alignStart>
+                  <FlexContainer flexDirection='column' alignStart justifySpaceBetween>
                     {/* TODO: conditionally display early price */}
-                    <Text variant='h3' color={theme.background.default}>
-                      ${event?.price}
-                    </Text>
-                    <Spacer y={0.5} />
-                    <Text variant='meta2' color={theme.background.default}>
-                      Early bird pricing
-                    </Text>
-                    <Text variant='meta2' color={theme.background.default}>
-                      until Feb. 28
-                    </Text>
+                    <div>
+                      <Text variant='h3' color={theme.background.default}>
+                        ${event?.price}
+                      </Text>
+                    </div>
+                    {event?.isEarlyPrice && (
+                      <>
+                        <Spacer y={0.5} />
+
+                        <Text variant='meta2' color={theme.background.default}>
+                          Early bird price
+                        </Text>
+                        <Text variant='meta2' color={theme.background.default}>
+                          until Feb. 28
+                        </Text>
+                      </>
+                    )}
+                    <div />
                   </FlexContainer>
-                  <FlexContainer flexDirection='column' alignEnd>
+                  <FlexContainer flexDirection='column' alignEnd justifyEnd>
                     <Text variant='meta2' color={theme.background.default}>
                       21 / 300 sold
                     </Text>
-                    {/* TODO: conditionally render this based on if seller is in request query */}
-                    <Text variant='meta2' color={theme.background.default}>
-                      Buying from Jay Joo
-                    </Text>
+                    {seller && (
+                      <Text variant='meta2' color={theme.background.default}>
+                        Buying from {seller?.fullName}
+                      </Text>
+                    )}
                     <Spacer y={0.3} />
-                    <Link to={`/buy-ticket/${event?._id}`}>
+                    <Link to={`/buy-ticket/${event?._id}?sellerId=${router.query?.sellerId}`}>
                       <Button
                         background={theme.background.default}
                         color={theme.brand[500]}
@@ -226,8 +239,9 @@ const BuyticketSection = styled.div`
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: stretch;
   padding: 1rem;
+  min-height: 120px;
 
   background: linear-gradient(45deg, #ff3683, #ef903c);
   background-size: 200% auto;

@@ -5,11 +5,12 @@ const ticketRouter = express.Router()
 
 ticketRouter.post('/', async (req, res) => {
   try {
+    console.log('req.body', req.body)
     const ticket = await new Ticket({
       ...req.body,
       userId: req.user?._id,
     }).save()
-
+    console.log('ticket', ticket)
     res.send(ticket)
   } catch (e) {
     res.status(500).send(e)
