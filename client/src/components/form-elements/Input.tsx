@@ -59,7 +59,7 @@ export const HookedInput = (props: HookedInputProps) => {
   } = useFormContext()
 
   return (
-    <InputContainer>
+    <InputContainer width={props?.width}>
       <Label>{props.label}</Label>
       <div>
         <StyledInput {...props} {...register(props.name)} error={errors[props.name] != null} />

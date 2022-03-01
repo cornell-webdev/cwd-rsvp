@@ -2,7 +2,7 @@ import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
 import { ISeller, ISellerStat } from 'src/types/seller.type'
 
-interface IGenerateSellerVariables {
+interface IGenerateSellerArgs {
   eventId: string
   fullName: string
   netId: string
@@ -11,7 +11,7 @@ interface IGenerateSellerVariables {
 export const useGenerateSeller = () => {
   const { mutateAsync: generateSellerAsync, ...rest } = useCustomMutation<
     ISeller,
-    IGenerateSellerVariables
+    IGenerateSellerArgs
   >({
     url: '/public/seller/generate',
     method: 'put',

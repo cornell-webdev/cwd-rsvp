@@ -14,7 +14,7 @@ export interface ISelectOption {
 interface ISelectProps {
   options?: ISelectOption[]
   value?: ISelectOption
-  onChange?: (newOption: unknown, actionMeta: ActionMeta<unknown>) => void
+  onChange?: (newOption: ISelectOption, actionMeta: ActionMeta<ISelectOption>) => void
   label?: string
   disabled?: boolean
   maxMenuHeight?: number
@@ -30,8 +30,8 @@ const Select = forwardRef<HTMLSelectElement, ISelectProps>((props: ISelectProps,
   return (
     <div>
       <Label>{props.label}</Label>
+      {/* @ts-ignore */}
       <StyledSelect
-        {...props}
         isDisabled={props.disabled}
         theme={(defaultStyles: any) => ({
           ...defaultStyles,
@@ -44,11 +44,9 @@ const Select = forwardRef<HTMLSelectElement, ISelectProps>((props: ISelectProps,
         })}
         value={valueObject}
         key={`select-key-${JSON.stringify(valueObject)}`}
-        isSearchable={props.isSearchable}
         classNamePrefix='react-select'
         isError={!!props?.error}
-        width={props?.width}
-        placeholder={props?.placeholder}
+        {...props}
       />
     </div>
   )

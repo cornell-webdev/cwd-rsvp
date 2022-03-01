@@ -100,7 +100,7 @@ const BuyTicket = () => {
         options={sellerOptions}
         value={seller}
         disabled={!!querySeller}
-        onChange={(newOption) => setSeller(newOption)}
+        onChange={(newOption: ISelectOption) => setSeller(newOption)}
       />
       <Spacer y={1} />
       <InfoTextContainer>

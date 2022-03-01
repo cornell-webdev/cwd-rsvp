@@ -26,7 +26,7 @@ export const queryConfigToKey = (queryConfig: IQueryConfig) => [
   queryConfig?.variables,
 ]
 
-const useCustomMutation = <TData, TVariables>({
+const useCustomMutation = <TData, TArgs = any>({
   url,
   method,
   localUpdates: localUpdatesProp,
@@ -151,7 +151,7 @@ const useCustomMutation = <TData, TVariables>({
       }
     : {}
 
-  const { mutate, ...mutationInfo } = useMutation<TData, AxiosError, TVariables>(
+  const { mutate, ...mutationInfo } = useMutation<TData, AxiosError, TArgs>(
     (variables: any) =>
       new Promise((resolve, reject) => {
         ;(async () => {
