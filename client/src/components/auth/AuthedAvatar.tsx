@@ -26,6 +26,10 @@ const AuthedAvatar = ({ userPhotoSrc }: AuthedProps) => {
       onClick: () => router.push('/profile/my-orgs'),
     },
     {
+      label: 'My tickets',
+      onClick: () => router.push('/profile/my-tickets'),
+    },
+    {
       label: 'Logout',
       onClick: () => router.push('/logout'),
     },
