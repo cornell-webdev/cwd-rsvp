@@ -1,10 +1,8 @@
 import AddIcon from '@mui/icons-material/Add'
-import { Button, FlexContainer, theme } from 'cornell-glue-ui'
+import { Button, FlexContainer } from 'cornell-glue-ui'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useCurrentUser } from 'src/api/user'
-import useIsMobile from 'src/hooks/useIsMobile'
-import useNavs from 'src/hooks/useNavs'
 import styled from 'styled-components'
 import Auth from '../auth/Auth'
 import PageContainer from '../layout/PageContainer'
@@ -12,8 +10,8 @@ import Logo from '../Logo'
 
 const Header = () => {
   const { currentUser } = useCurrentUser()
-  const isMobile = useIsMobile()
-  const navs = useNavs()
+  // const isMobile = useIsMobile()
+  // const navs = useNavs()
 
   return (
     <Container>
@@ -21,7 +19,7 @@ const Header = () => {
         <Row alignCenter justifySpaceBetween fullWidth>
           <Logo />
           <RightSection isSignedIn={currentUser !== null}>
-            {!isMobile &&
+            {/* {!isMobile &&
               navs?.map(({ path, label }) => (
                 <NavLink key={path} to={path}>
                   <NavButton
@@ -32,7 +30,7 @@ const Header = () => {
                     {label}
                   </NavButton>
                 </NavLink>
-              ))}
+              ))} */}
             <Link to='/new-event'>
               <Button startIcon={<StyledAddIcon />}>Event</Button>
             </Link>
@@ -53,15 +51,15 @@ const Container = styled.div`
   }
 `
 
-const NavLink = styled(Link)`
-  margin-left: 0.75rem !important;
-`
+// const NavLink = styled(Link)`
+//   margin-left: 0.75rem !important;
+// `
 
-const NavButton = styled(Button)`
-  font-weight: 600;
-  padding-left: 0.2rem;
-  padding-right: 0.2rem;
-`
+// const NavButton = styled(Button)`
+//   font-weight: 600;
+//   padding-left: 0.2rem;
+//   padding-right: 0.2rem;
+// `
 
 const StyledAddIcon = styled(AddIcon)`
   width: 18px;
