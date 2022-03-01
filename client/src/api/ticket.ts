@@ -70,7 +70,10 @@ export const useTicketsByEventId = (eventId: string, count: number, filterString
 }
 
 export const useCheckinTicket = () => {
-  const { mutateAsync: checkinTicketAsync, ...rest } = useCustomMutation<ITicket>({
+  const { mutateAsync: checkinTicketAsync, ...rest } = useCustomMutation<
+    ITicket,
+    { ticketId: string }
+  >({
     url: `/public/ticket/check-in`,
     method: 'put',
   })

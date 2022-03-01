@@ -45,7 +45,7 @@ const TicketDetails = () => {
         <Text color={theme.text.muted}>{ticket?.email}</Text>
         <QRContainer>
           {/* TODO: replace with production domain */}
-          <QRCode value={`https://cwd-rsvp-ticketing.herokuapp.com/check-in/${ticketId}`} />
+          <QRCode value={`https://cornellrsvp.com/check-in/${ticketId}`} />
         </QRContainer>
         <Text color={theme.text.muted} textAlign='center'>
           Show this QR code to the organizer to check-in to the event

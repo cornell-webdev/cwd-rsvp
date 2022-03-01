@@ -19,7 +19,7 @@ const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
 const MyLikes = React.lazy(() => import('src/pages/my-likes/MyLikes'))
 const OrgAdmins = React.lazy(() => import('src/pages/org-admins/OrgAdmins'))
 const DevTraining = React.lazy(() => import('src/pages/dev-training/DevTraining'))
-const TestTicketing = React.lazy(() => import('src/pages/test-ticketing/TestTicketing'))
+const CheckIn = React.lazy(() => import('src/pages/check-in/CheckIn'))
 const BuyTicket = React.lazy(() => import('src/pages/buy-ticket/BuyTicket'))
 const MyTickets = React.lazy(() => import('src/pages/my-tickets/MyTickets'))
 const TicketDetails = React.lazy(() => import('src/pages/ticket-details/TicketDetails'))
@@ -130,18 +130,9 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
-    path: '/test-ticketing',
-    component: TestTicketing,
-    label: 'Test ticketing',
-    isPublicNav: false,
-    isPrivateNav: false,
-    isPrivateRoute: false,
-    isDesktopOnly: false,
-  },
-  {
     path: '/check-in/:ticketId',
-    component: TestTicketing,
-    label: 'Test ticketing',
+    component: CheckIn,
+    label: 'Check-in',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
