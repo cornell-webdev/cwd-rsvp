@@ -3,6 +3,7 @@ import React from 'react'
 import PageContainer from 'src/components/layout/PageContainer'
 import styled from 'styled-components'
 import Jay from './developers/Jay'
+import Chris from './developers/Chris'
 
 const DevTraining = () => {
   return (
@@ -11,6 +12,7 @@ const DevTraining = () => {
       <Container>
         <Text variant='h4'>SP22 Dev training</Text>
         <Jay />
+        <Chris />
       </Container>
     </PageContainer>
   )
