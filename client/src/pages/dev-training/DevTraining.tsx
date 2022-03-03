@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Jay from './developers/Jay'
 import Chris from './developers/Chris'
 import Justin from './developers/Justin'
+import Melinda from './developers/Melinda'
 
 const DevTraining = () => {
   return (
@@ -14,6 +15,7 @@ const DevTraining = () => {
         <Jay />
         <Chris />
         <Justin />
+        <Melinda />
       </Container>
     </PageContainer>
   )
