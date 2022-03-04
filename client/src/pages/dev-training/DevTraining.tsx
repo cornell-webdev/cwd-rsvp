@@ -3,14 +3,19 @@ import React from 'react'
 import PageContainer from 'src/components/layout/PageContainer'
 import styled from 'styled-components'
 import Jay from './developers/Jay'
+import Chris from './developers/Chris'
+import Justin from './developers/Justin'
+import Melinda from './developers/Melinda'
 
 const DevTraining = () => {
   return (
     <PageContainer>
-      {/* TODO: put in your components here! */}
       <Container>
         <Text variant='h4'>SP22 Dev training</Text>
         <Jay />
+        <Chris />
+        <Justin />
+        <Melinda />
       </Container>
     </PageContainer>
   )
