@@ -9,7 +9,6 @@ import Justin from './developers/Justin'
 const DevTraining = () => {
   return (
     <PageContainer>
-      {/* TODO: put in your components here! */}
       <Container>
         <Text variant='h4'>SP22 Dev training</Text>
         <Jay />
