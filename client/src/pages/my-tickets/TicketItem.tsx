@@ -11,7 +11,6 @@ interface ITicketItemProps {
 }
 
 const TicketItem = ({ ticket }: ITicketItemProps) => {
-  console.log('ticket', ticket)
   return (
     <StyledLink to={`/profile/ticket-details/${ticket?._id}`}>
       <Container>

@@ -13,6 +13,7 @@ import Select, { ISelectOption } from 'src/components/form-elements/Select'
 import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDate, getEventTime } from 'src/util/date'
+import getTicketPrice from 'src/util/getTicketPrice'
 import styled from 'styled-components'
 import Paypal from './Paypal'
 
@@ -115,9 +116,8 @@ const BuyTicket = () => {
             <Text variant='meta1' color={theme.text.muted}>
               Ticket 1x
             </Text>
-            {/* TODO: conditionally get price (is it early price?) */}
             <Text variant='meta1' color={theme.text.muted}>
-              ${event?.price}
+              ${getTicketPrice(event)}
             </Text>
           </FlexContainer>
           <Spacer y={0.5} />
@@ -125,7 +125,6 @@ const BuyTicket = () => {
             <Text variant='meta1' color={theme.text.muted}>
               Fees & tax
             </Text>
-            {/* TODO: conditionally get price (is it early price?) */}
             <Text variant='meta1' color={theme.text.muted}>
               $0
             </Text>
@@ -134,8 +133,7 @@ const BuyTicket = () => {
         <PriceSection>
           <FlexContainer justifySpaceBetween>
             <Text fontWeight={700}>Total</Text>
-            {/* TODO: conditionally get price (is it early price?) */}
-            <Text fontWeight={700}>${event?.price}</Text>
+            <Text fontWeight={700}>${getTicketPrice(event)}</Text>
           </FlexContainer>
         </PriceSection>
       </PriceBreakdownContainer>
@@ -146,7 +144,7 @@ const BuyTicket = () => {
       </FlexContainer>
       <Spacer y={2} />
       <FlexContainer justifyCenter>
-        {event?.price && <Paypal onPayment={handlePayment} price={event.price} />}
+        {event && <Paypal onPayment={handlePayment} price={getTicketPrice(event)} />}
       </FlexContainer>
     </PageContainer>
   )

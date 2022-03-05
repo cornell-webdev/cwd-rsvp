@@ -44,7 +44,6 @@ const TicketDetails = () => {
         <Spacer y={0.5} />
         <Text color={theme.text.muted}>{ticket?.email}</Text>
         <QRContainer>
-          {/* TODO: replace with production domain */}
           <QRCode value={`https://cornellrsvp.com/check-in/${ticketId}`} />
         </QRContainer>
         <Text color={theme.text.muted} textAlign='center'>

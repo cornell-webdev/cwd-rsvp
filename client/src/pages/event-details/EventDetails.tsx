@@ -84,7 +84,6 @@ const EventDetails = () => {
               <TicketSection>
                 <BuyticketSection>
                   <FlexContainer flexDirection='column' alignStart justifySpaceBetween>
-                    {/* TODO: conditionally display early price */}
                     <div>
                       <Text variant='h3' color={theme.background.default}>
                         ${getTicketPrice(event)}
