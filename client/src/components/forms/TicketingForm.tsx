@@ -56,7 +56,8 @@ const TicketingForm = () => {
           <div>
             <RSVPInput label='Event host Venmo ID' name='venmoId' placeholder='@venmo-id' />
             <Text variant='meta1' color={theme.text.muted}>
-              All ticket revenue will be sent to this Venmo account 1 day after the event ends.
+              All ticket revenue will be sent to this Venmo account within 3 business days after the
+              event ends.
             </Text>
           </div>
           <RSVPInput label='Total number of tickets' name='totalTicketCount' />
@@ -83,7 +84,7 @@ const TicketingForm = () => {
               <Spacer y={1} />
               <Label>Early bird deadline</Label>
               <Spacer y={0.3} />
-              <DatePicker date={earlyDeadline} onChange={handleChangeDate} />
+              <DatePicker date={new Date(earlyDeadline)} onChange={handleChangeDate} />
               <Spacer y={0.3} />
               <Text variant='meta1' color={theme.text.muted}>
                 Tickets purchased before the early bird deadline will cost the early bird price.
