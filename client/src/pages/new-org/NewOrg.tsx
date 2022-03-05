@@ -1,4 +1,4 @@
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import BackButton from 'src/components/BackButton'

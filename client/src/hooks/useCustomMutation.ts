@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import { useMutation, useQueryClient } from 'react-query'
 import api from 'src/api'
 import { IQueryConfig } from './useCustomQuery'
@@ -25,7 +26,7 @@ export const queryConfigToKey = (queryConfig: IQueryConfig) => [
   queryConfig?.variables,
 ]
 
-const useCustomMutation = <T>({
+const useCustomMutation = <TData, TArgs = any>({
   url,
   method,
   localUpdates: localUpdatesProp,
@@ -150,12 +151,12 @@ const useCustomMutation = <T>({
       }
     : {}
 
-  const { mutate, ...mutationInfo } = useMutation(
+  const { mutate, ...mutationInfo } = useMutation<TData, AxiosError, TArgs>(
     (variables: any) =>
       new Promise((resolve, reject) => {
         ;(async () => {
           try {
-            const data = (await api(method, url, variables)) as T
+            const data = (await api(method, url, variables)) as TData
             resolve(data)
           } catch (error) {
             reject(error)

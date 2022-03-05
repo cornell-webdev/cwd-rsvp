@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import useIsMobile from 'src/hooks/useIsMobile'
+import useRouter from 'src/hooks/useRouter'
 import MyEvents from 'src/pages/my-events/MyEvents'
 import { IRootState } from 'src/types/redux.type'
 
@@ -18,6 +19,13 @@ const MyOrgs = React.lazy(() => import('src/pages/my-orgs/MyOrgs'))
 const MyLikes = React.lazy(() => import('src/pages/my-likes/MyLikes'))
 const OrgAdmins = React.lazy(() => import('src/pages/org-admins/OrgAdmins'))
 const DevTraining = React.lazy(() => import('src/pages/dev-training/DevTraining'))
+const CheckIn = React.lazy(() => import('src/pages/check-in/CheckIn'))
+const BuyTicket = React.lazy(() => import('src/pages/buy-ticket/BuyTicket'))
+const MyTickets = React.lazy(() => import('src/pages/my-tickets/MyTickets'))
+const TicketDetails = React.lazy(() => import('src/pages/ticket-details/TicketDetails'))
+const TicketingDashboard = React.lazy(
+  () => import('src/pages/ticketing-dashboard/TicketingDashboard')
+)
 
 interface IRoute {
   path: string
@@ -95,6 +103,15 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
+    path: '/dashboard/:eventId',
+    component: TicketingDashboard,
+    label: 'Ticketing dashboard',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
     path: '/my-likes',
     component: MyLikes,
     label: 'My likes',
@@ -113,11 +130,47 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
+    path: '/check-in/:ticketId',
+    component: CheckIn,
+    label: 'Check-in',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/buy-ticket/:eventId',
+    component: BuyTicket,
+    label: 'Buy ticket',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
     path: '/profile/my-events',
     component: MyEvents,
     label: 'My events',
     isPublicNav: false,
     isPrivateNav: true,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/profile/my-tickets',
+    component: MyTickets,
+    label: 'My tickets',
+    isPublicNav: false,
+    isPrivateNav: true,
+    isPrivateRoute: true,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/profile/ticket-details/:ticketId',
+    component: TicketDetails,
+    label: 'Ticket details',
+    isPublicNav: false,
+    isPrivateNav: false,
     isPrivateRoute: true,
     isDesktopOnly: false,
   },
@@ -161,9 +214,10 @@ export const routes: IRoute[] = [
 
 const PrivateRoute = ({ component: Component, ...rest }: IRoute) => {
   const { accessToken } = useSelector((state: IRootState) => state.authState)
+  const router = useRouter()
 
   if (!accessToken || accessToken.length === 0) {
-    return <Redirect to='/login' />
+    return <Redirect to={{ pathname: '/login', state: { prevPath: router.location.pathname } }} />
   }
 
   return <Route {...rest} render={() => <Component />} />

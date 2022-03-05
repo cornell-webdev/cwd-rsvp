@@ -8,7 +8,7 @@ const AuthCallback = () => {
   const router = useRouter()
   const { token } = router.query
   const dispatch = useDispatch()
-  const { accessToken } = useSelector((state: IRootState) => state.authState)
+  const { accessToken, redirectUrl } = useSelector((state: IRootState) => state.authState)
 
   // set access token
   useEffect(() => {
@@ -24,7 +24,7 @@ const AuthCallback = () => {
   useEffect(() => {
     ;(async () => {
       if (accessToken) {
-        router.push('/')
+        router.push(redirectUrl || '/')
       }
     })()
   }, [accessToken])

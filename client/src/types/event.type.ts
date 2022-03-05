@@ -28,4 +28,12 @@ export interface IEvent extends IDocument {
   providerId?: string
   providerUrl?: string
   providerData?: any
+  isTicketed: boolean
+  totalTicketCount?: number
+  price?: number
+  isEarlyPrice?: boolean
+  earlyPrice?: number
+  earlyDeadline?: Date
+  venmoId?: string
+  checkInInstructions?: string
 }

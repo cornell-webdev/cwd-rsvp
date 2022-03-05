@@ -17,4 +17,9 @@ export default defineConfig({
       plugins: [visualize({ open: true })],
     },
   },
+  resolve: {
+    alias: {
+      '@mui/styled-engine': '@mui/styled-engine-sc',
+    },
+  },
 })

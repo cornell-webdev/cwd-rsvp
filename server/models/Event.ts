@@ -76,6 +76,33 @@ const eventSchema = new Schema(
     providerData: {
       type: Schema.Types.Mixed,
     },
+    /* ticketing */
+    isTicketed: {
+      type: Boolean,
+      default: false,
+    },
+    totalTicketCount: {
+      type: Number,
+    },
+    price: {
+      type: Number,
+    },
+    isEarlyPrice: {
+      type: Boolean,
+      default: false,
+    },
+    earlyPrice: {
+      type: Number,
+    },
+    earlyDeadline: {
+      type: Date,
+    },
+    venmoId: {
+      type: String,
+    },
+    checkInInstructions: {
+      type: String,
+    },
   },
   {
     timestamps: true,

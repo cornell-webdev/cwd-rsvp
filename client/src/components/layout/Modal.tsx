@@ -1,5 +1,5 @@
 import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 import { FlexContainer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect } from 'react'
 import ReactModal from 'react-modal'

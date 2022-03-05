@@ -2,7 +2,7 @@ import { Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import useIsMobile from 'src/hooks/useIsMobile'
 import styled from 'styled-components'
-import InfoIcon from '@material-ui/icons/Info'
+import InfoIcon from '@mui/icons-material/Info'
 
 interface PageContainerProps {
   children: React.ReactNode

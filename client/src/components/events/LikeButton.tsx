@@ -1,5 +1,5 @@
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useCurrentUser } from 'src/api/user'
@@ -75,7 +75,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
             liked ? <HeartFilledIcon variant={variant} /> : <HeartOutlinedIcon variant={variant} />
           }
           onClick={liked ? handleUnlike : handleLike}>
-          Like this event
+          Like event
         </Button>
         {likeCount > 0 && (
           <FlexContainer alignCenter>

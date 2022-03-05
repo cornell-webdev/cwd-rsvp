@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Spacer, Text } from 'cornell-glue-ui'
+import { Button, Text } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -14,7 +14,9 @@ import useRouter from 'src/hooks/useRouter'
 import { IEvent, IEventDate } from 'src/types/event.type'
 import styled from 'styled-components'
 import * as yup from 'yup'
-import { HookedInput } from '../form-elements/Input'
+import RSVPInput from '../form-elements/RSVPInput'
+import FormSectionContainer from './FormSectionContainer'
+import TicketingForm from './TicketingForm'
 
 interface IEventFormProps {
   initValues?: IEvent
@@ -28,6 +30,10 @@ const EventForm = ({ initValues }: IEventFormProps) => {
       tag: yup.object().required('Event type is required'),
       org: yup.object().required('Organization is required'),
       details: yup.string().required('Event details is required'),
+      totalTicketCount: yup.number().typeError('Total ticket count must be a number'),
+      price: yup.number().typeError('Price must be a number'),
+      venmoId: yup.string(),
+      checkInInstructions: yup.string(),
     })
     .required()
 
@@ -37,8 +43,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     reValidateMode: 'onBlur',
     defaultValues:
       {
-        title: initValues?.title,
-        location: initValues?.location,
+        ...initValues,
         tag: initValues?.tag && {
           label: initValues?.tag?.name,
           value: initValues?.tag?._id,
@@ -47,7 +52,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
           label: initValues?.org?.name,
           value: initValues?.org?._id,
         },
-        details: initValues?.details,
+        earlyDeadline: new Date(initValues?.earlyDeadline || ''),
       } || {},
   })
 
@@ -101,60 +106,58 @@ const EventForm = ({ initValues }: IEventFormProps) => {
   return (
     <FormProvider {...form}>
       <StyledForm onSubmit={form.handleSubmit(onSubmit)}>
-        <Text fontWeight={700}>Basic information</Text>
-        <HookedSelect
-          name='org'
-          label='Organization'
-          placeholder='Choose organization'
-          width='300px'
-          options={orgOptions}
-        />
-        <Link to='/new-org'>
-          <Button variant='text' size='small'>
-            Create organization
-          </Button>
-        </Link>
-        <StyledInput label='Event title' placeholder='The name of your event' name='title' />
-        <StyledInput
-          label='Location'
-          placeholder='Physical location or meeting URL'
-          name='location'
-        />
-        <HookedSelect
-          name='tag'
-          label='Event type'
-          placeholder='Choose type'
-          width='200px'
-          options={tags?.map((tag) => ({
-            label: tag?.name,
-            value: tag?._id,
-          }))}
-        />
-        <Spacer y={0.25} />
-        <HookedTextarea
-          name='details'
-          label='Event details'
-          placeholder="What's this event about?"
-          minRows={5}
-        />
-        <Text fontWeight={700}>Date and time</Text>
-        <DateAndTime dates={dates} setDates={setDates} />
-        <Text fontWeight={700}>Thumbnail image</Text>
-        <ImageUpload urls={urls} setUrls={setUrls} maxImgs={1} />
+        <FormSectionContainer>
+          <Text fontWeight={700}>Basic information</Text>
+          <HookedSelect
+            name='org'
+            label='Organization'
+            placeholder='Choose organization'
+            width='300px'
+            options={orgOptions}
+          />
+          <Link to='/new-org'>
+            <Button variant='text' size='small'>
+              Create organization
+            </Button>
+          </Link>
+          <RSVPInput label='Event title' placeholder='The name of your event' name='title' />
+          <RSVPInput
+            label='Location'
+            placeholder='Physical location or meeting URL'
+            name='location'
+          />
+          <HookedSelect
+            name='tag'
+            label='Event type'
+            placeholder='Choose type'
+            width='200px'
+            options={tags?.map((tag) => ({
+              label: tag?.name,
+              value: tag?._id,
+            }))}
+          />
+          <HookedTextarea
+            name='details'
+            label='Event details'
+            placeholder="What's this event about?"
+            minRows={5}
+          />
+        </FormSectionContainer>
+        <FormSectionContainer>
+          <Text fontWeight={700}>Date and time</Text>
+          <DateAndTime dates={dates} setDates={setDates} />
+        </FormSectionContainer>
+        <TicketingForm />
+        <FormSectionContainer>
+          <Text fontWeight={700}>Thumbnail image</Text>
+          <ImageUpload urls={urls} setUrls={setUrls} maxImgs={1} />
+        </FormSectionContainer>
         <Button type='submit'>Publish</Button>
       </StyledForm>
     </FormProvider>
   )
 }
 
-const StyledForm = styled.form`
-  & > * {
-    margin-bottom: 0.75rem;
-  }
-`
-
-const StyledInput = styled(HookedInput)`
-  width: 85%;
-`
+const StyledForm = styled.form``
 
 export default EventForm

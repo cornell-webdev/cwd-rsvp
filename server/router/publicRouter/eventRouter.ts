@@ -99,7 +99,7 @@ eventRouter.get('/', async (req, res) => {
       ...tagQuery,
     }
 
-    const docs = await Event.find(query)
+    const docs = await Event.find(query).sort({ isTicketed: -1 })
     res.send(docs)
   } catch (e) {
     res.status(500).send(e)

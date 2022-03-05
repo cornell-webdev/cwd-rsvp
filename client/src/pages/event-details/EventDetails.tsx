@@ -1,26 +1,34 @@
-import CalendarIcon from '@material-ui/icons/CalendarTodayOutlined'
-import LocationIcon from '@material-ui/icons/LocationOnOutlined'
+import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
+import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
+import { useSellerById } from 'src/api/seller'
+import { useTicketsByEventId } from 'src/api/ticket'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
+import GradientAnimation from 'src/components/GradientAnimation'
 import PageContainer from 'src/components/layout/PageContainer'
 import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
-import { getEventDateTime } from 'src/util/date'
+import { getEventDate, getEventDateTime } from 'src/util/date'
 import getEventThumbnail from 'src/util/getEventThumbnail'
+import getTicketPrice from 'src/util/getTicketPrice'
 import styled from 'styled-components'
 
 const EventDetails = () => {
-  const router = useRouter()
   const isMobile = useIsMobile()
+  const router = useRouter()
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
-
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
+  const { soldCount } = useTicketsByEventId(eventId, 0, '')
+
+  const sellerId = router.query?.sellerId
+  const { seller } = useSellerById(sellerId)
 
   useEffect(() => {
     if (eventId) {
@@ -68,6 +76,58 @@ const EventDetails = () => {
           <LikesContainer>
             <LikeButton event={event} variant='event-detail' />
           </LikesContainer>
+          {event?.isTicketed && (
+            <>
+              {/* <SectionHeading variant='h5' fontWeight={700}>
+                Tickets
+              </SectionHeading> */}
+              <TicketSection>
+                <BuyticketSection>
+                  <FlexContainer flexDirection='column' alignStart justifySpaceBetween>
+                    <div>
+                      <Text variant='h3' color={theme.background.default}>
+                        ${getTicketPrice(event)}
+                      </Text>
+                    </div>
+                    {event?.isEarlyPrice && (
+                      <>
+                        <Spacer y={0.5} />
+
+                        <Text variant='meta2' color={theme.background.default}>
+                          Early bird price ${event?.earlyPrice}
+                        </Text>
+                        <Text variant='meta2' color={theme.background.default}>
+                          until {getEventDate(event?.earlyDeadline)}
+                        </Text>
+                      </>
+                    )}
+                    <div />
+                  </FlexContainer>
+                  <FlexContainer flexDirection='column' alignEnd justifyEnd>
+                    <Text variant='meta2' color={theme.background.default}>
+                      {soldCount} / {event?.totalTicketCount} tickets sold
+                    </Text>
+                    {seller && (
+                      <Text variant='meta2' color={theme.background.default}>
+                        Buying from {seller?.fullName}
+                      </Text>
+                    )}
+                    <Spacer y={0.3} />
+                    <Link to={`/buy-ticket/${event?._id}?sellerId=${router.query?.sellerId}`}>
+                      <Button
+                        background={theme.background.default}
+                        color={theme.brand[500]}
+                        hoverBackground={theme.brand[50]}
+                        disabled={soldCount === event?.totalTicketCount}>
+                        {soldCount === event?.totalTicketCount ? 'Sold out' : 'Buy ticket'}
+                      </Button>
+                    </Link>
+                  </FlexContainer>
+                </BuyticketSection>
+                {/* <Button>Buy ticket</Button> */}
+              </TicketSection>
+            </>
+          )}
           <SectionHeading variant='h5' fontWeight={700}>
             Event details
           </SectionHeading>
@@ -168,6 +228,26 @@ const IconRow = styled(FlexContainer)`
 
 const LikesContainer = styled.div`
   margin: 2rem 0;
+`
+
+const TicketSection = styled.div`
+  width: 100%;
+  margin-bottom: 2rem;
+`
+
+const BuyticketSection = styled.div`
+  width: 100%;
+  background: ${(props) => props.theme.brand[500]};
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 1rem;
+  min-height: 120px;
+
+  background: linear-gradient(45deg, #ff3683, #ef903c);
+  background-size: 200% auto;
+  animation: ${GradientAnimation} 4s linear infinite;
 `
 
 export default EventDetails
