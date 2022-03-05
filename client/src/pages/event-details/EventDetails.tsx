@@ -105,7 +105,7 @@ const EventDetails = () => {
                   </FlexContainer>
                   <FlexContainer flexDirection='column' alignEnd justifyEnd>
                     <Text variant='meta2' color={theme.background.default}>
-                      {soldCount} / {event?.totalTicketCount} sold
+                      {soldCount} / {event?.totalTicketCount} tickets sold
                     </Text>
                     {seller && (
                       <Text variant='meta2' color={theme.background.default}>
@@ -117,8 +117,9 @@ const EventDetails = () => {
                       <Button
                         background={theme.background.default}
                         color={theme.brand[500]}
-                        hoverBackground={theme.brand[50]}>
-                        Buy ticket
+                        hoverBackground={theme.brand[50]}
+                        disabled={soldCount === event?.totalTicketCount}>
+                        {soldCount === event?.totalTicketCount ? 'Sold out' : 'Buy ticket'}
                       </Button>
                     </Link>
                   </FlexContainer>
