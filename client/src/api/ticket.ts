@@ -83,3 +83,21 @@ export const useCheckinTicket = () => {
     checkinTicketAsync,
   }
 }
+
+export const hasSoldTicketQueryConfig = (eventId: string) => ({
+  url: `/private/ticket/event/${eventId}/has-sold-ticket`,
+  options: {
+    enabled: !!eventId,
+  },
+})
+
+export const useHasSoldTicket = (eventId: string) => {
+  const { data: hasSoldTicket, ...rest } = useCustomQuery<boolean>(
+    hasSoldTicketQueryConfig(eventId)
+  )
+
+  return {
+    ...rest,
+    hasSoldTicket,
+  }
+}

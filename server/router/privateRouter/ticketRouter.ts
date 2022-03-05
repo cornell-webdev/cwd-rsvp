@@ -5,12 +5,10 @@ const ticketRouter = express.Router()
 
 ticketRouter.post('/', async (req, res) => {
   try {
-    console.log('req.body', req.body)
     const ticket = await new Ticket({
       ...req.body,
       userId: req.user?._id,
     }).save()
-    console.log('ticket', ticket)
     res.send(ticket)
   } catch (e) {
     res.status(500).send(e)
@@ -24,6 +22,19 @@ ticketRouter.get('/:ticketId', async (req, res) => {
       res.status(401).send('Unauthorized')
     } else {
       res.send(ticket)
+    }
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
+ticketRouter.get('/event/:eventId/has-sold-ticket', async (req, res) => {
+  try {
+    const ticket = await Ticket.findOne({ eventId: req.params?.eventId })
+    if (ticket) {
+      res.send(true)
+    } else {
+      res.send(false)
     }
   } catch (e) {
     res.status(500).send(e)

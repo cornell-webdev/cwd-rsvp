@@ -1,36 +1,56 @@
-import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import styled from 'styled-components'
+import { useHasSoldTicket } from 'src/api/ticket'
+import useRouter from 'src/hooks/useRouter'
+import DatePicker from '../form-elements/DatePicker'
+import Label from '../form-elements/Label'
 import RSVPInput from '../form-elements/RSVPInput'
 import { HookedTextarea } from '../form-elements/Textarea'
 import FormSectionContainer from './FormSectionContainer'
-import DeleteIcon from '@mui/icons-material/Delete'
 
 const TicketingForm = () => {
   const { watch, setValue } = useFormContext()
-
   const org = watch('org')
+  const isEarlyPrice = watch('isEarlyPrice')
+  const earlyDeadline = watch('earlyDeadline')
   const isTicketed = watch('isTicketed')
+  const router = useRouter()
+  const { hasSoldTicket } = useHasSoldTicket(router.match?.params?.eventId)
+
+  const handleChangeDate = (date: Date) => {
+    setValue('earlyDeadline', date)
+  }
 
   if (org?.label !== 'LOKO') return null
 
   return (
     <FormSectionContainer>
-      <FlexContainer justifySpaceBetween>
+      <FlexContainer justifySpaceBetween fullWidth>
         <Text fontWeight={700}>Ticketing</Text>
-        {isTicketed && (
-          <Button
-            type='button'
-            variant='text'
-            size='small'
-            startIcon={<DeleteIcon />}
-            onClick={() => setValue('isTicketed', false)}>
-            Remove ticketing
-          </Button>
-        )}
-        {/* TODO: disable button + show why it's disabled if at least 1 ticket has been sold */}
+        <div>
+          {isTicketed && (
+            <Button
+              type='button'
+              variant='text'
+              size='small'
+              startIcon={<DeleteIcon />}
+              disabled={hasSoldTicket}
+              onClick={() => setValue('isTicketed', false)}>
+              Remove ticketing
+            </Button>
+          )}
+        </div>
       </FlexContainer>
+      {hasSoldTicket && (
+        <div>
+          <Text variant='meta1' color={theme.text.muted}>
+            Can't remove ticketing after a ticket has been sold
+          </Text>
+          <Spacer y={1} />
+        </div>
+      )}
       {isTicketed ? (
         <>
           <div>
@@ -40,8 +60,56 @@ const TicketingForm = () => {
             </Text>
           </div>
           <RSVPInput label='Total number of tickets' name='totalTicketCount' />
-          <RSVPInput label='Price per ticket (USD)' name='price' />
-          {/* TODO: early bird pricing feature */}
+          <div>
+            <RSVPInput label='Price per ticket (USD)' name='price' disabled={hasSoldTicket} />
+            {hasSoldTicket && (
+              <Text variant='meta1' color={theme.text.muted}>
+                Can't change price after a ticket has been sold
+              </Text>
+            )}
+          </div>
+          {isEarlyPrice ? (
+            <div>
+              <RSVPInput
+                label='Early bird price (USD)'
+                name='earlyPrice'
+                disabled={hasSoldTicket}
+              />
+              {hasSoldTicket && (
+                <Text variant='meta1' color={theme.text.muted}>
+                  Can't change price after a ticket has been sold
+                </Text>
+              )}
+              <Spacer y={1} />
+              <Label>Early bird deadline</Label>
+              <Spacer y={0.3} />
+              <DatePicker date={earlyDeadline} onChange={handleChangeDate} />
+              <Spacer y={0.3} />
+              <Text variant='meta1' color={theme.text.muted}>
+                Tickets purchased before the early bird deadline will cost the early bird price.
+              </Text>
+              <Spacer y={1} />
+              <Button
+                variant='text'
+                size='small'
+                onClick={() => setValue('isEarlyPrice', false)}
+                color={theme.grey[700]}
+                background={theme.grey[50]}
+                hoverBackground={theme.grey[100]}
+                startIcon={<DeleteIcon />}>
+                Remove early bird price
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant='text'
+              size='small'
+              onClick={() => setValue('isEarlyPrice', true)}
+              disabled={hasSoldTicket}>
+              Add early bird price
+            </Button>
+          )}
+          <Spacer y={1.5} />
           <div>
             <HookedTextarea
               name='checkInInstructions'

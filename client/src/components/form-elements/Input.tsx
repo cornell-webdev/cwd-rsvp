@@ -45,8 +45,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) 
 
 Input.displayName = 'Input'
 
-interface HookedInputProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+interface HookedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   width?: number
   label: string
   name: string
