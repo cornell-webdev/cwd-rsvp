@@ -5,14 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import { useSellerById } from 'src/api/seller'
+import { useTicketsByEventId } from 'src/api/ticket'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import GradientAnimation from 'src/components/GradientAnimation'
 import PageContainer from 'src/components/layout/PageContainer'
 import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
-import { getEventDateTime } from 'src/util/date'
+import { getEventDate, getEventDateTime } from 'src/util/date'
 import getEventThumbnail from 'src/util/getEventThumbnail'
+import getTicketPrice from 'src/util/getTicketPrice'
 import styled from 'styled-components'
 
 const EventDetails = () => {
@@ -20,10 +22,10 @@ const EventDetails = () => {
   const router = useRouter()
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
-
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
+  const { soldCount } = useTicketsByEventId(eventId, 0, '')
 
   const sellerId = router.query?.sellerId
   const { seller } = useSellerById(sellerId)
@@ -85,7 +87,7 @@ const EventDetails = () => {
                     {/* TODO: conditionally display early price */}
                     <div>
                       <Text variant='h3' color={theme.background.default}>
-                        ${event?.price}
+                        ${getTicketPrice(event)}
                       </Text>
                     </div>
                     {event?.isEarlyPrice && (
@@ -93,10 +95,10 @@ const EventDetails = () => {
                         <Spacer y={0.5} />
 
                         <Text variant='meta2' color={theme.background.default}>
-                          Early bird price
+                          Early bird price ${event?.earlyPrice}
                         </Text>
                         <Text variant='meta2' color={theme.background.default}>
-                          until Feb. 28
+                          until {getEventDate(event?.earlyDeadline)}
                         </Text>
                       </>
                     )}
@@ -104,7 +106,7 @@ const EventDetails = () => {
                   </FlexContainer>
                   <FlexContainer flexDirection='column' alignEnd justifyEnd>
                     <Text variant='meta2' color={theme.background.default}>
-                      21 / 300 sold
+                      {soldCount} / {event?.totalTicketCount} sold
                     </Text>
                     {seller && (
                       <Text variant='meta2' color={theme.background.default}>

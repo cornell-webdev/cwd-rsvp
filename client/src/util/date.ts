@@ -21,7 +21,9 @@ export const formatDate = (
   return fullDate
 }
 
-export function getEventDate(dateString: string | Date) {
+export function getEventDate(dateString?: string | Date) {
+  if (!dateString) return ''
+
   const d = new Date(dateString)
   const day = d.toLocaleString('default', { month: 'short', day: 'numeric' })
   return day

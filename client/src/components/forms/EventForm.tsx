@@ -52,6 +52,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
           label: initValues?.org?.name,
           value: initValues?.org?._id,
         },
+        earlyDeadline: new Date(initValues?.earlyDeadline || ''),
       } || {},
   })
 
