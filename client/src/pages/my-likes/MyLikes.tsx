@@ -1,23 +1,24 @@
 import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useLikedEvents } from 'src/api/event'
+import { ReactComponent as EmptyStateIllust } from 'src/assets/svgs/my-likes-empty-state.svg'
+import BackButton from 'src/components/BackButton'
 import EmptyState from 'src/components/EmptyState'
 import EventCard from 'src/components/events/EventCard'
 import PageContainer from 'src/components/layout/PageContainer'
 import styled from 'styled-components'
 import DayList from '../home/DayList'
-import { ReactComponent as EmptyStateIllust } from 'src/assets/svgs/my-likes-empty-state.svg'
-import BackButton from 'src/components/BackButton'
-import useRouter from 'src/hooks/useRouter'
 
 const MyLikes = () => {
   const { likedEvents } = useLikedEvents()
-  const router = useRouter()
 
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
-        <BackButton onClick={() => router.push('/')} />
+        <Link to='/'>
+          <BackButton />
+        </Link>
         <Spacer y={1.5} />
         <MatchDayListPadding>
           <Text variant='h4' fontWeight={700}>
