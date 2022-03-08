@@ -35,6 +35,15 @@ ticketRouter.get('/event/:eventId', async (req, res) => {
   }
 })
 
+ticketRouter.get('/:ticketId', async (req, res) => {
+  try {
+    const ticket = await Ticket.findById(req.params?.ticketId)
+    res.send(ticket)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 ticketRouter.put('/check-in', async (req, res) => {
   try {
     const ticket = await Ticket.findByIdAndUpdate(req.body?.ticketId, { isCheckedIn: true })

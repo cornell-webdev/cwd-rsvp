@@ -15,19 +15,6 @@ ticketRouter.post('/', async (req, res) => {
   }
 })
 
-ticketRouter.get('/:ticketId', async (req, res) => {
-  try {
-    const ticket = await Ticket.findById(req.params?.ticketId)
-    if (ticket?.user?._id?.toString() !== req?.user?._id?.toString()) {
-      res.status(401).send('Unauthorized')
-    } else {
-      res.send(ticket)
-    }
-  } catch (e) {
-    res.status(500).send(e)
-  }
-})
-
 ticketRouter.get('/event/:eventId/has-sold-ticket', async (req, res) => {
   try {
     const ticket = await Ticket.findOne({ eventId: req.params?.eventId })
