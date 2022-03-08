@@ -28,7 +28,7 @@ export const useMyTickets = () => {
 }
 
 export const ticketByIdQueryConfig = (ticketId: string) => ({
-  url: `/private/ticket/${ticketId}`,
+  url: `/public/ticket/${ticketId}`,
 })
 
 export const useTicketById = (ticketId: string) => {
