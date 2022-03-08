@@ -12,6 +12,7 @@ import User from './models/User'
 import router from './router'
 import initScript from './util/initScript'
 import { IUserDocument } from './types/user.type'
+import { forceDomain } from 'forcedomain'
 
 // env variables
 dotenv.config()
@@ -59,6 +60,15 @@ DBConnect.dbConnection()
 
 // routing
 app.use('/api', router)
+
+// force domain and https
+app.use(
+  forceDomain({
+    hostname: 'cornellrsvp.com',
+    protocol: 'https',
+    excludeRule: /[a-zA-Z0-9][a-zA-Z0-9-]+\.herokuapp\.com/i,
+  })
+)
 
 // serve static files from client
 const isDev = path.dirname(__dirname) === 'server'
