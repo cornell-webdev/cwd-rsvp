@@ -23,6 +23,4 @@ export type ISnackbarVariant = 'error' | 'warning' | 'info' | 'success'
 
 export interface IRootState {
   authState: IAuthState
-  snackbarState: ISnackbarState
-  appState: IAppState
 }
