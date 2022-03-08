@@ -20,7 +20,7 @@ const SellersLinkForm = ({ eventId }: ISellersLinkFormProps) => {
       fullName,
       netId,
     })
-    setGeneratedLink(`https://www.cornellrsvp.com/event/${eventId}?sellerId=${seller?._id}`)
+    setGeneratedLink(`https://cornellrsvp.com/event/${eventId}?sellerId=${seller?._id}`)
     setFullName(seller?.fullName)
   }
 
