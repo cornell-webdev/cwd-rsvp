@@ -7,7 +7,7 @@ import ChrisEventCard from './ChrisEventCard'
 interface IChrisProps {}
 
 const Chris = ({}: IChrisProps) => {
-  const { events } = useEvents({
+  const { events, refetch } = useEvents({
     date: new Date(),
   })
 
@@ -17,7 +17,7 @@ const Chris = ({}: IChrisProps) => {
     <Container>
       <Text>Hi my name is Chris</Text>
       {events?.map((event) => (
-        <ChrisEventCard key={event._id} event={event} />
+        <ChrisEventCard key={event._id} event={event} refetch={refetch} />
       ))}
     </Container>
   )
