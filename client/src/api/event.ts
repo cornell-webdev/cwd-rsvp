@@ -103,7 +103,7 @@ export const useIncrementEventViews = () => {
     mutate: incrementEventViews,
     mutateAsync: incrementEventViewsAsync,
     ...rest
-  } = useCustomMutation<IEvent>({
+  } = useCustomMutation<IEvent, { _id: string }>({
     url: '/public/event/increment-views',
     method: 'post',
   })
