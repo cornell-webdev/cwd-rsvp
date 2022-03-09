@@ -2,7 +2,6 @@ import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React from 'react'
 import { IOrg } from 'src/types/org.type'
 import styled from 'styled-components'
-import GroupIcon from '@material-ui/icons/Group'
 import { Link } from 'react-router-dom'
 import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
 import { useOrgAddLinkedUser } from 'src/api/org'
@@ -19,7 +18,6 @@ const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
   const { currentUser } = useCurrentUser()
 
   const addLinkedUser = async () => {
-    // const orgId = org._id
     var email
     if (currentUser !== undefined && currentUser !== null) {
       email = currentUser.email
@@ -46,13 +44,14 @@ const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
           </Text>
           <Spacer y={1} />
         </RightSection>
-        <ClaimButton
-          onClick={() => {
-            router.history.goBack()
-            addLinkedUser()
-          }}>
-          Claim
-        </ClaimButton>
+        <Link to={`/profile/my-orgs`}>
+          <ClaimButton
+            onClick={() => {
+              addLinkedUser()
+            }}>
+            Claim
+          </ClaimButton>
+        </Link>
       </FlexContainer>
     </Container>
   )
