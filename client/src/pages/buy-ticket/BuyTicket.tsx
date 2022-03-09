@@ -2,6 +2,7 @@ import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { useEventById } from 'src/api/event'
 import { useEventSeller, useSellerById } from 'src/api/seller'
@@ -64,9 +65,9 @@ const BuyTicket = () => {
   return (
     <PageContainer isMobileOnly>
       <Spacer y={2} />
-      <BackButton
-        onClick={() => router.push(`/event/${eventId}?sellerId=${router.query?.sellerId}`)}
-      />
+      <Link to={`/event/${eventId}?sellerId=${router.query?.sellerId}`}>
+        <BackButton />
+      </Link>
       <Spacer y={1} />
       <Text variant='h3'>{event?.title}</Text>
       <Spacer y={1} />

@@ -22,7 +22,9 @@ const TicketingDashboard = () => {
     <Container>
       <PageContainer isMobileOnly>
         <Section>
-          <BackButton onClick={() => router.push('/profile/my-events')} />
+          <Link to='/profile/my-events'>
+            <BackButton />
+          </Link>
           <div>
             <Text color={theme.text.muted}>Event dashboard</Text>
             <Text variant='h4' fontWeight={700}>

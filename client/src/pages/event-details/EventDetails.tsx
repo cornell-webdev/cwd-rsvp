@@ -50,7 +50,9 @@ const EventDetails = () => {
     <PageContainer isMobileOnly isShowWarning={false} isNoPadding>
       <Container>
         <HoriPadding>
-          <BackButton onClick={() => router.history.goBack()} />
+          <Link to='/'>
+            <BackButton />
+          </Link>
         </HoriPadding>
         <ImgContainer>
           <EventImg src={getEventThumbnail(event)} />

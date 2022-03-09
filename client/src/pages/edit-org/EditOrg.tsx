@@ -1,5 +1,6 @@
 import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useOrgById } from 'src/api/org'
 import BackButton from 'src/components/BackButton'
 import OrgForm from 'src/components/forms/OrgForm'
@@ -15,7 +16,9 @@ const EditOrg = () => {
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
-        <BackButton onClick={() => router.history.goBack()} />
+        <Link to='/profile/my-orgs'>
+          <BackButton />
+        </Link>
         <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Edit profile

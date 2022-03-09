@@ -4,7 +4,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import rootReducer from 'src/redux'
 
-const loggerMiddleware = import.meta.env.VITE_NODE_ENV === 'development' ? [logger] : [logger]
+const loggerMiddleware = import.meta.env.VITE_NODE_ENV === 'development' ? [logger] : []
 const persistBlacklist = import.meta.env.VITE_NODE_ENV === 'development' ? [] : []
 
 const persistConfig = {
