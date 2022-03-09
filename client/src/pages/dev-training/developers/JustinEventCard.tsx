@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { IEvent } from 'src/types/event.type'
 import styled from 'styled-components'
 import { useIncrementEventViews } from 'src/api/event'
