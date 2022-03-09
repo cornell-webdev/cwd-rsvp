@@ -5,7 +5,7 @@ import { useEvents } from 'src/api/event'
 import JustinEventCard from './JustinEventCard'
 
 const Justin = () => {
-  const { events } = useEvents({
+  const { events, refetch } = useEvents({
     date: new Date(),
   })
 
@@ -15,7 +15,7 @@ const Justin = () => {
     <Container>
       <Text>Hello my name is Justin!</Text>
       {events?.map((event) => (
-        <JustinEventCard event={event} key={event?._id}></JustinEventCard>
+        <JustinEventCard event={event} key={event?._id} refetch={refetch}></JustinEventCard>
       ))}
     </Container>
   )
