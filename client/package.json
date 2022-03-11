@@ -27,6 +27,7 @@
     "install": "^0.13.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.12",
+    "notistack": "^2.0.3",
     "npm": "^7.21.0",
     "query-string": "^7.0.0",
     "react": "^17.0.2",

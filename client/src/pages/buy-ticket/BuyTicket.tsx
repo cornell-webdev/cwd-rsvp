@@ -1,12 +1,12 @@
 import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
+import { useSnackbar } from 'notistack'
+import React, { useEffect, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import { useEventById } from 'src/api/event'
 import { useEventSeller, useSellerById } from 'src/api/seller'
-import { useCreateTicket } from 'src/api/ticket'
+import { useCreateTicket, useTicketsByEventId } from 'src/api/ticket'
 import { useCurrentUser } from 'src/api/user'
 import BackButton from 'src/components/BackButton'
 import Input from 'src/components/form-elements/Input'
@@ -29,6 +29,8 @@ const BuyTicket = () => {
   const [seller, setSeller] = useState<ISelectOption>()
   const { sellers } = useEventSeller(eventId)
   const { seller: querySeller } = useSellerById(router.query?.sellerId)
+  const { soldCount } = useTicketsByEventId(eventId, 0, '')
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     if (querySeller) {
@@ -61,6 +63,14 @@ const BuyTicket = () => {
   }
 
   if (!event) return null
+
+  if (soldCount === event?.totalTicketCount) {
+    enqueueSnackbar('Tickets have been sold out', {
+      variant: 'error',
+      preventDuplicate: true,
+    })
+    return <Redirect to={`/event/${eventId}`} />
+  }
 
   return (
     <PageContainer isMobileOnly>
