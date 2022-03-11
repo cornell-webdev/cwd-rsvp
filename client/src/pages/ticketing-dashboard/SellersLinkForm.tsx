@@ -2,6 +2,7 @@ import { Button, FlexContainer, Spacer } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useGenerateSeller } from 'src/api/seller'
 import Input from 'src/components/form-elements/Input'
+import getSellersLink from 'src/util/getSellersLink'
 import styled from 'styled-components'
 
 interface ISellersLinkFormProps {
@@ -20,7 +21,7 @@ const SellersLinkForm = ({ eventId }: ISellersLinkFormProps) => {
       fullName,
       netId,
     })
-    setGeneratedLink(`https://cornellrsvp.com/event/${eventId}?sellerId=${seller?._id}`)
+    setGeneratedLink(getSellersLink({ eventId, sellerId: seller?._id }))
     setFullName(seller?.fullName)
   }
 

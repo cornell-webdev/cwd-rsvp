@@ -24,7 +24,7 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Router history={history}>
           <QueryClientProvider client={queryClient}>
-            <SnackbarProvider maxSnack={3}>
+            <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
               <GlueProvider>
                 <Header />
                 <InnerContents>

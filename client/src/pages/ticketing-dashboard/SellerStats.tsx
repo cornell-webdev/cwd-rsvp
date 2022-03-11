@@ -6,6 +6,10 @@ import useIsMobile from 'src/hooks/useIsMobile'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
 import FilterInput from './FilterInput'
+import InsertLinkOutlinedIcon from '@mui/icons-material/InsertLinkOutlined'
+import { useSnackbar } from 'notistack'
+import copyToClipboard from 'src/util/copyToClipboard'
+import getSellersLink from 'src/util/getSellersLink'
 
 interface ISellerStatsProps {
   eventId: string
@@ -18,6 +22,12 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
   const [debouncedFilterString] = useDebounce(filterString, 1000)
   const { sellerStats } = useSellerStats(eventId, isReversed, isShowAll, debouncedFilterString)
   const isMobile = useIsMobile()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const copySellersLink = (sellerId: string) => {
+    copyToClipboard(getSellersLink({ eventId, sellerId }))
+    enqueueSnackbar("Copied seller's link")
+  }
 
   return (
     <Container>
@@ -39,8 +49,12 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
         <>
           <ListContainer>
             {sellerStats?.map((seller) => (
-              <SellerListItem key={seller?._id}>
-                <Text variant='meta1'>{seller?.fullName}</Text>
+              <SellerListItem key={seller?._id} onClick={() => copySellersLink(seller?._id)}>
+                <FlexContainer alignCenter>
+                  <Text variant='meta1'>{seller?.fullName}</Text>
+                  <Spacer x={0.3} />
+                  <StyledLinkIcon />
+                </FlexContainer>
                 <FlexContainer alignCenter>
                   <HoriBar width={(seller?.soldCount / sellerStats[0]?.soldCount) * 100} />
                   <Spacer x={0.5} />
@@ -65,7 +79,27 @@ const ListContainer = styled.div`
 `
 
 const SellerListItem = styled.div`
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
+  padding: 0.3rem 0.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 80ms ease-in-out;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      background: ${(props) => props.theme.grey[100]};
+    }
+  }
+`
+
+const StyledLinkIcon = styled(InsertLinkOutlinedIcon)`
+  fill: ${(props) => props.theme.brand[500]};
+  opacity: 0;
+  transition: opacity 80ms ease-in-out;
+
+  ${SellerListItem}:hover & {
+    opacity: 1;
+  }
 `
 
 interface HoriBarProps {
