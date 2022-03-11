@@ -26,9 +26,7 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
 
   const copySellersLink = (sellerId: string) => {
     copyToClipboard(getSellersLink({ eventId, sellerId }))
-    enqueueSnackbar("Copied seller's link", {
-      preventDuplicate: true,
-    })
+    enqueueSnackbar("Copied seller's link")
   }
 
   return (
