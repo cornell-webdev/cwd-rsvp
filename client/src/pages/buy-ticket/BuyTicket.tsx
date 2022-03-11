@@ -1,12 +1,12 @@
 import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
+import { useSnackbar } from 'notistack'
+import React, { useEffect, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import { useEventById } from 'src/api/event'
 import { useEventSeller, useSellerById } from 'src/api/seller'
-import { useCreateTicket } from 'src/api/ticket'
+import { useCreateTicket, useTicketsByEventId } from 'src/api/ticket'
 import { useCurrentUser } from 'src/api/user'
 import BackButton from 'src/components/BackButton'
 import Input from 'src/components/form-elements/Input'
@@ -29,6 +29,8 @@ const BuyTicket = () => {
   const [seller, setSeller] = useState<ISelectOption>()
   const { sellers } = useEventSeller(eventId)
   const { seller: querySeller } = useSellerById(router.query?.sellerId)
+  const { soldCount } = useTicketsByEventId(eventId, 0, '')
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     if (querySeller) {
@@ -57,10 +59,22 @@ const BuyTicket = () => {
       providerId: paypalOrderId,
       providerData: orderData,
     })
+    enqueueSnackbar('Ticket purchase successful!', {
+      variant: 'success',
+      preventDuplicate: true,
+    })
     router.push('/profile/my-tickets')
   }
 
   if (!event) return null
+
+  if (soldCount === event?.totalTicketCount) {
+    enqueueSnackbar('Tickets have been sold out', {
+      variant: 'error',
+      preventDuplicate: true,
+    })
+    return <Redirect to={`/event/${eventId}`} />
+  }
 
   return (
     <PageContainer isMobileOnly>
@@ -140,7 +154,15 @@ const BuyTicket = () => {
       </PriceBreakdownContainer>
       <FlexContainer justifyCenter>
         <Text variant='meta2' color={theme.text.muted} textAlign='center'>
-          By purchasing a ticket, you agree to the terms and conditions.
+          By purchasing a ticket, you agree to the{' '}
+          <StyledLink to='/terms-and-conditions' target='_blank' rel='noopener noreferrer'>
+            Terms and Conditions
+          </StyledLink>{' '}
+          and{' '}
+          <StyledLink to='/privacy-policy' target='_blank' rel='noopener noreferrer'>
+            Privacy Policy
+          </StyledLink>
+          .
         </Text>
       </FlexContainer>
       <Spacer y={2} />
@@ -176,6 +198,16 @@ const StyledLocationIcon = styled(LocationIcon)`
 
 const InfoTextContainer = styled.div`
   padding: 0 0.5rem;
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: underline;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 export default BuyTicket

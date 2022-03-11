@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import history from 'src/util/history'
 import Header from '../components/header/Header'
 import Routes from './Routes'
+import { SnackbarProvider } from 'notistack'
 
 const persistor = persistStore(store)
 
@@ -23,13 +24,31 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <Router history={history}>
           <QueryClientProvider client={queryClient}>
-            <GlueProvider>
-              <Header />
-              <InnerContents>
-                <Routes />
-              </InnerContents>
-              <Footer />
-            </GlueProvider>
+            <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+              <GlueProvider>
+                <Header />
+                <InnerContents>
+                  <Routes />
+                </InnerContents>
+                <Footer
+                  navs={[
+                    {
+                      heading: 'Policies',
+                      routes: [
+                        {
+                          label: 'Terms and Conditions',
+                          url: '/terms-and-conditions',
+                        },
+                        {
+                          label: 'Privacy Policy',
+                          url: '/privacy-policy',
+                        },
+                      ],
+                    },
+                  ]}
+                />
+              </GlueProvider>
+            </SnackbarProvider>
           </QueryClientProvider>
         </Router>
       </PersistGate>

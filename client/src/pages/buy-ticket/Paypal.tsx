@@ -17,7 +17,7 @@ const Paypal = ({ onPayment, price }: IPaypalProps) => {
     : PAYPAY_CLIENT_ID_SANDBOX
 
   useScript(
-    `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&enable-funding=venmo&disable-funding=credit&currency=USD`
+    `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&disable-funding=credit&currency=USD`
   )
 
   // @ts-ignore

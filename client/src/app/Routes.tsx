@@ -26,6 +26,10 @@ const TicketDetails = React.lazy(() => import('src/pages/ticket-details/TicketDe
 const TicketingDashboard = React.lazy(
   () => import('src/pages/ticketing-dashboard/TicketingDashboard')
 )
+const TermsAndConditions = React.lazy(
+  () => import('src/pages/terms-and-conditions/TermsAndConditions')
+)
+const PrivacyPolicy = React.lazy(() => import('src/pages/privacy-policy/PrivacyPolicy'))
 
 interface IRoute {
   path: string
@@ -61,6 +65,24 @@ export const routes: IRoute[] = [
     path: '/auth/callback',
     component: AuthCallback,
     label: '',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/privacy-policy',
+    component: PrivacyPolicy,
+    label: 'Privacy policy',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/terms-and-conditions',
+    component: TermsAndConditions,
+    label: 'Terms and Conditions',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
