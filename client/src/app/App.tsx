@@ -30,7 +30,23 @@ const App = () => {
                 <InnerContents>
                   <Routes />
                 </InnerContents>
-                <Footer />
+                <Footer
+                  navs={[
+                    {
+                      heading: 'Policies',
+                      routes: [
+                        {
+                          label: 'Terms and Conditions',
+                          url: '/terms-and-conditions',
+                        },
+                        {
+                          label: 'Privacy Policy',
+                          url: '/privacy-policy',
+                        },
+                      ],
+                    },
+                  ]}
+                />
               </GlueProvider>
             </SnackbarProvider>
           </QueryClientProvider>

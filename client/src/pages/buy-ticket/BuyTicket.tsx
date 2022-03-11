@@ -154,7 +154,15 @@ const BuyTicket = () => {
       </PriceBreakdownContainer>
       <FlexContainer justifyCenter>
         <Text variant='meta2' color={theme.text.muted} textAlign='center'>
-          By purchasing a ticket, you agree to the terms and conditions.
+          By purchasing a ticket, you agree to the{' '}
+          <StyledLink to='/terms-and-conditions' target='_blank' rel='noopener noreferrer'>
+            Terms and Conditions
+          </StyledLink>{' '}
+          and{' '}
+          <StyledLink to='/privacy-policy' target='_blank' rel='noopener noreferrer'>
+            Privacy Policy
+          </StyledLink>
+          .
         </Text>
       </FlexContainer>
       <Spacer y={2} />
@@ -190,6 +198,16 @@ const StyledLocationIcon = styled(LocationIcon)`
 
 const InfoTextContainer = styled.div`
   padding: 0 0.5rem;
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: underline;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `
 
 export default BuyTicket
