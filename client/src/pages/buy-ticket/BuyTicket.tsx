@@ -59,6 +59,10 @@ const BuyTicket = () => {
       providerId: paypalOrderId,
       providerData: orderData,
     })
+    enqueueSnackbar('Ticket purchase successful!', {
+      variant: 'success',
+      preventDuplicate: true,
+    })
     router.push('/profile/my-tickets')
   }
 
