@@ -37,6 +37,7 @@ memberRouter.put('/:name', async (req, res) => {
 
 memberRouter.delete('/delete', async (req, res) => {
   try {
+    console.log('delete request')
     const result = await Member.findOneAndDelete(req.body)
     res.send(result)
   } catch (e) {

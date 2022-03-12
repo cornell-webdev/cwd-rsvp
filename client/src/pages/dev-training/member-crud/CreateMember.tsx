@@ -1,11 +1,18 @@
 import { FlexContainer, Spacer, Button } from 'cornell-glue-ui'
 import React, { useState } from 'react'
+import { useCreateMember } from 'src/api/member'
 import styled from 'styled-components'
 
 const CreateMember = () => {
   const [name, setName] = useState<string>('')
+  const { createMemberAsync } = useCreateMember()
 
-  const handleCreateMember = () => {}
+  const handleCreateMember = () => {
+    if (name) {
+      createMemberAsync({ name })
+      setName('')
+    }
+  }
 
   return (
     <Container>

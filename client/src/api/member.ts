@@ -1,6 +1,5 @@
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
-import { IEvent } from 'src/types/event.type'
 import { IMember } from 'src/types/member.type'
 
 export const memberByNameQueryConfig = (name: string) => ({
@@ -24,7 +23,7 @@ export const useCreateMember = () => {
     mutate: createMember,
     mutateAsync: createMemberAsync,
     ...rest
-  } = useCustomMutation<IMember, IMember>({
+  } = useCustomMutation<IMember, { name: string }>({
     url: '/public/member/',
     method: 'post',
   })
@@ -59,7 +58,7 @@ export const useDeleteMember = () => {
     mutateAsync: deleteMemberAsync,
     ...rest
   } = useCustomMutation<IMember, { name: string }>({
-    url: 'public/member/delete',
+    url: '/public/member/delete',
     method: 'delete',
   })
 
