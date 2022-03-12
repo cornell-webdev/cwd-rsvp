@@ -1,24 +1,22 @@
-import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
+import { Button, FlexContainer, Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
-import { IOrg } from 'src/types/org.type'
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
 import { useOrgAddLinkedUser } from 'src/api/org'
 import { useCurrentUser } from 'src/api/user'
-import useRouter from 'src/hooks/useRouter'
+import { ReactComponent as FallbackAvatarIllust } from 'src/assets/svgs/org-fallback.svg'
+import { IOrg } from 'src/types/org.type'
+import styled from 'styled-components'
 
 interface IClaimOrgCardProps {
   org: IOrg
 }
 
 const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
-  const router = useRouter()
   const { addLinkedUserAsync } = useOrgAddLinkedUser(org._id)
   const { currentUser } = useCurrentUser()
 
   const addLinkedUser = async () => {
-    var email
+    let email
     if (currentUser !== undefined && currentUser !== null) {
       email = currentUser.email
     }
@@ -26,31 +24,30 @@ const ClaimOrgCard = ({ org }: IClaimOrgCardProps) => {
       email: email,
     })
   }
+
   return (
     <Container>
-      <FlexContainer alignCenter>
-        {org?.avatar ? (
-          <Avatar src={org?.avatar} />
-        ) : (
-          <FallbackContainer>
-            <FallbackAvatar />
-          </FallbackContainer>
-        )}
-        <Spacer x={0.5} />
-        <RightSection>
-          <Text variant='meta2'>{org?.linkedUserIds?.length} administrators</Text>
-          <Text variant='meta1' fontWeight={700}>
-            {org?.name}
-          </Text>
-          <Spacer y={1} />
-        </RightSection>
+      <FlexContainer alignCenter fullWidth justifySpaceBetween>
+        <FlexContainer alignCenter>
+          {org?.avatar ? (
+            <Avatar src={org?.avatar} />
+          ) : (
+            <FallbackContainer>
+              <FallbackAvatar />
+            </FallbackContainer>
+          )}
+          <Spacer x={0.5} />
+          <RightSection>
+            <Text variant='meta2'>{org?.linkedUserIds?.length} administrators</Text>
+            <Text variant='meta1' fontWeight={700}>
+              {org?.name}
+            </Text>
+          </RightSection>
+        </FlexContainer>
         <Link to={`/profile/my-orgs`}>
-          <ClaimButton
-            onClick={() => {
-              addLinkedUser()
-            }}>
+          <Button size='small' onClick={() => addLinkedUser()}>
             Claim
-          </ClaimButton>
+          </Button>
         </Link>
       </FlexContainer>
     </Container>
@@ -105,7 +102,7 @@ const RightSection = styled.div`
 `
 
 const TextContainer = styled.div`
-  max-width: 80%;
+  width: 90%;
 `
 
 export default ClaimOrgCard

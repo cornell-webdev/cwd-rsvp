@@ -96,7 +96,7 @@ export const useOrgAddLinkedUser = (orgId: string) => {
     method: 'put',
     localUpdates: [
       {
-        queryConfigs: [orgLinkedUsersQueryConfig(orgId)],
+        queryConfigs: [orgLinkedUsersQueryConfig(orgId), myOrgsQueryConfig()],
       },
     ],
   })
