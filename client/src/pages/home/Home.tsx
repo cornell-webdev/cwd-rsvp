@@ -44,7 +44,7 @@ function Home() {
     <PageContainer isMobileOnly isShowWarning={false}>
       <EventText>Trending</EventText>
       <TrendingEvents events={trendingEvents} />
-      <SearchBox />
+      <SearchBox placeholder='search event' />
       {!query && (
         <FiltersContainer>
           {tags?.map((tag) => (

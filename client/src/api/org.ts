@@ -96,7 +96,7 @@ export const useOrgAddLinkedUser = (orgId: string) => {
     method: 'put',
     localUpdates: [
       {
-        queryConfigs: [orgLinkedUsersQueryConfig(orgId)],
+        queryConfigs: [orgLinkedUsersQueryConfig(orgId), myOrgsQueryConfig()],
       },
     ],
   })
@@ -121,5 +121,18 @@ export const useOrgRemoveLinkedUser = (orgId: string) => {
   return {
     ...rest,
     removeLinkedUserAsync,
+  }
+}
+
+export const searchedOrgsQueryConfig = (query: string) => ({
+  url: `/public/org/search?query=${query}`,
+})
+
+export const useSearchedOrgs = (query: string) => {
+  const { data: searchedOrgs, ...rest } = useCustomQuery<IOrg[]>(searchedOrgsQueryConfig(query))
+
+  return {
+    ...rest,
+    searchedOrgs,
   }
 }
