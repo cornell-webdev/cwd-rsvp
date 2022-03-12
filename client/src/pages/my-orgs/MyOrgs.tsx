@@ -20,7 +20,7 @@ const MyOrgs = () => {
         </Text>
         <Spacer y={0.75} />
         <Link to='/claim-org'>
-          <Button startIcon={<AddIcon />}>Org</Button>
+          <Button startIcon={<AddIcon />}>Claim organization</Button>
         </Link>
         {myOrgs && myOrgs?.length > 0 ? (
           <>

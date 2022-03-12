@@ -115,9 +115,9 @@ const EventForm = ({ initValues }: IEventFormProps) => {
             width='300px'
             options={orgOptions}
           />
-          <Link to='/new-org'>
+          <Link to='/claim-org'>
             <Button variant='text' size='small'>
-              Create organization
+              Claim organization
             </Button>
           </Link>
           <RSVPInput label='Event title' placeholder='The name of your event' name='title' />
