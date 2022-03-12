@@ -23,8 +23,8 @@ export const useCreateMember = () => {
     mutate: createMember,
     mutateAsync: createMemberAsync,
     ...rest
-  } = useCustomMutation<any, any>({
-    url: '',
+  } = useCustomMutation<IMember, IMember>({
+    url: '/public/member/',
     method: 'post',
   })
 
