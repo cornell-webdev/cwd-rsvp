@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useCreateEvent, useUpdateEventById } from 'src/api/event'
-import { useAllOrgs } from 'src/api/org'
+import { useAllOrgs, useMyOrgs } from 'src/api/org'
 import { useAllTags } from 'src/api/tag'
 import DateAndTime from 'src/components/form-elements/DateAndTime'
 import ImageUpload from 'src/components/form-elements/ImageUpload'
@@ -97,8 +97,8 @@ const EventForm = ({ initValues }: IEventFormProps) => {
     router.push('/profile/my-events')
   }
 
-  const { allOrgs } = useAllOrgs()
-  const orgOptions = allOrgs?.map((org) => ({
+  const { myOrgs } = useMyOrgs()
+  const orgOptions = myOrgs?.map((org) => ({
     label: org?.name,
     value: org?._id,
   }))
@@ -117,7 +117,7 @@ const EventForm = ({ initValues }: IEventFormProps) => {
           />
           <Link to='/claim-org'>
             <Button variant='text' size='small'>
-              Claim organization
+              Claim an organization
             </Button>
           </Link>
           <RSVPInput label='Event title' placeholder='The name of your event' name='title' />
