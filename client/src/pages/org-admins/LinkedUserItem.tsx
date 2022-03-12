@@ -34,11 +34,11 @@ const LinkedUserItem = ({ user, orgId }: ILinkedUserItemProps) => {
               <StyledLinkIcon />
               <Text>{user?.email}</Text>
             </FlexContainer>
-            {isCurrentUser && (
+            {/* {isCurrentUser && (
               <Text variant='meta2' color={theme.text.light} fontWeight={700}>
                 you
               </Text>
-            )}
+            )} */}
           </EmailContainer>
           <Spacer x={1.25} />
           <IconButton icon={<DeleteIcon />} onClick={() => setIsModalOpen(true)} />
@@ -60,7 +60,9 @@ const LinkedUserItem = ({ user, orgId }: ILinkedUserItemProps) => {
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  margin-bottom: 0.5rem;
+`
 
 interface IEmailContainerProps {
   isCurrentUser: boolean
