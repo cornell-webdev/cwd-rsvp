@@ -54,17 +54,17 @@ export const useUpdateMember = () => {
 
 export const useDeleteMember = () => {
   const {
-    mutate: DeleteMember,
-    mutateAsync: DeleteMemberAsync,
+    mutate: deleteMember,
+    mutateAsync: deleteMemberAsync,
     ...rest
-  } = useCustomMutation<any, any>({
-    url: '',
-    method: 'post',
+  } = useCustomMutation<IMember, { name: string }>({
+    url: 'public/member/delete',
+    method: 'delete',
   })
 
   return {
     ...rest,
-    DeleteMember,
-    DeleteMemberAsync,
+    deleteMember,
+    deleteMemberAsync,
   }
 }
