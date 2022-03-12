@@ -12,6 +12,17 @@ memberRouter.get('/:name', async (req, res) => {
   }
 })
 
+memberRouter.post('/', async (req, res) => {
+  try {
+    const member = await new Member({
+      ...req.body,
+    }).save()
+    res.send(member)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 memberRouter.put('/:name', async (req, res) => {
   try {
     const name = { name: req.params.name }
