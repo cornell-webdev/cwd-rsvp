@@ -1,13 +1,16 @@
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
-import { IEvent } from 'src/types/event.type'
+import { IMember } from 'src/types/member.type'
 
 export const memberByNameQueryConfig = (name: string) => ({
-  url: ``,
+  url: `/public/member/${name}`,
+  options: {
+    enabled: !!name,
+  },
 })
 
 export const useMemberByName = (name: string) => {
-  const { data: member, ...rest } = useCustomQuery<any>(memberByNameQueryConfig(name))
+  const { data: member, ...rest } = useCustomQuery<IMember>(memberByNameQueryConfig(name))
 
   return {
     ...rest,

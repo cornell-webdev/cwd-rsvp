@@ -20,8 +20,6 @@ const DayEventsList = ({ date, tagId }: IDayEventProps) => {
 
   const { events } = useEvents({ date, tagId })
 
-  console.log('events', events)
-
   /* filter by multiple tags */
   // useEffect(() => {
   //   if (tagIDs.length === 0) {

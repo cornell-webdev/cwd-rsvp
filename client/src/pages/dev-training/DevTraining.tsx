@@ -6,7 +6,7 @@ import Jay from './developers/Jay'
 import Chris from './developers/Chris'
 import Justin from './developers/Justin'
 import Melinda from './developers/Melinda'
-import MemberCRUD from './MemberCRUD'
+import MemberCRUD from './member-crud/MemberCRUD'
 
 const DevTraining = () => {
   return (

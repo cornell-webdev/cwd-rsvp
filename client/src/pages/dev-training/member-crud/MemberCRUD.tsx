@@ -1,12 +1,10 @@
 import { Button, FlexContainer, Spacer, Text } from 'cornell-glue-ui'
-import React, { useState, useEffect } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import { useMemberByName } from 'src/api/member'
-
 import styled from 'styled-components'
+import CreateMember from './CreateMember'
 
 const MemberCRUD = () => {
-  const [createName, setCreateName] = useState<string>('')
   const [readName, setReadName] = useState<string>('')
   const [updateName, setUpdateName] = useState<string>()
 
@@ -18,19 +16,13 @@ const MemberCRUD = () => {
     }
   }, [member])
 
-  const handleCreateMember = () => {}
-
   const handleReadMember = () => {}
 
   const handleUpdateMember = () => {}
 
   return (
     <Container>
-      <FlexContainer alignCenter>
-        <StyledInput value={createName} onChange={(event) => setCreateName(event.target.value)} />
-        <Spacer x={0.5} />
-        <Button onClick={handleCreateMember}>Create member</Button>
-      </FlexContainer>
+      <CreateMember />
       <FlexContainer alignCenter>
         <StyledInput value={readName} onChange={(event) => setReadName(event.target.value)} />
         <Spacer x={0.5} />
