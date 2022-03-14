@@ -68,7 +68,7 @@ const BuyTicket = () => {
 
   if (!event) return null
 
-  if (soldCount === event?.totalTicketCount) {
+  if (Number(soldCount) >= Number(event?.totalTicketCount)) {
     enqueueSnackbar('Tickets have been sold out', {
       variant: 'error',
       preventDuplicate: true,
