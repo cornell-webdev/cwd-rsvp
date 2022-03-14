@@ -44,7 +44,11 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
             <TicketItem key={ticket?._id} alignStart justifySpaceBetween>
               <LeftBlockContainer>
                 <Text variant='meta1'>{ticket?.name}</Text>
-                {ticket?.seller && <Text variant='meta1'>sold by {ticket?.seller?.fullName}</Text>}
+                {ticket?.seller && (
+                  <Text variant='meta1' color={theme.text.muted}>
+                    sold by {ticket?.seller?.fullName}
+                  </Text>
+                )}
               </LeftBlockContainer>
               <FlexContainer flexDirection='column' alignCenter>
                 <Text variant='meta1'>{formatDate(ticket?.createdAt)}</Text>
