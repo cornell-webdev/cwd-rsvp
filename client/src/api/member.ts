@@ -1,6 +1,5 @@
 import useCustomMutation from 'src/hooks/useCustomMutation'
 import useCustomQuery from 'src/hooks/useCustomQuery'
-import { IEvent } from 'src/types/event.type'
 import { IMember } from 'src/types/member.type'
 
 export const memberByNameQueryConfig = (name: string) => ({
