@@ -2,7 +2,8 @@ import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+import { Link, useHistory } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import { useSellerById } from 'src/api/seller'
 import { useTicketsByEventId } from 'src/api/ticket'
@@ -26,6 +27,7 @@ const EventDetails = () => {
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
   const { soldCount } = useTicketsByEventId(eventId, 0, '')
+  const history = useHistory()
 
   const sellerId = router.query?.sellerId
   const { seller } = useSellerById(sellerId)

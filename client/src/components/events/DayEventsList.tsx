@@ -1,9 +1,10 @@
 import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
-import React, { memo, useState } from 'react'
+import React, { memo } from 'react'
 import { useEvents } from 'src/api/event'
 import EventCard from 'src/components/events/EventCard'
 import { getEventDate } from 'src/util/date'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 interface IDayEventProps {
   date: Date
@@ -12,7 +13,6 @@ interface IDayEventProps {
 
 const DayEventsList = ({ date, tagId }: IDayEventProps) => {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  const [expand, setExpand] = useState(false)
 
   date?.setHours(0, 0, 0, 0)
   const today = new Date()
@@ -34,7 +34,7 @@ const DayEventsList = ({ date, tagId }: IDayEventProps) => {
   // }, [events, tagIDs.length])
 
   // const displayEvents = getEventByDate(d, Data, expand)
-  const displayEvents = expand ? events : events?.slice(0, 2)
+  const displayEvents = events?.slice(0, 3)
 
   function getEventByDate() {
     const eventByDate = displayEvents
@@ -63,24 +63,29 @@ const DayEventsList = ({ date, tagId }: IDayEventProps) => {
         {getEventDate(date)}
       </DateText>
       {getEventByDate()}
-      {events?.length > 2 ? (
-        <ButtonContainer justifyEnd={true}>
-          <Button
-            variant='text'
-            size='small'
-            background={theme.grey[50]}
-            hoverBackground={theme.grey[100]}
-            color={theme.text.default}
-            onClick={() => {
-              setExpand(!expand)
-            }}>
-            {expand ? 'Show less' : 'Show more'}
-          </Button>
-        </ButtonContainer>
-      ) : null}
+      <StyledLink to={`/show-all-page/${date}`}>
+        {events?.length > 3 ? (
+          <ButtonContainer justifyEnd={true}>
+            <Button
+              variant='text'
+              size='small'
+              background={theme.grey[50]}
+              hoverBackground={theme.grey[100]}
+              color={theme.text.default}
+              onClick={() => {}}>
+              Show all
+            </Button>
+          </ButtonContainer>
+        ) : null}
+      </StyledLink>
     </Container>
   )
 }
+
+const StyledLink = styled(Link)`
+  margin: 0.25rem 0;
+  width: 100%;
+`
 
 const Container = styled.div`
   margin: 1.5rem 0;
