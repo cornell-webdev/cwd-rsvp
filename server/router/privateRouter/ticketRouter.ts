@@ -1,5 +1,7 @@
 import express from 'express'
+import Event from '../../models/Event'
 import Ticket from '../../models/Ticket'
+import sendTicketEmail from './../../util/email/sendTicketEmail'
 
 const ticketRouter = express.Router()
 
@@ -9,6 +11,15 @@ ticketRouter.post('/', async (req, res) => {
       ...req.body,
       userId: req.user?._id,
     }).save()
+
+    const event = await Event.findById(req.body?.eventId)
+
+    if (req.user?.email && event?.title) {
+      sendTicketEmail({
+        email: req.user.email,
+        eventName: event.title,
+      })
+    }
     res.send(ticket)
   } catch (e) {
     res.status(500).send(e)
