@@ -11,6 +11,7 @@ import ParticipantList from './ParticipantList'
 import SellersLinkForm from './SellersLinkForm'
 import SellerStats from './SellerStats'
 import TicketSalesList from './TicketSalesList'
+import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined'
 
 const TicketingDashboard = () => {
   const router = useRouter()
@@ -31,8 +32,8 @@ const TicketingDashboard = () => {
               {event?.title}
             </Text>
           </div>
-          <Link to={`/event/${event?._id}`}>
-            <Button>View event</Button>
+          <Link to={`/event/${event?._id}`} target='_blank' rel='noopener noreferrer'>
+            <Button startIcon={<OpenInNewOutlinedIcon />}>View event</Button>
           </Link>
         </Section>
         <Section>
