@@ -120,8 +120,10 @@ const EventDetails = () => {
                         background={theme.background.default}
                         color={theme.brand[500]}
                         hoverBackground={theme.brand[50]}
-                        disabled={soldCount === event?.totalTicketCount}>
-                        {soldCount === event?.totalTicketCount ? 'Sold out' : 'Buy ticket'}
+                        disabled={Number(soldCount) >= Number(event?.totalTicketCount)}>
+                        {Number(soldCount) >= Number(event?.totalTicketCount)
+                          ? 'Sold out'
+                          : 'Buy ticket'}
                       </Button>
                     </Link>
                   </FlexContainer>

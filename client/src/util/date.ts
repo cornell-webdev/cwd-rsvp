@@ -21,6 +21,10 @@ export const formatDate = (
   return fullDate
 }
 
+export function getTime(date: Date): string {
+  return `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`
+}
+
 export function getEventDate(dateString?: string | Date) {
   if (!dateString) return ''
 

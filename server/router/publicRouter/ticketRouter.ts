@@ -35,6 +35,16 @@ ticketRouter.get('/event/:eventId', async (req, res) => {
   }
 })
 
+ticketRouter.get('/event/:eventId/participant-emails', async (req, res) => {
+  try {
+    const allTickets = await Ticket.find({ eventId: req.params?.eventId })
+    const participantEmails = allTickets?.map((ticket) => ticket?.user?.email)
+    res.send(participantEmails)
+  } catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 ticketRouter.get('/:ticketId', async (req, res) => {
   try {
     const ticket = await Ticket.findById(req.params?.ticketId)
