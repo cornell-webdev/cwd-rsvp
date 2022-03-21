@@ -33,6 +33,13 @@ const BuyTicket = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
+    if (currentUser && !name && !email) {
+      setName(currentUser?.name)
+      setEmail(currentUser?.email)
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     if (querySeller) {
       setSeller({
         label: querySeller?.fullName,
@@ -167,7 +174,12 @@ const BuyTicket = () => {
       </FlexContainer>
       <Spacer y={2} />
       <FlexContainer justifyCenter>
-        {event && <Paypal onPayment={handlePayment} price={getTicketPrice(event)} />}
+        {event && (
+          <Paypal
+            onPayment={(orderData) => handlePayment(orderData, name, email, seller?.value)}
+            price={getTicketPrice(event)}
+          />
+        )}
       </FlexContainer>
     </PageContainer>
   )
