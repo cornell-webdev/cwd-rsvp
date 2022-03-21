@@ -79,7 +79,7 @@ const BuyTicket = () => {
   return (
     <PageContainer isMobileOnly>
       <Spacer y={2} />
-      <Link to={`/event/${eventId}?sellerId=${router.query?.sellerId}`}>
+      <Link to={`/event/${eventId}${router.location.search}`}>
         <BackButton />
       </Link>
       <Spacer y={1} />

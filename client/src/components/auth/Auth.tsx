@@ -18,7 +18,11 @@ const Auth = () => {
   }
 
   return (
-    <Link to={{ pathname: '/login', state: { prevPath: router.location.pathname } }}>
+    <Link
+      to={{
+        pathname: '/login',
+        state: { prevPath: router.location.pathname + router.location.search },
+      }}>
       <Button
         variant='text'
         color={theme.text.default}
