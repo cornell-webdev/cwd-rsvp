@@ -94,7 +94,7 @@ const TicketItem = styled(FlexContainer)`
 `
 
 const LeftBlockContainer = styled.div`
-  width: 120px;
+  width: 170px;
   overflow: hidden;
 `
 

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import useScript from 'src/hooks/useScript'
 import styled from 'styled-components'
 
@@ -17,39 +18,41 @@ const Paypal = ({ onPayment, price }: IPaypalProps) => {
     : PAYPAY_CLIENT_ID_SANDBOX
 
   useScript(
-    `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&disable-funding=credit&currency=USD`
+    `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&components=buttons&disable-funding=credit&currency=USD`,
+    true
   )
 
   // @ts-ignore
-  const paypal = window.paypal
+  const PayPalButton = window.paypal?.Buttons?.driver('react', { React, ReactDOM })
 
-  useEffect(() => {
-    if (paypal) {
-      console.log('init paypal env:', IS_PROD ? 'prod' : 'dev')
-      paypal
-        .Buttons({
-          createOrder: function (data: any, actions: any) {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: price,
-                  },
-                },
-              ],
-            })
+  const createOrder = (data: any, actions: any) => {
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: price,
           },
-          onApprove: function (data: any, actions: any) {
-            return actions.order.capture().then(function (orderData: any) {
-              onPayment(orderData)
-            })
-          },
-        })
-        .render('#paypal-button-container')
-    }
-  }, [paypal])
+        },
+      ],
+    })
+  }
 
-  return <Container id='paypal-button-container' />
+  const onApprove = (data: any, actions: any) => {
+    return actions.order.capture().then(function (orderData: any) {
+      onPayment(orderData)
+    })
+  }
+
+  if (!PayPalButton) return null
+
+  return (
+    <Container>
+      <PayPalButton
+        createOrder={(data: any, actions: any) => createOrder(data, actions)}
+        onApprove={(data: any, actions: any) => onApprove(data, actions)}
+      />
+    </Container>
+  )
 }
 
 const Container = styled.div`

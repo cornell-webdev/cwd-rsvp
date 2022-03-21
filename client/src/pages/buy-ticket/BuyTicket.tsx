@@ -33,6 +33,13 @@ const BuyTicket = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
+    if (currentUser && !name && !email) {
+      setName(currentUser?.name)
+      setEmail(currentUser?.email)
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     if (querySeller) {
       setSeller({
         label: querySeller?.fullName,
@@ -79,7 +86,7 @@ const BuyTicket = () => {
   return (
     <PageContainer isMobileOnly>
       <Spacer y={2} />
-      <Link to={`/event/${eventId}?sellerId=${router.query?.sellerId}`}>
+      <Link to={`/event/${eventId}${router.location.search}`}>
         <BackButton />
       </Link>
       <Spacer y={1} />

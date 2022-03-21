@@ -171,7 +171,7 @@ export const routes: IRoute[] = [
     isDesktopOnly: false,
   },
   {
-    path: '/buy-ticket/:eventId',
+    path: '/buy-ticket/:eventId/purchase',
     component: BuyTicket,
     label: 'Buy ticket',
     isPublicNav: false,
@@ -249,7 +249,14 @@ const PrivateRoute = ({ component: Component, ...rest }: IRoute) => {
   const router = useRouter()
 
   if (!accessToken || accessToken.length === 0) {
-    return <Redirect to={{ pathname: '/login', state: { prevPath: router.location.pathname } }} />
+    return (
+      <Redirect
+        to={{
+          pathname: '/login',
+          state: { prevPath: router.location.pathname + router.location.search },
+        }}
+      />
+    )
   }
 
   return <Route {...rest} render={() => <Component />} />

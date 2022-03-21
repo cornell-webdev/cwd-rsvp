@@ -4,6 +4,7 @@ import endOfDay from 'date-fns/endOfDay'
 import startOfDay from 'date-fns/startOfDay'
 import Org from '../../models/Org'
 import { IEvent } from '../../types/event.type'
+import sendTicketEmail from '../../util/email/sendTicketEmail'
 
 const eventRouter = express.Router()
 
