@@ -108,7 +108,7 @@ const BuyTicket = () => {
       </FlexContainer>
       <Spacer y={2} />
       <Input label='Name' value={name} onChange={(event) => setName(event.target.value)} />
-      <Spacer y={1} />
+      {/* <Spacer y={1} />
       <Input label='Email' value={email} onChange={(event) => setEmail(event.target.value)} />
       <Spacer y={0.5} />
       <InfoTextContainer>
@@ -116,7 +116,7 @@ const BuyTicket = () => {
           Your email address will be shared with the event host to communicate any updates or
           changes to the event.
         </Text>
-      </InfoTextContainer>
+      </InfoTextContainer> */}
       <Spacer y={1} />
       <Select
         label='Seller'
