@@ -49,7 +49,10 @@ const TicketDetails = () => {
           <QRCode value={`https://cornellrsvp.com/check-in/${ticketId}`} />
         </QRContainer>
         <Text color={theme.text.muted} textAlign='center'>
-          Show this QR code to the organizer to check-in to the event
+          Show this QR code to the organizer
+        </Text>
+        <Text color={theme.text.muted} textAlign='center'>
+          to check-in to the event
         </Text>
         <Divider />
       </FlexContainer>
