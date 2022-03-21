@@ -66,10 +66,6 @@ eventRouter.get('/search', async (req, res) => {
 
 eventRouter.get('/:id', async (req, res) => {
   try {
-    sendTicketEmail({
-      email: 'jj534@cornell.edu',
-      eventName: 'test event name',
-    })
     const doc = await Event.findById(req.params.id)
     res.send(doc)
   } catch (e) {
