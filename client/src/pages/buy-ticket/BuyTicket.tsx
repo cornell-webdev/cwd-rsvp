@@ -174,12 +174,7 @@ const BuyTicket = () => {
       </FlexContainer>
       <Spacer y={2} />
       <FlexContainer justifyCenter>
-        {event && (
-          <Paypal
-            onPayment={(orderData) => handlePayment(orderData, name, email, seller?.value)}
-            price={getTicketPrice(event)}
-          />
-        )}
+        {event && <Paypal onPayment={handlePayment} price={getTicketPrice(event)} />}
       </FlexContainer>
     </PageContainer>
   )
