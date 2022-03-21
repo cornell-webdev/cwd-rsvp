@@ -21,6 +21,8 @@ export interface IEmailConfig {
 }
 
 const sendEmail = ({ to, subject, html }: IEmailConfig) => {
+  console.log('sendEmail request received', to, subject, html)
+
   const mailOptions = {
     from: 'cornellwebdev@gmail.com',
     to,
@@ -29,12 +31,10 @@ const sendEmail = ({ to, subject, html }: IEmailConfig) => {
   }
 
   transporter.sendMail(mailOptions, (error: any, info: any) => {
-    if (process.env.NODE_ENV === 'development') {
-      if (error) {
-        console.log('ERROR sendEmail', error)
-      } else {
-        console.log('SUCCESS sendEmail', info)
-      }
+    if (error) {
+      console.log('ERROR sendEmail', error)
+    } else {
+      console.log('SUCCESS sendEmail', info)
     }
   })
 }

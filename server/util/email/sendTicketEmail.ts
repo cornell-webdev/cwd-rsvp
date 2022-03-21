@@ -6,7 +6,7 @@ export interface ISendTicketEmailConfigs {
 }
 
 const sendTicketEmail = ({ email, eventName }: ISendTicketEmailConfigs) => {
-  console.log('email, eventName', email, eventName)
+  console.log('sendTicketEmail request received', email, eventName)
   const subject = `[RSVP] Here's your ticket for ${eventName}!`
   const isDev = process.env.NODE_ENV === 'development'
   const devHtml = `<div>Intended recipent: ${email}</div>`
