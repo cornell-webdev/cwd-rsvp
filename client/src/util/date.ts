@@ -34,6 +34,8 @@ export function getEventDate(dateString?: string | Date) {
 }
 
 export function getEventTime(time: string) {
+  if (!time) return ''
+
   const hour = parseInt(time.substring(0, 2))
   if (hour < 12) {
     return hour.toString() + ':' + time.substring(2, 4) + ' am'
