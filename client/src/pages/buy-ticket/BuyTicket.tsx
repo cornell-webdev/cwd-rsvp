@@ -86,9 +86,9 @@ const BuyTicket = () => {
   return (
     <PageContainer isMobileOnly>
       <Spacer y={2} />
-      <Link to={`/event/${eventId}${router.location.search}`}>
-        <BackButton />
-      </Link>
+      {/* <Link to={`/event/${eventId}${router.location.search}`}> */}
+      <BackButton />
+      {/* </Link> */}
       <Spacer y={1} />
       <Text variant='h3'>{event?.title}</Text>
       <Spacer y={1} />
