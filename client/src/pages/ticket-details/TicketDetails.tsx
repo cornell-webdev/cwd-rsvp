@@ -35,9 +35,9 @@ const TicketDetails = () => {
 
   return (
     <PageContainer isMobileOnly>
-      <Link to='/profile/my-tickets'>
-        <BackButton />
-      </Link>
+      {/* <Link to='/profile/my-tickets'> */}
+      <BackButton />
+      {/* </Link> */}
       <Spacer y={4} />
       <FlexContainer flexDirection='column' alignCenter>
         <Text variant='h5' fontWeight={700}>

@@ -1,15 +1,12 @@
-import { Button, Spacer, Text, theme } from 'cornell-glue-ui'
+import { Spacer, Text } from 'cornell-glue-ui'
 import React from 'react'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import { useSearchedOrgs } from 'src/api/org'
 import BackButton from 'src/components/BackButton'
-import { useAllOrgs } from 'src/api/org'
+import SearchBox from 'src/components/events/SearchBox'
 import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
-import SearchBox from 'src/components/events/SearchBox'
 import ClaimOrgCard from './ClaimOrgCard'
-import { useSearchedOrgs } from 'src/api/org'
-import { Link, useHistory } from 'react-router-dom'
 
 const ClaimOrg = () => {
   const router = useRouter()
@@ -19,9 +16,9 @@ const ClaimOrg = () => {
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
-        <Link to={`/profile/my-orgs`}>
-          <BackButton />
-        </Link>
+        {/* <Link to={`/profile/my-orgs`}> */}
+        <BackButton />
+        {/* </Link> */}
         <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Claim organization

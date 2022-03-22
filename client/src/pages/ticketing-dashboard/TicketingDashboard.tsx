@@ -39,9 +39,6 @@ const TicketingDashboard = () => {
     <Container>
       <PageContainer isMobileOnly>
         <Section>
-          <Link to='/profile/my-events'>
-            <BackButton />
-          </Link>
           <div>
             <Text color={theme.text.muted}>Event dashboard</Text>
             <Text variant='h4' fontWeight={700}>

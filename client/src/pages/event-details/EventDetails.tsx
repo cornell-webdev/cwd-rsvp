@@ -50,9 +50,9 @@ const EventDetails = () => {
     <PageContainer isMobileOnly isShowWarning={false} isNoPadding>
       <Container>
         <HoriPadding>
-          <Link to='/'>
-            <BackButton />
-          </Link>
+          {/* <Link to='/'> */}
+          <BackButton />
+          {/* </Link> */}
         </HoriPadding>
         <ImgContainer>
           <EventImg src={getEventThumbnail(event)} />
