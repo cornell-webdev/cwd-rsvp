@@ -23,15 +23,13 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
 
   const today = new Date()
 
-  if (date == null) {
-    date = today
-  }
-
   let opacityStyle = false
-  if (today.getDate() === date.getDate() || today < date) {
-    opacityStyle = true
-  } else if (today > date) {
-    opacityStyle = false
+  if (date) {
+    if (today.getDate() === date.getDate() || today < date) {
+      opacityStyle = true
+    } else if (today > date) {
+      opacityStyle = false
+    }
   }
 
   return (
@@ -67,7 +65,7 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
           <FlexContainer justifySpaceBetween alignCenter>
             {date !== undefined ? (
               <Text variant='meta2' color='#d05f5f' fontWeight='700'>
-                {getEventTime(startTime)} - {getEventTime(endTime)}
+                {getEventTime(startTime)} - {getEventTime(endTime)}, {getEventDate(date)}
               </Text>
             ) : (
               <Text variant='meta2' color='#d05f5f' fontWeight='700'>
