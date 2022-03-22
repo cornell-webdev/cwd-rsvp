@@ -1,11 +1,11 @@
 import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useTicketsByEventId } from 'src/api/ticket'
-import { formatDate, getEventTime } from 'src/util/date'
+import { formatDate, getTime } from 'src/util/date'
 import styled from 'styled-components'
+import { useDebounce } from 'use-debounce'
 import FilterInput from './FilterInput'
 import StatLabel from './StatLabel'
-import { useDebounce } from 'use-debounce'
 
 interface ITicketSalesListProps {
   eventId: string
@@ -53,7 +53,7 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
               <FlexContainer flexDirection='column' alignCenter>
                 <Text variant='meta1'>{formatDate(ticket?.createdAt)}</Text>
                 <Text variant='meta1' color={theme.text.muted}>
-                  {getEventTime(ticket?.createdAt?.toString())}
+                  {ticket.createdAt && getTime(new Date(ticket.createdAt))}
                 </Text>
               </FlexContainer>
               <Text variant='meta1' fontWeight={700} color={theme.success[500]}>
@@ -94,7 +94,7 @@ const TicketItem = styled(FlexContainer)`
 `
 
 const LeftBlockContainer = styled.div`
-  width: 120px;
+  width: 170px;
   overflow: hidden;
 `
 

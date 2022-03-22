@@ -12,9 +12,9 @@ const OrgAdmins = () => {
   return (
     <PageContainer isMobileOnly>
       <Container>
-        <Link to='/profile/my-orgs'>
-          <BackButton />
-        </Link>
+        {/* <Link to='/profile/my-orgs'> */}
+        <BackButton />
+        {/* </Link> */}
         <Spacer y={0.75} />
         <Text variant='h4' fontWeight={700}>
           Manage administrators

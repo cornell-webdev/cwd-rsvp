@@ -1,16 +1,16 @@
-import DeleteIcon from '@mui/icons-material/Delete'
-import { Button, FlexContainer, IconButton, Spacer, Text } from 'cornell-glue-ui'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDeleteEvent } from 'src/api/event'
 import GradientAnimation from 'src/components/GradientAnimation'
 import ConfirmationModal from 'src/components/layout/ConfirmationModal'
-import useIsMobile from 'src/hooks/useIsMobile'
 import { IEvent } from 'src/types/event.type'
 import getBumpedCount from 'src/util/getBumpedCount'
 import getEventThumbnail from 'src/util/getEventThumbnail'
 import styled from 'styled-components'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined'
 
 interface IMyEventCardProps {
   event: IEvent
@@ -19,7 +19,12 @@ interface IMyEventCardProps {
 const MyEventCard = ({ event }: IMyEventCardProps) => {
   const [isDeleteModoalOpen, setIsDeleteModoalOpen] = useState<boolean>(false)
   const { deleteEventAsync } = useDeleteEvent()
-  const isMobile = useIsMobile()
+
+  const handleDeleteButtonClick = (event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setIsDeleteModoalOpen(true)
+  }
 
   const handleDelete = async () => {
     await deleteEventAsync({ _id: event?._id })
@@ -27,42 +32,46 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
   }
 
   return (
-    <>
-      <Container>
-        <Thumbnail src={getEventThumbnail(event)} />
-        <RightSection>
-          <TextSection>
-            <Text variant='meta2'>
-              {getBumpedCount(event, 'LIKES')} likes • {getBumpedCount(event, 'VIEWS')} views
-            </Text>
-            <Text variant='meta1' fontWeight={700}>
-              {event?.title}
-            </Text>
-          </TextSection>
-          <FlexContainer alignCenter justifySpaceBetween fullWidth>
-            <FlexContainer alignCenter>
-              <Link to={`/edit-event/${event?._id}`}>
-                <Button>Edit</Button>
-              </Link>
-              <Spacer x={1} />
-              <Link to={`/event/${event?._id}`}>
-                <Button variant='text'>View {!isMobile && 'event'}</Button>
-              </Link>
+    <div>
+      <StyledLink to={`/event/${event?._id}`}>
+        <Container>
+          <Thumbnail src={getEventThumbnail(event)} />
+          <RightSection>
+            <TextSection>
+              <Text variant='meta2'>
+                {getBumpedCount(event, 'LIKES')} likes • {getBumpedCount(event, 'VIEWS')} views
+              </Text>
+              <Text variant='meta1' fontWeight={700}>
+                {event?.title}
+              </Text>
+            </TextSection>
+            <FlexContainer alignCenter justifySpaceBetween fullWidth>
+              <FlexContainer alignCenter>
+                <Link to={`/edit-event/${event?._id}`}>
+                  <Button startIcon={<EditOutlinedIcon />}>Edit</Button>
+                </Link>
+                <Spacer x={1} />
+                {event?.isTicketed ? (
+                  <Link to={`/dashboard/${event?._id}`}>
+                    <TicketingButton startIcon={<LocalActivityOutlinedIcon />}>
+                      Ticketing
+                    </TicketingButton>
+                  </Link>
+                ) : (
+                  <Button
+                    variant='text'
+                    background={theme.grey[100]}
+                    hoverBackground={theme.grey[200]}
+                    color={theme.text.default}
+                    onClick={handleDeleteButtonClick}>
+                    Delete
+                  </Button>
+                )}
+              </FlexContainer>
             </FlexContainer>
-            <IconButton icon={<DeleteIcon />} onClick={() => setIsDeleteModoalOpen(true)} />
-          </FlexContainer>
-          {event?.isTicketed && (
-            <>
-              <Spacer y={0.5} />
-              <Link to={`/dashboard/${event?._id}`} target='_blank' rel='noopener noreferrer'>
-                <TicketingButton startIcon={<StyledOpenInNewIcon />}>
-                  Ticketing dashboard
-                </TicketingButton>
-              </Link>
-            </>
-          )}
-        </RightSection>
-      </Container>
+          </RightSection>
+        </Container>
+      </StyledLink>
       <ConfirmationModal
         isOpen={isDeleteModoalOpen}
         onRequestClose={() => setIsDeleteModoalOpen(false)}
@@ -71,14 +80,25 @@ const MyEventCard = ({ event }: IMyEventCardProps) => {
         body='The event will no longer exist on RSVP'
         confirmationText='Delete'
       />
-    </>
+    </div>
   )
 }
+
+const StyledLink = styled(Link)`
+  width: 100%;
+`
 
 const Container = styled.div`
   padding: 0.33rem 0;
   display: flex;
   align-items: stretch;
+  border-radius: 10px;
+
+  @media (min-width: ${(props) => props.theme.small}) {
+    &:hover {
+      background: ${(props) => props.theme.grey[50]};
+    }
+  }
 `
 
 const Thumbnail = styled.img`

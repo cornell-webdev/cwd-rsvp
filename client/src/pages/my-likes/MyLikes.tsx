@@ -16,9 +16,9 @@ const MyLikes = () => {
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
       <Container>
-        <Link to='/'>
-          <BackButton />
-        </Link>
+        {/* <Link to='/'> */}
+        <BackButton />
+        {/* </Link> */}
         <Spacer y={1.5} />
         <MatchDayListPadding>
           <Text variant='h4' fontWeight={700}>

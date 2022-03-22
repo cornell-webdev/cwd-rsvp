@@ -1,6 +1,8 @@
 import { IEvent } from 'src/types/event.type'
 
 const getEventThumbnail = (event: IEvent) => {
+  if (!event) return ''
+
   if (
     !event?.imgs ||
     event?.imgs?.length === 0 ||
