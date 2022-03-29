@@ -11,6 +11,7 @@ import styled from 'styled-components'
 import { useSearchedEvents } from '../../api/event'
 import DayList from './DayList'
 import TrendingEvents from './TrendingEvents'
+import DatePicker from 'src/components/form-elements/DatePicker'
 
 function Home() {
   const [tagId, setTagId] = useState<string>()
@@ -19,6 +20,8 @@ function Home() {
   const { searchedEvents } = useSearchedEvents(query)
   const { trendingEvents } = useTrendingEvents()
   const { tags } = useAllTags()
+  const [datefilter, setDate] = useState<Date>()
+  setDate(new Date())
 
   const toggleTag = (targetTagId: string) => {
     if (tagId === targetTagId) {
@@ -39,6 +42,10 @@ function Home() {
   //     ))
   //   )
   // }
+
+  const onChange = (date: Date) => {
+    setDate(date)
+  }
 
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
