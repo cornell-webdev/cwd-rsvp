@@ -23,7 +23,7 @@ const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: I
 
   const today = new Date()
 
-  let opacityStyle = false
+  let opacityStyle = true
   if (date) {
     if (today.getDate() === date.getDate() || today < date) {
       opacityStyle = true
