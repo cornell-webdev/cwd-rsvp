@@ -3,10 +3,12 @@ import useInfiniteScroll from 'react-infinite-scroll-hook'
 import DayEventsList from 'src/components/events/DayEventsList'
 
 interface IEventsByDayProps {
+  startDate?: Date
+  endDate?: Date
   tagId?: string
 }
 
-const DayList = ({ tagId }: IEventsByDayProps) => {
+const DayList = ({ startDate, endDate, tagId }: IEventsByDayProps) => {
   const MAX_LENGTH = 50
   const [arr, setArr] = useState<any[]>(Array.from({ length: 10 }))
 
@@ -24,17 +26,27 @@ const DayList = ({ tagId }: IEventsByDayProps) => {
     disabled: false,
   })
 
+  const range = false
+
+  const rangeEvents = (startDate: Date, endDate: Date) => {
+    const curr: Date = startDate
+
+    return <div>{}</div>
+  }
+
   return (
     <div>
-      {arr.map((_, i) => {
-        const day: Date = new Date()
-        day.setDate(new Date().getDate() + i)
-        return (
-          <div key={day.toString()}>
-            <DayEventsList date={day} tagId={tagId} />
-          </div>
-        )
-      })}
+      {!range
+        ? arr.map((_, i) => {
+            const day: Date = new Date()
+            day.setDate(new Date().getDate() + i)
+            return (
+              <div key={day.toString()}>
+                <DayEventsList date={day} tagId={tagId} />
+              </div>
+            )
+          })
+        : rangeEvents(startDate as Date, endDate as Date)}
       <div ref={sentryRef} />
     </div>
   )

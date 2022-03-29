@@ -1,4 +1,4 @@
-import { FlexContainer, Text } from 'cornell-glue-ui'
+import { Button, FlexContainer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
 import { useTrendingEvents } from 'src/api/event'
 import { useAllTags } from 'src/api/tag'
@@ -11,7 +11,8 @@ import styled from 'styled-components'
 import { useSearchedEvents } from '../../api/event'
 import DayList from './DayList'
 import TrendingEvents from './TrendingEvents'
-import DatePicker from 'src/components/form-elements/DatePicker'
+import DateRangePicker, { IDates } from 'src/components/form-elements/DateRangePicker'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 function Home() {
   const [tagId, setTagId] = useState<string>()
@@ -20,8 +21,14 @@ function Home() {
   const { searchedEvents } = useSearchedEvents(query)
   const { trendingEvents } = useTrendingEvents()
   const { tags } = useAllTags()
-  const [datefilter, setDate] = useState<Date>()
-  setDate(new Date())
+  const [startDate, setStartDate] = useState<Date>(new Date())
+  const [endDate, setEndDate] = useState<Date>(new Date())
+  const [showRange, setShowRange] = useState<Boolean>(false)
+
+  const setDates = (newDates: IDates) => {
+    setStartDate(newDates?.startDate as Date)
+    setEndDate(newDates?.endDate as Date)
+  }
 
   const toggleTag = (targetTagId: string) => {
     if (tagId === targetTagId) {
@@ -43,9 +50,8 @@ function Home() {
   //   )
   // }
 
-  const onChange = (date: Date) => {
-    setDate(date)
-  }
+  console.log(startDate)
+  console.log(endDate)
 
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
@@ -57,9 +63,22 @@ function Home() {
           {tags?.map((tag) => (
             <FilterButton key={tag?._id} selectedTagId={tagId} tag={tag} onClick={toggleTag} />
           ))}
+          <Button
+            variant='text'
+            size='small'
+            endIcon={<FilterListIcon />}
+            color={theme.text.default}
+            background={theme.grey[50]}
+            hoverBackground={theme.grey[100]}
+            onClick={() => setShowRange(!showRange)}>
+            Date
+          </Button>
+          {showRange ? (
+            <DateRangePicker dates={{ startDate, endDate }} setDates={setDates}></DateRangePicker>
+          ) : null}
         </FiltersContainer>
       )}
-      <DatePicker date={datefilter as Date} onChange={onChange} isHideYear={true}></DatePicker>
+
       <FlexContainer justifyCenter>
         <EventListContainer>
           {searchedEvents?.length === 0 ? (
@@ -73,7 +92,7 @@ function Home() {
                 <DayList tagId={tagId} />
               </div>
             ) : (
-              <DayList tagId={tagId} />
+              <DayList startDate={startDate} endDate={endDate} tagId={tagId} />
             )
           ) : (
             <SearchEvents events={searchedEvents} />
