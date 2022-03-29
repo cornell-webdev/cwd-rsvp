@@ -59,6 +59,7 @@ function Home() {
           ))}
         </FiltersContainer>
       )}
+      <DatePicker date={datefilter as Date} onChange={onChange} isHideYear={true}></DatePicker>
       <FlexContainer justifyCenter>
         <EventListContainer>
           {searchedEvents?.length === 0 ? (
