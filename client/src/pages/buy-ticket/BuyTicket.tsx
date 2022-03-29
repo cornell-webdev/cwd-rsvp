@@ -33,6 +33,13 @@ const BuyTicket = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
+    if (currentUser && !name && !email) {
+      setName(currentUser?.name)
+      setEmail(currentUser?.email)
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     if (querySeller) {
       setSeller({
         label: querySeller?.fullName,
@@ -79,9 +86,9 @@ const BuyTicket = () => {
   return (
     <PageContainer isMobileOnly>
       <Spacer y={2} />
-      <Link to={`/event/${eventId}?sellerId=${router.query?.sellerId}`}>
-        <BackButton />
-      </Link>
+      {/* <Link to={`/event/${eventId}${router.location.search}`}> */}
+      <BackButton />
+      {/* </Link> */}
       <Spacer y={1} />
       <Text variant='h3'>{event?.title}</Text>
       <Spacer y={1} />
@@ -101,7 +108,7 @@ const BuyTicket = () => {
       </FlexContainer>
       <Spacer y={2} />
       <Input label='Name' value={name} onChange={(event) => setName(event.target.value)} />
-      <Spacer y={1} />
+      {/* <Spacer y={1} />
       <Input label='Email' value={email} onChange={(event) => setEmail(event.target.value)} />
       <Spacer y={0.5} />
       <InfoTextContainer>
@@ -109,7 +116,7 @@ const BuyTicket = () => {
           Your email address will be shared with the event host to communicate any updates or
           changes to the event.
         </Text>
-      </InfoTextContainer>
+      </InfoTextContainer> */}
       <Spacer y={1} />
       <Select
         label='Seller'

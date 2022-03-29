@@ -118,7 +118,7 @@ const EventDetails = () => {
                       </Text>
                     )}
                     <Spacer y={0.3} />
-                    <Link to={`/buy-ticket/${event?._id}?sellerId=${router.query?.sellerId}`}>
+                    <Link to={`/buy-ticket/${event?._id}/purchase${router.location.search}`}>
                       <Button
                         background={theme.background.default}
                         color={theme.brand[500]}

@@ -21,6 +21,10 @@ export const formatDate = (
   return fullDate
 }
 
+export function getTime(date: Date): string {
+  return `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`
+}
+
 export function getEventDate(dateString?: string | Date) {
   if (!dateString) return ''
 
@@ -30,6 +34,8 @@ export function getEventDate(dateString?: string | Date) {
 }
 
 export function getEventTime(time: string) {
+  if (!time) return ''
+
   const hour = parseInt(time.substring(0, 2))
   if (hour < 12) {
     return hour.toString() + ':' + time.substring(2, 4) + ' am'

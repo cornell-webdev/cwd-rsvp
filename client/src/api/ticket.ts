@@ -101,3 +101,19 @@ export const useHasSoldTicket = (eventId: string) => {
     hasSoldTicket,
   }
 }
+
+export const participantEmailsQueryConfig = (eventId: string) => ({
+  url: `/public/ticket/event/${eventId}/participant-emails`,
+  options: {
+    enabled: !!eventId,
+  },
+})
+
+export const useParticipantEmails = (eventId: string) => {
+  const { data: emails, ...rest } = useCustomQuery<string[]>(participantEmailsQueryConfig(eventId))
+
+  return {
+    ...rest,
+    emails,
+  }
+}

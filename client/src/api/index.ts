@@ -52,7 +52,7 @@ const api = (method: 'get' | 'post' | 'put' | 'delete', url: string, variables: 
               history.push({
                 pathname: '/login',
                 state: {
-                  prevPath: location.pathname,
+                  prevPath: location.pathname + location.search,
                 },
               })
             }
