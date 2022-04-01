@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
 import FilterInput from './FilterInput'
 import StatLabel from './StatLabel'
+import LoadingDots from 'src/components/LoadingDots'
 
 interface IParticipantListProps {
   eventId: string
@@ -14,7 +15,7 @@ const ParticipantList = ({ eventId }: IParticipantListProps) => {
   const [count, setCount] = useState<number>(5)
   const [filterString, setFilterString] = useState<string>('')
   const [debouncedFilterString] = useDebounce(filterString, 1000)
-  const { tickets, soldCount, checkinCount, refetch } = useTicketsByEventId(
+  const { tickets, soldCount, checkinCount, refetch, isLoading } = useTicketsByEventId(
     eventId,
     count,
     debouncedFilterString
@@ -23,6 +24,10 @@ const ParticipantList = ({ eventId }: IParticipantListProps) => {
   const handleCheckin = async (ticketId: string) => {
     await checkinTicketAsync({ ticketId })
     refetch()
+  }
+
+  if (isLoading) {
+    return <LoadingDots />
   }
 
   return (
