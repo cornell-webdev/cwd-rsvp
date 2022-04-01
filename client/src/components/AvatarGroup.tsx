@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 interface IAvatarGroupProps {
   avatarUrls: string[]
-  spoofCount?: number
+  spoofAvatarCount?: number
   spoofOffset?: number // stable but random offset
 }
 
-const AvatarGroup = ({ avatarUrls, spoofCount = 0, spoofOffset = 0 }: IAvatarGroupProps) => {
+const AvatarGroup = ({ avatarUrls, spoofAvatarCount = 0, spoofOffset = 0 }: IAvatarGroupProps) => {
   const chars = [
     'G',
     'A',
@@ -39,7 +39,7 @@ const AvatarGroup = ({ avatarUrls, spoofCount = 0, spoofOffset = 0 }: IAvatarGro
   const hexesCore = ['#1C3F6E', '#40916c', '#f27059', '#4D189D', '#778da9', '#493548']
   const hexes = [...hexesCore, ...hexesCore, ...hexesCore, ...hexesCore]
 
-  if (avatarUrls?.length === 0 && spoofCount === 0) return null
+  if (avatarUrls?.length === 0 && spoofAvatarCount === 0) return null
 
   return (
     <Container>
@@ -47,7 +47,7 @@ const AvatarGroup = ({ avatarUrls, spoofCount = 0, spoofOffset = 0 }: IAvatarGro
         {avatarUrls?.slice(0, 3)?.map((url) => (
           <Img key={url} src={url} />
         ))}
-        {[...Array(spoofCount || 0)]?.map((_, i) => (
+        {[...Array(spoofAvatarCount || 0)]?.map((_, i) => (
           <SpoofedAvatar key={i} background={hexes[i + spoofOffset]}>
             <AvatarText>{chars[i + spoofOffset]}</AvatarText>
           </SpoofedAvatar>

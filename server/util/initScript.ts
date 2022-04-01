@@ -10,8 +10,8 @@ export default async () => {
   // 62467dab5139d70004e07c50
   // 62467db25139d70004e07d05
 
-  // const tickets = await Ticket.find({ sellerId: '62467db25139d70004e07d05' })
-  // console.log('tickets?.length', tickets?.length)
+  // const seller = await Seller.findById('62426d7663a77a00040575f8')
+  // console.log('seller?.length', seller)
 
   if (process.env.NODE_ENV !== 'development') {
     try {
