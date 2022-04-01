@@ -77,17 +77,21 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
           onClick={liked ? handleUnlike : handleLike}>
           Like event
         </Button>
-        {/* {likeCount > 0 && (
+        {likeCount > 0 && (
           <FlexContainer alignCenter>
             <AvatarGroup
               avatarUrls={avatarUrls}
-              spoofCount={likeCount >= 3 ? 3 - avatarUrls?.length : likeCount - avatarUrls?.length}
+              spoofAvatarCount={
+                likeCount >= 3
+                  ? Math.max(3 - avatarUrls?.length, 0)
+                  : Math.max(likeCount - avatarUrls?.length, 0)
+              }
               spoofOffset={event.title?.length % 20}
             />
             <Spacer x={0.7} />
             <Text variant='meta1'>{likeCount} likes</Text>
           </FlexContainer>
-        )} */}
+        )}
       </FlexContainer>
     )
   }

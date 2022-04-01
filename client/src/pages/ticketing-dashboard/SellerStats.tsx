@@ -66,7 +66,16 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
                   <StyledLinkIcon />
                 </FlexContainer>
                 <FlexContainer alignCenter>
-                  <HoriBar width={(seller?.soldCount / sellerStats[0]?.soldCount) * 100} />
+                  <HoriBar
+                    width={
+                      (seller?.soldCount /
+                        Math.max(
+                          sellerStats[0]?.soldCount,
+                          sellerStats[sellerStats?.length - 1]?.soldCount
+                        )) *
+                      100
+                    }
+                  />
                   <Spacer x={0.5} />
                   <Text variant='meta1'>{seller?.soldCount}</Text>
                 </FlexContainer>
