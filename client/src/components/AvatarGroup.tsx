@@ -47,7 +47,7 @@ const AvatarGroup = ({ avatarUrls, spoofCount = 0, spoofOffset = 0 }: IAvatarGro
         {avatarUrls?.slice(0, 3)?.map((url) => (
           <Img key={url} src={url} />
         ))}
-        {[...Array(spoofCount)]?.map((_, i) => (
+        {[...Array(spoofCount || 0)]?.map((_, i) => (
           <SpoofedAvatar key={i} background={hexes[i + spoofOffset]}>
             <AvatarText>{chars[i + spoofOffset]}</AvatarText>
           </SpoofedAvatar>

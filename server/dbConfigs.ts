@@ -11,7 +11,7 @@ class Database {
     let dbType = process.env.NODE_ENV === 'production' ? 'prod' : 'dev'
     let url = process.env.NODE_ENV === 'production' ? process.env.DB_PROD : process.env.DB_DEV
 
-    const forceProd = false
+    const forceProd = true
 
     if (forceProd) {
       url = process.env.DB_PROD
