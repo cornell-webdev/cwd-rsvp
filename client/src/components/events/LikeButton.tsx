@@ -77,7 +77,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
           onClick={liked ? handleUnlike : handleLike}>
           Like event
         </Button>
-        {likeCount > 0 && (
+        {/* {likeCount > 0 && (
           <FlexContainer alignCenter>
             <AvatarGroup
               avatarUrls={avatarUrls}
@@ -87,7 +87,7 @@ const LikeButton: React.FC<ILikeProps> = ({ event, variant = 'default' }: ILikeP
             <Spacer x={0.7} />
             <Text variant='meta1'>{likeCount} likes</Text>
           </FlexContainer>
-        )}
+        )} */}
       </FlexContainer>
     )
   }
