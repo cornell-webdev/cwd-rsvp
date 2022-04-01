@@ -10,6 +10,7 @@ import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import GradientAnimation from 'src/components/GradientAnimation'
 import PageContainer from 'src/components/layout/PageContainer'
+import LoadingDots from 'src/components/LoadingDots'
 import useIsMobile from 'src/hooks/useIsMobile'
 import useRouter from 'src/hooks/useRouter'
 import { getEventDate, getEventDateTime } from 'src/util/date'
@@ -21,7 +22,7 @@ const EventDetails = () => {
   const isMobile = useIsMobile()
   const router = useRouter()
   const eventId = router.match.params.eventId
-  const { event } = useEventById(eventId)
+  const { event, isLoading } = useEventById(eventId)
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
@@ -37,6 +38,17 @@ const EventDetails = () => {
       })
     }
   }, [])
+
+  if (isLoading) {
+    return (
+      <PageContainer>
+        <Spacer y={2} />
+        <FlexContainer justifyCenter fullWidth>
+          <LoadingDots />
+        </FlexContainer>
+      </PageContainer>
+    )
+  }
 
   if (!event) {
     return (
