@@ -33,7 +33,7 @@ const getBumpedCount = (event: IEvent, variant: 'LIKES' | 'VIEWS'): number => {
   // this value is stable, yet random, so that different events don't have the same bumped value
   const randValue = datesSinceCreation > 0 ? event.title?.length % 8 : 0
   const finalViewCount = Math.floor(expBumpbed + randValue)
-  const finalLikeCount = Math.floor(randValue)
+  const finalLikeCount = Math.floor(trueCount + randValue)
 
   return variant === 'LIKES' ? finalLikeCount : finalViewCount
 }
