@@ -10,6 +10,7 @@ import InsertLinkOutlinedIcon from '@mui/icons-material/InsertLinkOutlined'
 import { useSnackbar } from 'notistack'
 import copyToClipboard from 'src/util/copyToClipboard'
 import getSellersLink from 'src/util/getSellersLink'
+import LoadingDots from 'src/components/LoadingDots'
 
 interface ISellerStatsProps {
   eventId: string
@@ -20,13 +21,22 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
   const [isReversed, setIsReversed] = useState<boolean>(false)
   const [isShowAll, setIsShowAll] = useState<boolean>(false)
   const [debouncedFilterString] = useDebounce(filterString, 1000)
-  const { sellerStats } = useSellerStats(eventId, isReversed, isShowAll, debouncedFilterString)
+  const { sellerStats, isLoading } = useSellerStats(
+    eventId,
+    isReversed,
+    isShowAll,
+    debouncedFilterString
+  )
   const isMobile = useIsMobile()
   const { enqueueSnackbar } = useSnackbar()
 
   const copySellersLink = (sellerId: string) => {
     copyToClipboard(getSellersLink({ eventId, sellerId }))
     enqueueSnackbar("Copied seller's link")
+  }
+
+  if (isLoading) {
+    return <LoadingDots />
   }
 
   return (
@@ -63,9 +73,11 @@ const SellerStats = ({ eventId }: ISellerStatsProps) => {
               </SellerListItem>
             ))}
           </ListContainer>
-          <Button variant='text' size='small' onClick={() => setIsShowAll(true)}>
-            Show all
-          </Button>
+          {!isShowAll && (
+            <Button variant='text' size='small' onClick={() => setIsShowAll(true)}>
+              Show all
+            </Button>
+          )}
         </>
       )}
     </Container>
