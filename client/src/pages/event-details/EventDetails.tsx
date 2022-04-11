@@ -2,7 +2,8 @@ import CalendarIcon from '@mui/icons-material/CalendarTodayOutlined'
 import LocationIcon from '@mui/icons-material/LocationOnOutlined'
 import { Avatar, Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+import { Link, useHistory } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import { useSellerById } from 'src/api/seller'
 import { useTicketsByEventId } from 'src/api/ticket'
@@ -22,12 +23,11 @@ const EventDetails = () => {
   const isMobile = useIsMobile()
   const router = useRouter()
   const eventId = router.match.params.eventId
-  const { event, isLoading } = useEventById(eventId)
+  const { event, isLoading: isEventLoading } = useEventById(eventId)
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
-  const { soldCount } = useTicketsByEventId(eventId, 0, '')
-
+  const { soldCount, isLoading: isSoldCountLoading } = useTicketsByEventId(eventId, 0, '')
   const sellerId = router.query?.sellerId
   const { seller } = useSellerById(sellerId)
 
@@ -39,7 +39,7 @@ const EventDetails = () => {
     }
   }, [])
 
-  if (isLoading) {
+  if (isEventLoading) {
     return (
       <PageContainer>
         <Spacer y={2} />
@@ -132,8 +132,12 @@ const EventDetails = () => {
                         background={theme.background.default}
                         color={theme.brand[500]}
                         hoverBackground={theme.brand[50]}
-                        disabled={Number(soldCount) >= Number(event?.totalTicketCount)}>
-                        {Number(soldCount) >= Number(event?.totalTicketCount)
+                        disabled={
+                          isSoldCountLoading || Number(soldCount) >= Number(event?.totalTicketCount)
+                        }>
+                        {isSoldCountLoading
+                          ? 'Loading...'
+                          : Number(soldCount) >= Number(event?.totalTicketCount)
                           ? 'Sold out'
                           : 'Buy ticket'}
                       </Button>

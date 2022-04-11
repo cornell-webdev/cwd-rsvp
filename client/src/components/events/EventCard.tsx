@@ -21,9 +21,20 @@ interface IEventProps {
 const EventCard: React.FC<IEventProps> = ({ event, startTime, endTime, date }: IEventProps) => {
   const isMobile = useIsMobile()
 
+  const today = new Date()
+
+  let opacityStyle = true
+  if (date) {
+    if (today.getDate() === date.getDate() || today < date) {
+      opacityStyle = true
+    } else if (today > date) {
+      opacityStyle = false
+    }
+  }
+
   return (
     <StyledLink to={`/event/${event?._id}`}>
-      <EventContainer alignStart>
+      <EventContainer style={{ opacity: opacityStyle ? 1 : 0.4 }} alignStart>
         <Thumbnail src={getEventThumbnail(event)} />
         <TextContainer>
           <Text variant={isMobile ? 'meta2' : 'meta1'} maxLines={1}>

@@ -24,6 +24,7 @@ const CheckIn = React.lazy(() => import('src/pages/check-in/CheckIn'))
 const BuyTicket = React.lazy(() => import('src/pages/buy-ticket/BuyTicket'))
 const MyTickets = React.lazy(() => import('src/pages/my-tickets/MyTickets'))
 const TicketDetails = React.lazy(() => import('src/pages/ticket-details/TicketDetails'))
+const ShowAllPage = React.lazy(() => import('src/pages/show-all-page/ShowAllPage'))
 const TicketingDashboard = React.lazy(
   () => import('src/pages/ticketing-dashboard/TicketingDashboard')
 )
@@ -228,6 +229,15 @@ export const routes: IRoute[] = [
     path: '/event/:eventId',
     component: EventDetails,
     label: 'Event details',
+    isPublicNav: false,
+    isPrivateNav: false,
+    isPrivateRoute: false,
+    isDesktopOnly: false,
+  },
+  {
+    path: '/show-all-page/:date',
+    component: ShowAllPage,
+    label: 'All Day Events',
     isPublicNav: false,
     isPrivateNav: false,
     isPrivateRoute: false,
