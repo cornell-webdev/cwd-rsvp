@@ -50,8 +50,8 @@ function Home() {
   //   )
   // }
 
-  console.log(startDate)
-  console.log(endDate)
+  // console.log(startDate)
+  // console.log(endDate)
 
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
@@ -79,7 +79,7 @@ function Home() {
         </FiltersContainer>
       )}
 
-      <FlexContainer justifyCenter>
+      {/* <FlexContainer justifyCenter>
         <EventListContainer>
           {searchedEvents?.length === 0 ? (
             query && query !== '' ? (
@@ -97,6 +97,12 @@ function Home() {
           ) : (
             <SearchEvents events={searchedEvents} />
           )}
+        </EventListContainer>
+      </FlexContainer> */}
+
+      <FlexContainer justifyCenter>
+        <EventListContainer>
+          <DayList startDate={startDate} endDate={endDate} tagId={tagId} />
         </EventListContainer>
       </FlexContainer>
     </PageContainer>

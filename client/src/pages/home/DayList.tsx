@@ -1,3 +1,4 @@
+import { listenerCount } from 'process'
 import React, { memo, useState } from 'react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import DayEventsList from 'src/components/events/DayEventsList'
@@ -26,13 +27,40 @@ const DayList = ({ startDate, endDate, tagId }: IEventsByDayProps) => {
     disabled: false,
   })
 
-  const range = false
+  let range = false
+
+  // right now, the date range picker works as long as they select more than 1 day
+  if (startDate && endDate) {
+    range = startDate < endDate
+  }
+
+  // console.log(startDate)
+  // console.log(endDate)
 
   const rangeEvents = (startDate: Date, endDate: Date) => {
-    const curr: Date = startDate
+    let curr = new Date(startDate)
+    curr.setDate(curr.getDate() - 1)
+    const dates = []
 
-    return <div>{}</div>
+    // for some reason, the dates that are displayed is one more than the startDate and endDate
+    while (curr < endDate) {
+      dates.push(curr)
+
+      const newDate = curr.setDate(curr.getDate() + 1)
+      curr = new Date(newDate)
+    }
+
+    const datesList = dates.map((date) => (
+      <div key={date.toString()}>
+        <DayEventsList date={date} tagId={tagId} />
+      </div>
+    ))
+
+    return <div>{datesList}</div>
   }
+
+  console.log(startDate)
+  console.log(endDate)
 
   return (
     <div>
