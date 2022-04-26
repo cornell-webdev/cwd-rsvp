@@ -50,13 +50,8 @@ function Home() {
   //   )
   // }
 
-<<<<<<< HEAD
   // console.log(startDate)
   // console.log(endDate)
-=======
-  console.log(startDate)
-  console.log(endDate)
->>>>>>> d5ad9dfdcc064979c315d28ba8496ee828cd03ff
 
   return (
     <PageContainer isMobileOnly isShowWarning={false}>
@@ -84,11 +79,7 @@ function Home() {
         </FiltersContainer>
       )}
 
-<<<<<<< HEAD
       {/* <FlexContainer justifyCenter>
-=======
-      <FlexContainer justifyCenter>
->>>>>>> d5ad9dfdcc064979c315d28ba8496ee828cd03ff
         <EventListContainer>
           {searchedEvents?.length === 0 ? (
             query && query !== '' ? (

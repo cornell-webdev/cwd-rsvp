@@ -18,7 +18,11 @@ import getEventThumbnail from 'src/util/getEventThumbnail'
 import getTicketPrice from 'src/util/getTicketPrice'
 import styled from 'styled-components'
 
-const EventDetails = () => {
+interface IEventDetails {
+  date?: Date
+}
+
+const EventDetails = ({ date }: IEventDetails) => {
   const isMobile = useIsMobile()
   const router = useRouter()
   const eventId = router.match.params.eventId
@@ -28,6 +32,7 @@ const EventDetails = () => {
   const { incrementEventViews } = useIncrementEventViews()
   const { soldCount } = useTicketsByEventId(eventId, 0, '')
   const history = useHistory()
+  const [showMoreDates, setShowMoreDates] = useState(false)
 
   const sellerId = router.query?.sellerId
   const { seller } = useSellerById(sellerId)
@@ -48,6 +53,26 @@ const EventDetails = () => {
     )
   }
 
+  const moreData = event?.dates?.map((date) => (
+    <Text key={`${date?.date}${date?.startTime}${date?.endTime}`}>
+      {getEventDateTime(new Date(date?.date), date?.startTime, date?.endTime)}
+    </Text>
+  ))
+
+  // if (date) {
+  //   firstDate = date
+  // } else {
+  //   firstDate = event?.dates[0]
+  // }
+
+  const firstDate = event?.dates[0]
+
+  const lessData = (
+    <Text>
+      {getEventDateTime(new Date(firstDate?.date), firstDate?.startTime, firstDate?.endTime)}
+    </Text>
+  )
+
   return (
     <PageContainer isMobileOnly isShowWarning={false} isNoPadding>
       <Container>
@@ -64,7 +89,7 @@ const EventDetails = () => {
           <Text variant='h5' fontWeight={700}>
             {event?.title}
           </Text>
-          <IconRow>
+          {/* <IconRow>
             <CalendarIcon />
             <div>
               {event?.dates?.map((date) => (
@@ -73,7 +98,24 @@ const EventDetails = () => {
                 </Text>
               ))}
             </div>
+          </IconRow> */}
+          <IconRow>
+            <CalendarIcon />
+
+            <div>
+              <Text>{showMoreDates ? moreData : lessData}</Text>
+            </div>
           </IconRow>
+          <Button
+            variant='text'
+            size='small'
+            background={theme.grey[50]}
+            hoverBackground={theme.grey[100]}
+            color={theme.text.default}
+            onClick={() => setShowMoreDates(!showMoreDates)}>
+            {showMoreDates ? 'Show Less Dates' : 'Show More Dates'}
+          </Button>
+
           <IconRow>
             <LocationIcon />
             <Text>{event?.location}</Text>
@@ -255,6 +297,10 @@ const BuyticketSection = styled.div`
   background: linear-gradient(45deg, #ff3683, #ef903c);
   background-size: 200% auto;
   animation: ${GradientAnimation} 4s linear infinite;
+`
+
+const ButtonContainer = styled(FlexContainer)`
+  padding: 10px 0px 6px 0px;
 `
 
 export default EventDetails
