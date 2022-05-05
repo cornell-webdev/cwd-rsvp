@@ -19,6 +19,9 @@ sellerRouter.get('/event/:eventId/stats', async (req, res) => {
 
     let counts: ISellerStat[] = []
 
+    // TODO: this part slows down the entire website
+    // need to make it more efficient
+    // store soldCount in Seller model?
     const promises = sellers?.map(async (seller) => {
       const tickets = await Ticket.find({
         eventId: req.params?.eventId,

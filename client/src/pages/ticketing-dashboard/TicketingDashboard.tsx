@@ -22,18 +22,18 @@ const TicketingDashboard = () => {
   const eventId = router.match.params.eventId
   const { event } = useEventById(eventId)
   const isMobile = useIsMobile()
-  const { emails } = useParticipantEmails(eventId)
-  const { enqueueSnackbar } = useSnackbar()
+  // const { emails } = useParticipantEmails(eventId)
+  // const { enqueueSnackbar } = useSnackbar()
 
-  const copyEmails = () => {
-    const emailsString = emails?.join(', ')
-    if (emailsString) {
-      copyToClipboard(emailsString)
-      enqueueSnackbar('Copied all participant emails', {
-        variant: 'success',
-      })
-    }
-  }
+  // const copyEmails = () => {
+  //   const emailsString = emails?.join(', ')
+  //   if (emailsString) {
+  //     copyToClipboard(emailsString)
+  //     enqueueSnackbar('Copied all participant emails', {
+  //       variant: 'success',
+  //     })
+  //   }
+  // }
 
   return (
     <Container>
@@ -50,6 +50,21 @@ const TicketingDashboard = () => {
           </Link>
         </Section>
         <Section>
+          <FlexContainer alignCenter justifySpaceBetween>
+            <Text variant='h4' fontWeight={700}>
+              Participants
+            </Text>
+            {/* <Button
+              variant='text'
+              size='small'
+              startIcon={<ContentCopyIcon />}
+              onClick={copyEmails}>
+              Copy emails
+            </Button> */}
+          </FlexContainer>
+          <ParticipantList eventId={eventId} />
+        </Section>
+        <Section>
           <Text variant='h4' fontWeight={700}>
             Seller's link
           </Text>
@@ -61,32 +76,17 @@ const TicketingDashboard = () => {
             <SellersLinkForm eventId={eventId} />
           </div>
         </Section>
-        <Section>
+        {/* <Section>
           <Text variant='h4' fontWeight={700}>
             Sellers
           </Text>
           <SellerStats eventId={eventId} />
-        </Section>
+        </Section> */}
         <Section>
           <Text variant='h4' fontWeight={700}>
             Ticket sales
           </Text>
           <TicketSalesList eventId={eventId} ticketsTotalCount={event?.totalTicketCount} />
-        </Section>
-        <Section>
-          <FlexContainer alignCenter justifySpaceBetween>
-            <Text variant='h4' fontWeight={700}>
-              Participants
-            </Text>
-            <Button
-              variant='text'
-              size='small'
-              startIcon={<ContentCopyIcon />}
-              onClick={copyEmails}>
-              Copy emails
-            </Button>
-          </FlexContainer>
-          <ParticipantList eventId={eventId} />
         </Section>
       </PageContainer>
     </Container>
