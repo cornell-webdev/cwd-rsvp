@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 interface ILabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
 
-const Label = ({ children }: ILabelProps) => {
-  return <StyledLabel>{children}</StyledLabel>
+const Label = ({ children, ...rest }: ILabelProps) => {
+  return <StyledLabel {...rest}>{children}</StyledLabel>
 }
 
 const StyledLabel = styled.label`

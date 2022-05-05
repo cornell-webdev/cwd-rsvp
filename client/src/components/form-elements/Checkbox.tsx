@@ -16,7 +16,7 @@ const Checkbox = (props: CheckboxProps) => {
         <input {...props} type='checkbox' />
         <span />
       </StyledCheckbox>
-      <Label>{props.label}</Label>
+      <CheckboxLabel>{props.label}</CheckboxLabel>
     </FlexContainer>
   )
 }
@@ -39,12 +39,16 @@ export const HookedCheckbox = (props: HookedCheckboxProps) => {
           <input {...register(props.name)} type='checkbox' />
           <span />
         </StyledCheckbox>
-        <Label>{props.label}</Label>
+        <CheckboxLabel>{props.label}</CheckboxLabel>
       </FlexContainer>
       <ErrorMsg error={errors[props.name]?.message} />
     </div>
   )
 }
+
+const CheckboxLabel = styled(Label)`
+  margin-bottom: 0;
+`
 
 const StyledCheckbox = styled.label`
   z-index: 0;
@@ -112,9 +116,9 @@ const StyledCheckbox = styled.label`
     content: '';
     display: block;
     position: absolute;
-    top: 3px;
+    top: 2px;
     left: 1px;
-    width: 10px;
+    width: 8px;
     height: 5px;
     border: solid 2px transparent;
     border-right: none;

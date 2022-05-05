@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { useEventById } from 'src/api/event'
 import { useEventSeller, useSellerById } from 'src/api/seller'
-import { useCreateTicket, useTicketsByEventId } from 'src/api/ticket'
+import { useCreateTicket, useTicketStatsByEventId } from 'src/api/ticket'
 import { useCurrentUser } from 'src/api/user'
 import BackButton from 'src/components/BackButton'
 import Input from 'src/components/form-elements/Input'
@@ -29,7 +29,7 @@ const BuyTicket = () => {
   const [seller, setSeller] = useState<ISelectOption>()
   const { sellers } = useEventSeller(eventId)
   const { seller: querySeller } = useSellerById(router.query?.sellerId)
-  const { soldCount } = useTicketsByEventId(eventId, 0, '')
+  const { soldCount } = useTicketStatsByEventId(eventId)
   const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {

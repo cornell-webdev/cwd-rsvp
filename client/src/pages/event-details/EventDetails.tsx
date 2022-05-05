@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useEventById, useIncrementEventViews } from 'src/api/event'
 import { useSellerById } from 'src/api/seller'
-import { useTicketsByEventId } from 'src/api/ticket'
+import { useTicketStatsByEventId } from 'src/api/ticket'
 import BackButton from 'src/components/BackButton'
 import LikeButton from 'src/components/events/LikeButton'
 import GradientAnimation from 'src/components/GradientAnimation'
@@ -27,7 +27,7 @@ const EventDetails = () => {
   const [isDetailsExpanded, setIsDetailsExpanded] = useState<boolean>(false)
   const [isHostExpanded, setIsHostExpanded] = useState<boolean>(false)
   const { incrementEventViews } = useIncrementEventViews()
-  const { soldCount, isLoading: isSoldCountLoading } = useTicketsByEventId(eventId, 0, '')
+  const { soldCount, isLoading: isSoldCountLoading } = useTicketStatsByEventId(eventId)
   const sellerId = router.query?.sellerId
   const { seller } = useSellerById(sellerId)
 

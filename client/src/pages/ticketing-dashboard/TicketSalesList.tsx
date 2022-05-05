@@ -1,6 +1,6 @@
 import { Button, FlexContainer, Spacer, Text, theme } from 'cornell-glue-ui'
 import React, { useState } from 'react'
-import { useTicketsByEventId } from 'src/api/ticket'
+import { useTicketsByEventId, useTicketStatsByEventId } from 'src/api/ticket'
 import { formatDate, getTime } from 'src/util/date'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
@@ -17,11 +17,12 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
   const [count, setCount] = useState<number>(3)
   const [filterString, setFilterString] = useState<string>('')
   const [debouncedFilterString] = useDebounce(filterString, 1000)
-  const { tickets, revenue, soldCount, isLoading } = useTicketsByEventId(
+  const { revenue, soldCount, isLoading } = useTicketStatsByEventId(eventId)
+  const { tickets } = useTicketsByEventId({
     eventId,
-    count,
-    debouncedFilterString
-  )
+    count: count.toString(),
+    filterString: debouncedFilterString,
+  })
 
   if (isLoading) {
     return <LoadingDots />
@@ -71,9 +72,11 @@ const TicketSalesList = ({ eventId, ticketsTotalCount }: ITicketSalesListProps) 
             </TicketItem>
           ))}
       </TicketSalesListContainer>
-      <Button variant='text' size='small' onClick={() => setCount(count + 10)}>
-        Show more
-      </Button>
+      {soldCount && count < Number(soldCount) && (
+        <Button variant='text' size='small' onClick={() => setCount(count + 10)}>
+          Show more
+        </Button>
+      )}
     </Container>
   )
 }

@@ -15,7 +15,7 @@ export default async () => {
 
   if (process.env.NODE_ENV !== 'development') {
     try {
-      // TODO: uncomment scrape script
+      // TODO: enable scraping after loko showcase
       // scrapeAtMidnight()
       // await scrapeCampusGroups()
       // await verifyDatabase()

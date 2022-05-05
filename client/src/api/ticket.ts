@@ -40,39 +40,61 @@ export const useTicketById = (ticketId: string) => {
   }
 }
 
-interface IEventTicketResponse {
-  tickets: ITicket[]
+interface IEventTicketStatsResponse {
   revenue: string
   soldCount: string
   checkinCount: string
 }
 
-export const ticketsByEventIdQueryConfig = (
-  eventId: string,
-  count: number,
-  filterString: string
-) => ({
-  url: `/public/ticket/event/${eventId}?count=${count}&filterString=${filterString}`,
+export const ticketStatsByEventIdQueryConfig = (eventId: string) => ({
+  url: `/public/ticket/event/${eventId}/ticket-stats`,
 })
 
-export const useTicketsByEventId = (eventId: string, count: number, filterString: string) => {
-  const { data, ...rest } = useCustomQuery<IEventTicketResponse>(
-    ticketsByEventIdQueryConfig(eventId, count, filterString)
+export const useTicketStatsByEventId = (eventId: string) => {
+  const { data, ...rest } = useCustomQuery<IEventTicketStatsResponse>(
+    ticketStatsByEventIdQueryConfig(eventId)
   )
 
   return {
     ...rest,
-    tickets: data?.tickets,
     revenue: data?.revenue,
     soldCount: data?.soldCount,
     checkinCount: data?.checkinCount,
   }
 }
 
+interface IEventTicketsResponse {
+  tickets: ITicket[]
+}
+
+interface IUseTicketsByEventIdParams {
+  eventId: string
+  count: string
+  filterString?: string
+  isOnlyCheckedIn?: string
+}
+
+export const ticketsByEventIdQueryConfig = (params: IUseTicketsByEventIdParams) => ({
+  url: `/public/ticket/event/${params?.eventId}/tickets?${new URLSearchParams({
+    ...params,
+  }).toString()}`,
+})
+
+export const useTicketsByEventId = (params: IUseTicketsByEventIdParams) => {
+  const { data, ...rest } = useCustomQuery<IEventTicketsResponse>(
+    ticketsByEventIdQueryConfig(params)
+  )
+
+  return {
+    ...rest,
+    tickets: data?.tickets,
+  }
+}
+
 export const useCheckinTicket = () => {
   const { mutateAsync: checkinTicketAsync, ...rest } = useCustomMutation<
     ITicket,
-    { ticketId: string }
+    { ticketId: string; isCheckedIn: boolean }
   >({
     url: `/public/ticket/check-in`,
     method: 'put',
