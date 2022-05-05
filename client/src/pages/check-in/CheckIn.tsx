@@ -15,7 +15,7 @@ const CheckIn = () => {
 
   useEffect(() => {
     if (ticket) {
-      checkinTicketAsync({ ticketId })
+      checkinTicketAsync({ ticketId, isCheckedIn: true })
     }
   }, [ticket])
 
