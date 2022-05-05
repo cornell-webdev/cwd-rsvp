@@ -79,6 +79,7 @@ const ParticipantList = ({ eventId }: IParticipantListProps) => {
                 size='small'
                 onClick={() => handleCheckin(ticket?._id, ticket?.isCheckedIn)}
                 background={theme.success[50]}
+                hoverBackground={theme.success[100]}
                 color={theme.success[500]}
                 startIcon={<RestartAltOutlinedIcon />}>
                 Checked in
