@@ -48,6 +48,9 @@ interface IEventTicketStatsResponse {
 
 export const ticketStatsByEventIdQueryConfig = (eventId: string) => ({
   url: `/public/ticket/event/${eventId}/ticket-stats`,
+  options: {
+    refetchOnWindowFocus: false,
+  },
 })
 
 export const useTicketStatsByEventId = (eventId: string) => {
@@ -78,6 +81,9 @@ export const ticketsByEventIdQueryConfig = (params: IUseTicketsByEventIdParams) 
   url: `/public/ticket/event/${params?.eventId}/tickets?${new URLSearchParams({
     ...params,
   }).toString()}`,
+  options: {
+    refetchOnWindowFocus: false,
+  },
 })
 
 export const useTicketsByEventId = (params: IUseTicketsByEventIdParams) => {

@@ -30,6 +30,9 @@ const sellerStatsConfig = (
   filterString: string
 ) => ({
   url: `/public/seller/event/${eventId}/stats?isReversed=${isReversed}&isShowAll=${isShowAll}&filterString=${filterString}`,
+  options: {
+    refetchOnWindowFocus: false,
+  },
 })
 
 export const useSellerStats = (
