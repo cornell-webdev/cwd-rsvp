@@ -204,7 +204,7 @@ export const routes: IRoute[] = [
     label: 'Ticket details',
     isPublicNav: false,
     isPrivateNav: false,
-    isPrivateRoute: true,
+    isPrivateRoute: false,
     isDesktopOnly: false,
   },
   {
