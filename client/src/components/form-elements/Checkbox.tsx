@@ -149,7 +149,7 @@ const StyledCheckbox = styled.label`
   }
 
   /* Hover, Focus */
-  &:hover > input {
+  /* &:hover > input {
     opacity: 0.04;
   }
 
@@ -159,10 +159,10 @@ const StyledCheckbox = styled.label`
 
   &:hover > input:focus {
     opacity: 0.12;
-  }
+  } */
 
   /* Active */
-  & > input:active {
+  /* & > input:active {
     opacity: 1;
     transform: scale(0);
     transition: transform 0s, opacity 0s;
@@ -175,7 +175,7 @@ const StyledCheckbox = styled.label`
   & > input:checked:active + span::before {
     border-color: transparent;
     background-color: rgba(var(--pure-material-onsurface-rgb, 0, 0, 0), 0.6);
-  }
+  } */
 
   /* Disabled */
   & > input:disabled {
