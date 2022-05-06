@@ -1,17 +1,12 @@
-import Seller from '../models/Seller'
 import Ticket from '../models/Ticket'
 import createTags from './createTags'
 import { scrapeAtMidnight, scrapeCampusGroups } from './scrapeCampusGroups'
 import verifyDatabase from './verifyDatabase'
 
 export default async () => {
-  // Jessica seller ids
-  // 62426d7663a77a00040575f8
-  // 62467dab5139d70004e07c50
-  // 62467db25139d70004e07d05
-
-  // const seller = await Seller.findById('62426d7663a77a00040575f8')
-  // console.log('seller?.length', seller)
+  // TODO: remove random ticket fetch for LOKO's showcase
+  // const ticket = await Ticket.findOne({ eventId: '62426c0463a77a0004056bc5' })
+  // console.log('ticket', ticket?._id)
 
   if (process.env.NODE_ENV !== 'development') {
     try {
