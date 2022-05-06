@@ -7,11 +7,12 @@ import PageContainer from 'src/components/layout/PageContainer'
 import useRouter from 'src/hooks/useRouter'
 import styled from 'styled-components'
 import ReportIcon from '@mui/icons-material/Report'
+import Loading from 'src/components/Loading'
 
 const CheckIn = () => {
   const router = useRouter()
   const ticketId = router.match.params.ticketId
-  const { ticket } = useTicketById(ticketId)
+  const { ticket, isLoading } = useTicketById(ticketId)
   const { checkinTicketAsync } = useCheckinTicket()
   const [isNewCheckin, setIsNewCheckin] = useState<boolean>(false)
 
@@ -22,11 +23,12 @@ const CheckIn = () => {
     }
   }, [ticket])
 
-  if (!ticket) {
+  if (isLoading) {
     return (
       <PageContainer isMobileOnly>
-        <Text>Check-in failed.</Text>
-        <Text>Invalid ticket.</Text>
+        <PageCenter>
+          <Loading />
+        </PageCenter>
       </PageContainer>
     )
   }
@@ -82,6 +84,13 @@ const CheckIn = () => {
       </PageContainer>
     )
   }
+
+  return (
+    <PageContainer isMobileOnly>
+      <Text>Check-in failed.</Text>
+      <Text>Invalid ticket.</Text>
+    </PageContainer>
+  )
 }
 
 const PageCenter = styled.div`
